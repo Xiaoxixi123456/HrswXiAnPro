@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hrsw.XiAnPro.Models
 {
-    public class Part : BindableBase
+    public class Part : BindableBase, IStatus
     {
         [Bindable]
         public string Name { get; set; }
@@ -25,6 +25,12 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
-        public PartStatus Status { get; set; }
+        public bool Pass { get; set; }
+        [Bindable]
+        public double XOffset { get; set; }
+        [Bindable]
+        public double YOffset { get; set; }
+        [Bindable]
+        public AAStatus Status { get; set; }
     }
 }

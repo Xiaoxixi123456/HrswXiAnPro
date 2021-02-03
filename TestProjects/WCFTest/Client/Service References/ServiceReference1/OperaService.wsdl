@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="OperaService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="OperateServiceEp_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost/operaservice?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost/operaservice?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost/operaservice?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Contracts" />
+      <xsd:import schemaLocation="http://localhost/operaservice?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Models" />
+      <xsd:import schemaLocation="http://localhost/operaservice?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Prism.Mvvm" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServiceContract_Hook_InputMessage">
+    <wsdl:part name="parameters" element="tns:Hook" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Hook_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HookResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Operator_InputMessage">
+    <wsdl:part name="parameters" element="tns:Operator" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Operator_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OperatorResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_ReturnString_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnString" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_ReturnString_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnStringResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Send_InputMessage">
+    <wsdl:part name="parameters" element="tns:Send" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Send_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SendResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Reponse_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:Reponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceContract_Reponse_InputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:ReponseResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IServiceContract">
+    <wsdl:operation name="Hook">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceContract/Hook" message="tns:IServiceContract_Hook_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceContract/HookResponse" message="tns:IServiceContract_Hook_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Operator">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceContract/Operator" message="tns:IServiceContract_Operator_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceContract/OperatorResponse" message="tns:IServiceContract_Operator_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnString">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceContract/ReturnString" message="tns:IServiceContract_ReturnString_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceContract/ReturnStringResponse" message="tns:IServiceContract_ReturnString_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Send">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceContract/Send" message="tns:IServiceContract_Send_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceContract/SendResponse" message="tns:IServiceContract_Send_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Reponse">
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceContract/Reponse" message="tns:IServiceContract_Reponse_OutputCallbackMessage" />
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceContract/ReponseResponse" message="tns:IServiceContract_Reponse_InputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OperateServiceEp" type="tns:IServiceContract">
+    <wsp:PolicyReference URI="#OperateServiceEp_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="Hook">
+      <soap12:operation soapAction="http://tempuri.org/IServiceContract/Hook" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Operator">
+      <soap12:operation soapAction="http://tempuri.org/IServiceContract/Operator" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnString">
+      <soap12:operation soapAction="http://tempuri.org/IServiceContract/ReturnString" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Send">
+      <soap12:operation soapAction="http://tempuri.org/IServiceContract/Send" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Reponse">
+      <soap12:operation soapAction="http://tempuri.org/IServiceContract/Reponse" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OperaService">
+    <wsdl:port name="OperateServiceEp" binding="tns:OperateServiceEp">
+      <soap12:address location="net.tcp://localhost:666/OperateService" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:666/OperateService</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

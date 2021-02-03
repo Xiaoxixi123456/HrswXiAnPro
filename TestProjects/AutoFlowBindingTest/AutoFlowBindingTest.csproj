@@ -70,7 +70,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Cmm.cs" />
     <Compile Include="TestBindable.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">

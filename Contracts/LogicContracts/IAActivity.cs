@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.Models;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +16,11 @@ namespace Hrsw.XiAnPro.LogicContracts
     }
 
     public interface IAActivity<T> : IAActivity<T, bool>
+    {
+
+    }
+
+    public interface ISelectorAActivity<T> : IAActivity<IEnumerable<T>, T>
     {
 
     }

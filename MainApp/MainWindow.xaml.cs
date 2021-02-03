@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,22 @@ namespace MainApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainViewModel MainViewModel { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            MainViewModel = new MainViewModel();
+            DataContext = MainViewModel;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.Initial();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.Start();
         }
     }
 }

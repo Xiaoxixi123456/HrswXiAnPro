@@ -55,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AAStatus.cs" />
+    <Compile Include="IStatus.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="PartStatus.cs" />
     <Compile Include="Part_s.cs" />

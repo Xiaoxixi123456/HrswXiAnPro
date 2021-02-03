@@ -1,9 +1,6 @@
 ﻿using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
@@ -13,10 +10,11 @@ namespace Hrsw.XiAnPro.LogicActivities
     {
         private List<IAActivity<Tray>> AActivities;
 
-        public RootActivity()
+        public RootActivity(ICMMControl cmmControl)
         {
             AActivities = new List<IAActivity<Tray>>();
-            AActivities.Add(new LoadActivity());
+            //AActivities.Add(new LoadActivity());
+            AActivities.Add(new MeasureTrayActivity(cmmControl));
         }
 
         public async Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)

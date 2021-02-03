@@ -19,6 +19,7 @@ namespace Hrsw.XiAnPro.Models
         public double RowOffset { get; set; }
         public double BaseColumnOffset { get; set; }
         public double BaseRowOffset { get; set; }
-        public TrayStatus Status { get; set; }
+        public AAStatus Status { get; set; }
+
     }
 }

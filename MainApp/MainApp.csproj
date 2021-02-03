@@ -75,6 +75,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\LogicUnitViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,8 +119,29 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CMMClient\CMMClients.csproj">
+      <Project>{7CD681E8-7414-4A7B-B865-67EE4200B289}</Project>
+      <Name>CMMClients</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\LogicContracts\LogicContracts.csproj">
+      <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
+      <Name>LogicContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LogicUnits\LogicControls\LogicControls.csproj">
+      <Project>{F3126C8F-8C60-40F2-9B74-5B4D5EDC2D8C}</Project>
+      <Name>LogicControls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models\Models.csproj">
+      <Project>{5082865E-4D57-4080-84A3-19B5134E7416}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities\Utilities.csproj">
+      <Project>{2F3106C7-9975-488D-844E-39A00FE7714E}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

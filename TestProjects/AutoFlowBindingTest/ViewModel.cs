@@ -21,7 +21,7 @@ namespace AutoFlowBindingTest
 
         public ViewModel()
         {
-            Rack = new Rack(3, 3);
+            Rack = new Rack(1, 1);
             //Rack.Trays[0] = new Tray()
             //{
             //    Id = 1,
@@ -29,7 +29,7 @@ namespace AutoFlowBindingTest
             //    Category = 3,
             //    Status = TrayStatus.TS_Idle
             //};
-            AFManager = new LogicUnit(Rack, new TraySelectActivity(), new RootActivity());
+            AFManager = new LogicUnit(Rack);
         }
 
         public void Start()

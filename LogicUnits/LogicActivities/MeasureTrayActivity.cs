@@ -11,47 +11,28 @@ namespace Hrsw.XiAnPro.LogicActivities
 {
     public class MeasureTrayActivity : IAActivity<Tray>
     {
-        //private int _currentId;
-        //private Part _part;
-        //private IAActivity<Part> _measurePartAActivity;
-        ////private ISelector<Tray, Part> _partSelector;
-
-        //public MeasureTrayActivity(IAActivity<Part> cmm/*, ISelector<Tray, Part> selector*/)
-        //{
-        //    _currentId = 0;
-        //    _measurePartAActivity = cmm;
-        //    _partSelector = selector;
-        //}
-
-        //public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
-        //{
-        //    _currentId = 0;
-        //    bool success = true;
-        //    while (true)
-        //    {
-        //        if (cts.IsCancellationRequested)
-        //        {
-        //            success = false;
-        //            break;
-        //        }
-        //        Part part = await _partSelector.SelectAsync(tray, cts);
-        //        if (part == null)
-        //            break;
-        //        _part = part;
-        //        success = await _measurePartAActivity.ExecuteAsync(_part, cts);
-        //        if (!success)
-        //            break;
-        //    }
-        //    return success;
-        //}
-
-        //public void Stop()
-        //{
-        //    throw new NotImplementedException();
-        //}
-        public Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)
+        private ISelectorAActivity<Part> _selector;
+        private IAActivity<Part> _mesPartActivity;
+        
+        public MeasureTrayActivity(ICMMControl cmmControl)
         {
-            throw new NotImplementedException();
+            _selector = new SelectorActivity<Part>();
+            _mesPartActivity = new MeasurePartActivity(cmmControl);
+        }
+
+        public async Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)
+        {
+            bool success = false;
+            while (true)
+            {
+                Part part = await _selector.ExecuteAsync(obj.Parts, cts);
+                if (part == null)
+                    break;
+                success = await _mesPartActivity.ExecuteAsync(part, cts);
+                if (!success)
+                    break;
+            }
+            return success;
         }
     }
 }

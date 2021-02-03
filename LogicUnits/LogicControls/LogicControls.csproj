@@ -71,6 +71,10 @@
       <Project>{2F3106C7-9975-488D-844E-39A00FE7714E}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LogicActivities\LogicActivities.csproj">
+      <Project>{FE17D7F1-AE13-4908-AB07-2D96E05F18F9}</Project>
+      <Name>LogicActivities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

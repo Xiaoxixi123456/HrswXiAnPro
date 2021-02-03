@@ -24,7 +24,7 @@ namespace WPFBindingTest
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new ViewModel();
+            //ViewModel = new ViewModel();
             DataContext = ViewModel;
         }
 

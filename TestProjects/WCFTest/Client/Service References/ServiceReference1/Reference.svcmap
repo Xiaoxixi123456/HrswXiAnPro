@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="763796ec-7e94-48ee-b9a0-e179917e0acd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="Http://localhost/operaservice" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="OperaService.wsdl" MetadataType="Wsdl" ID="5b659f91-2624-483e-8559-eb140ac8f817" SourceId="1" SourceUrl="http://localhost/operaservice" />
+    <MetadataFile FileName="operaservice3.xsd" MetadataType="Schema" ID="bf6bab1d-a6e2-499e-9a71-fc5f35e2009a" SourceId="1" SourceUrl="http://localhost/operaservice?xsd=xsd4" />
+    <MetadataFile FileName="operaservice.xsd" MetadataType="Schema" ID="6f632342-de41-4b3a-a7ef-acc7ed3fcc4f" SourceId="1" SourceUrl="http://localhost/operaservice?xsd=xsd0" />
+    <MetadataFile FileName="operaservice1.xsd" MetadataType="Schema" ID="120ebc3c-cfe4-4876-aa95-9e257574a126" SourceId="1" SourceUrl="http://localhost/operaservice?xsd=xsd1" />
+    <MetadataFile FileName="operaservice2.xsd" MetadataType="Schema" ID="e9d1cda7-3779-42e7-9bc7-0c69d2c96df0" SourceId="1" SourceUrl="http://localhost/operaservice?xsd=xsd2" />
+    <MetadataFile FileName="operaservice21.xsd" MetadataType="Schema" ID="62f50299-1f90-41b9-ae6a-a8aa879451e5" SourceId="1" SourceUrl="http://localhost/operaservice?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

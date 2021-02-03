@@ -1,15 +1,11 @@
 ﻿using Hrsw.XiAnPro.Utilities;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hrsw.XiAnPro.Models
 {
-    public class Tray : BindableBase
+    public class Tray : BindableBase, IStatus
     {
         [Bindable]
         public int Id { get; set; }
@@ -32,7 +28,7 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
-        public TrayStatus Status { get; set; }
+        public AAStatus Status { get; set; }
         [Bindable]
         public ObservableCollection<Part> Parts { get; set; }
 
@@ -42,18 +38,18 @@ namespace Hrsw.XiAnPro.Models
             ColumnCount = cols;
             RowCount = rows;
             if (rand.Next(1, 100) % 2 == 0)
-                Status = TrayStatus.TS_Empty;
+                Status = AAStatus.Empty;
             else
-                Status = TrayStatus.TS_Idle;
-            if (Status == TrayStatus.TS_Idle)
+                Status = AAStatus.Idle;
+            if (Status == AAStatus.Idle)
             {
                 Parts = new ObservableCollection<Part>();
                 for (int i = 0; i < ColumnCount * RowCount; i++)
                 {
                     if (rand.Next(1, 100) % 2 == 0)
-                        Parts.Add(new Part() { SlotNb = i, Status = PartStatus.PS_Empty });
+                        Parts.Add(new Part() { SlotNb = i, Status = AAStatus.Empty });
                     else
-                        Parts.Add(new Part() { SlotNb = i, Status = PartStatus.PS_Idle});
+                        Parts.Add(new Part() { SlotNb = i, Status = AAStatus.Idle});
                 }
             }
         }
