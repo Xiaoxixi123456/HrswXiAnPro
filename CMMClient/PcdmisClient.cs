@@ -72,11 +72,10 @@ namespace Hrsw.XiAnPro.CMMClient
             return Task.FromResult(true);
         }
 
-        public async Task<AActivityFlags> MeasurePartAsync(Part part)
+        public async Task<bool> MeasurePartAsync(Part part)
         {
-            AActivityFlags flag = new AActivityFlags() { Next = true };
             // TODO 判断结果，并启动文件回传
-
+            bool success = true;
             try
             {
                 part.Status = PartStatus.PS_Measuring;
@@ -87,28 +86,21 @@ namespace Hrsw.XiAnPro.CMMClient
 
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
 
+                success = response.Success;
                 part.Pass = response.Pass;
-                if (response.Success)
-                {
-                    part.Status = PartStatus.PS_Measured;
-                }
-                else
-                {
-                    part.Status = PartStatus.PS_Error;
-                }
+                part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
 
-                flag.Next = response.IsNext;
-                AActivityFlags.IsExit = false;
             }
-            catch (Exception e) 
+            catch (Exception) 
             {
                 // 通讯失败中终止测量
                 AActivityFlags.IsExit = true;
+                success = false;
                 part.Pass = false;
                 part.Status = PartStatus.PS_Error;
             }
 
-            return flag;
+            return success;
         }
 
         private PCDResponse Measure(Part part)
@@ -130,7 +122,7 @@ namespace Hrsw.XiAnPro.CMMClient
             throw new NotImplementedException();
         }
 
-        Task<AActivityFlags> ICMMControl.GotoSafePositionAsync()
+        Task<bool> ICMMControl.GotoSafePositionAsync()
         {
             throw new NotImplementedException();
         }

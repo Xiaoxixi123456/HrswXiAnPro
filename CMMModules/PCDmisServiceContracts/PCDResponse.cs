@@ -8,8 +8,6 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
         [DataMember]
         public bool Success { get; set; }
         [DataMember]
-        public bool IsNext { get; set; }
-        [DataMember]
         public bool Pass { get; set; }
         [DataMember]
         public string ReportFile { get; set; }

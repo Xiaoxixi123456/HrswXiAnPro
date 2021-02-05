@@ -2,10 +2,11 @@
 using Hrsw.XiAnPro.Models;
 using System.Threading.Tasks;
 using System.Threading;
+using System;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class MeasurePartActivity : IAActivity<Part, AActivityFlags>
+    public class MeasurePartActivity : IAActivity<Part, bool>
     {
         private ICMMControl _cmm;
 
@@ -19,10 +20,25 @@ namespace Hrsw.XiAnPro.LogicActivities
             //_cmm = new CMMController();
         }
 
-        public async Task<AActivityFlags> ExecuteAsync(Part obj, CancellationTokenSource cts)
+        public async Task<bool> ExecuteAsync(Part obj, CancellationTokenSource cts)
         {
-            AActivityFlags astatus = await _cmm.MeasurePartAsync(obj);
-            return astatus;
+            bool success = await _cmm.MeasurePartAsync(obj);
+            return success;
+        }
+
+        public void Next()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Complete()
+        {
+            throw new NotImplementedException();
         }
     }
 }

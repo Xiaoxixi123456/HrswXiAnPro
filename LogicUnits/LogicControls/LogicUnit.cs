@@ -16,7 +16,7 @@ namespace Hrsw.XiAnPro.LogicControls
     {
         private CancellationTokenSource _cts;
         private IAActivity<Rack, Tray> _traySelector;
-        private IAActivity<Tray, AActivityFlags> _rootActivity;
+        private IAActivity<Tray, bool> _rootActivity;
 
         [Bindable]
         public Tray CurrentTray { get; set; }

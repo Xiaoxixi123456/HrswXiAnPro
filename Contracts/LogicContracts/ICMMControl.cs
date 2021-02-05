@@ -9,8 +9,8 @@ namespace Hrsw.XiAnPro.LogicContracts
 {
     public interface ICMMControl 
     {
-        Task<AActivityFlags> GotoSafePositionAsync();
-        Task<AActivityFlags> MeasurePartAsync(Part part);
+        Task<bool> GotoSafePositionAsync();
+        Task<bool> MeasurePartAsync(Part part);
         void PauseMeasure();
         void Stop();
     }

@@ -12,6 +12,8 @@ namespace Hrsw.XiAnPro.LogicContracts
         /// true是为重测，false为跳过
         /// </summary>
         public bool Next { get; set; }
+        public static bool NextPart { get; set; }
+        public static bool NextTray { get; set; }
         public static bool IsExit { get; set; }
     }
 }

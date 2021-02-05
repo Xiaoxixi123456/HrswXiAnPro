@@ -18,9 +18,5 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
         PCDResponse Connect();
         [OperationContract]
         PCDResponse Disconnect();
-        [OperationContract]
-        void Next();
-        [OperationContract]
-        void Retry();
     }
 }

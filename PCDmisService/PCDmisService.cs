@@ -18,7 +18,6 @@ namespace Hrsw.XiAnPro.PCDmisService
         private PCDmisControl _pcdmisControl;
         private AutoResetEvent _are;
         private bool _completed;
-        private bool _nextPart;
 
         public PCDmisService()
         {
@@ -96,19 +95,8 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         public PCDResponse MeasurePart(PCDRequest request)
         {
-            PCDResponse resp = new PCDResponse()
-            {
-                Success = true,
-                Pass = true,
-                Message = ""
-            };
-            // TODO 生成偏置文件
-            // 在零件程序目录中查找零件程序
-            // 调用零件程序
-            // 异步执行零件程序
-            // 等待程序执行结束
-            // 判读测量结果
-            // 返回结果
+            PCDResponse resp = null;
+
             string progName = SearchProgram(request.Part);
             try
             {
@@ -120,21 +108,19 @@ namespace Hrsw.XiAnPro.PCDmisService
             }
             catch (PcdmisServiceException pe)
             {
-                resp.Success = false;
-                resp.Pass = false;
-                resp.Message = pe.Message;
+                resp = new PCDResponse()
+                {
+                    Success = false,
+                    Pass = false,
+                    Message = pe.Message
+                };
             }
             return resp;
         }
 
         private PCDResponse EvalMeasure(bool completed)
         {
-            PCDResponse resp = new PCDResponse()
-            {
-                Success = true,
-                Pass = true,
-                Message = ""
-            };
+            PCDResponse resp = new PCDResponse();
 
             if (completed)
             {
@@ -146,7 +132,6 @@ namespace Hrsw.XiAnPro.PCDmisService
             else
             {
                 resp.Success = false;
-                resp.IsNext = _nextPart;
                 resp.Pass = false;
                 resp.Message = "测量未完成。";
             }
@@ -181,18 +166,6 @@ namespace Hrsw.XiAnPro.PCDmisService
         {
             PCDMessage mage = new PCDMessage() { Result = true, Message = message };
             _pcdmisCallback?.SendMessage(mage);
-        }
-
-        public void Next()
-        {
-            _nextPart = true;
-            _are.Set();
-        }
-
-        public void Retry()
-        {
-            _nextPart = false;
-            _are.Set();
         }
     }
 }
