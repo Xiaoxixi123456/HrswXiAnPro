@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="4c206147-ab7d-49ba-85f2-4ce1a9c67091" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/PcdmisServiceUrl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PCDmisService.wsdl" MetadataType="Wsdl" ID="8b5ae643-fcaf-48c5-a1c1-2f53b4d84d6f" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl" />
+    <MetadataFile FileName="PcdmisServiceUrl.xsd" MetadataType="Schema" ID="f4fe8b6f-3ccc-479b-89d8-586e8d4b1c84" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl?xsd=xsd3" />
+    <MetadataFile FileName="PcdmisServiceUrl1.xsd" MetadataType="Schema" ID="5d509069-b471-4d03-b5d6-fc2e9fc9840f" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl?xsd=xsd0" />
+    <MetadataFile FileName="PcdmisServiceUrl2.xsd" MetadataType="Schema" ID="fe1557eb-f2da-4a2f-8dd4-02b483621753" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl?xsd=xsd1" />
+    <MetadataFile FileName="PcdmisServiceUrl3.xsd" MetadataType="Schema" ID="ed7b9d1f-39ad-4a91-93b2-e6d3ba98bf96" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl?xsd=xsd4" />
+    <MetadataFile FileName="PcdmisServiceUrl4.xsd" MetadataType="Schema" ID="89d914e4-112d-4da8-a167-74bb3e72ac9e" SourceId="1" SourceUrl="http://localhost/PcdmisServiceUrl?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

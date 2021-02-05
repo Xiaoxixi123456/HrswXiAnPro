@@ -7,7 +7,7 @@
     <ProjectGuid>{280B648D-EF14-43E7-8E02-38EA80C6B66B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PCDmisService</RootNamespace>
+    <RootNamespace>Hrsw.XiAnPro.PCDmisService</RootNamespace>
     <AssemblyName>PCDmisService</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

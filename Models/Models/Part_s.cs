@@ -17,6 +17,6 @@ namespace Hrsw.XiAnPro.Models
         public int Category { get; set; }
         public string DrawingNo { get; set; }
         public int CmmNo { get; set; }
-        public AAStatus Status { get; set; }
+        public PartStatus Status { get; set; }
     }
 }

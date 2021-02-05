@@ -9,7 +9,8 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
     public enum PCDmisStatus
     {
         PCD_Error,
-        PCD_Failed,
+        PCD_MsgBox,
+        PCD_Cancel,
         PCD_Success
     }
 }

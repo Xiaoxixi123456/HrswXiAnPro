@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.PCDmisServiceContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.PCDmisServiceContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.Models" />
+  <xs:complexType name="PCDRequest">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.Models" minOccurs="0" name="Part" nillable="true" type="q1:Part" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PCDRequest" nillable="true" type="tns:PCDRequest" />
+  <xs:complexType name="PCDResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsNext" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pass" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ReportFile" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PCDResponse" nillable="true" type="tns:PCDResponse" />
+  <xs:complexType name="PCDMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PCDMessage" nillable="true" type="tns:PCDMessage" />
+</xs:schema>

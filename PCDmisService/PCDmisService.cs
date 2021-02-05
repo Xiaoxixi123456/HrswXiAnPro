@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Hrsw.XiAnPro.Models;
 using System.Threading;
 
-namespace PCDmisService
+namespace Hrsw.XiAnPro.PCDmisService
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single, UseSynchronizationContext = false)]
     public class PCDmisService : IPCDmisService
@@ -18,6 +18,7 @@ namespace PCDmisService
         private PCDmisControl _pcdmisControl;
         private AutoResetEvent _are;
         private bool _completed;
+        private bool _nextPart;
 
         public PCDmisService()
         {
@@ -30,12 +31,14 @@ namespace PCDmisService
 
         private void MessageBoxEventHandler(object sender, PcdmisEventArgs e)
         {
+            // TODO 取消测量需人工干预是否进行下一个测量
             _completed = false;
             RespondMessage(e.Message);
         }
 
         private void ExecuteError(object sender, PcdmisEventArgs e)
         {
+            // TODO 取消测量需人工干预是否进行下一个测量
             _completed = false;
             RespondMessage(e.Message);
         }
@@ -93,7 +96,12 @@ namespace PCDmisService
 
         public PCDResponse MeasurePart(PCDRequest request)
         {
-            PCDResponse resp = new PCDResponse() { Success = true, Pass = true, Message = "" };
+            PCDResponse resp = new PCDResponse()
+            {
+                Success = true,
+                Pass = true,
+                Message = ""
+            };
             // TODO 生成偏置文件
             // 在零件程序目录中查找零件程序
             // 调用零件程序
@@ -108,19 +116,7 @@ namespace PCDmisService
                 bool success = _pcdmisControl.OpenProgram(progName);
                 success = _pcdmisControl.ExecuteProgramAsync();
                 _are.WaitOne();
-                if (_completed)
-                {
-                    bool pass = EvalReport();
-                    resp.Success = true;
-                    resp.Pass = pass;
-                    resp.Message = "测量完成。"; 
-                }
-                else
-                {
-                    resp.Success = false;
-                    resp.Pass = false;
-                    resp.Message = "测量未完成。";
-                }
+                resp = EvalMeasure(_completed);
             }
             catch (PcdmisServiceException pe)
             {
@@ -128,6 +124,33 @@ namespace PCDmisService
                 resp.Pass = false;
                 resp.Message = pe.Message;
             }
+            return resp;
+        }
+
+        private PCDResponse EvalMeasure(bool completed)
+        {
+            PCDResponse resp = new PCDResponse()
+            {
+                Success = true,
+                Pass = true,
+                Message = ""
+            };
+
+            if (completed)
+            {
+                bool pass = EvalReport();
+                resp.Success = true;
+                resp.Pass = pass;
+                resp.Message = "测量完成。";
+            }
+            else
+            {
+                resp.Success = false;
+                resp.IsNext = _nextPart;
+                resp.Pass = false;
+                resp.Message = "测量未完成。";
+            }
+
             return resp;
         }
 
@@ -158,6 +181,18 @@ namespace PCDmisService
         {
             PCDMessage mage = new PCDMessage() { Result = true, Message = message };
             _pcdmisCallback?.SendMessage(mage);
+        }
+
+        public void Next()
+        {
+            _nextPart = true;
+            _are.Set();
+        }
+
+        public void Retry()
+        {
+            _nextPart = false;
+            _are.Set();
         }
     }
 }
