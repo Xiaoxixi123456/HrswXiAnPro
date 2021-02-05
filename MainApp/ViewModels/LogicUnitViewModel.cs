@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrsw.XiAnPro.CMMClient;
 using Hrsw.XiAnPro.Utilities;
+using System.Windows.Controls;
 
 namespace MainApp.ViewModels
 {
@@ -16,10 +17,14 @@ namespace MainApp.ViewModels
         [Bindable]
         public LogicUnit LogicUnit { get; set; }
 
-        public LogicUnitViewModel(int cmmNo, ICMMControl cmmClient)
+        //[Bindable]
+        //public UserControl LogicUnitUI { get; set; }
+
+        public LogicUnitViewModel(int cmmNo, string cmmName, ICMMControl cmmClient)
         {
-            LogicUnit = new LogicUnit(cmmNo, cmmClient);
+            LogicUnit = new LogicUnit(cmmNo, cmmName, cmmClient);
         }
         
+
     }
 }

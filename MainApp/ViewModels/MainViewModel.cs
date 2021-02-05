@@ -9,12 +9,15 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace MainApp.ViewModels
 {
     public class MainViewModel : BindableBase
     {
+        [Bindable]
         public ObservableCollection<LogicUnitViewModel> LogicUnits;
+        private Dispatcher dispatcher;
 
         [Bindable]
         public Rack Rack { get; set; }
@@ -24,7 +27,7 @@ namespace MainApp.ViewModels
 
         public MainViewModel()
         {
-            Rack = new Rack(3, 3);
+            Rack = new Rack(5, 5);
             LogicUnits = new ObservableCollection<LogicUnitViewModel>();
             PcdmisClient = PcdmisClient.Inst;
             CalypsoClient = CalypsoClient.Inst;
@@ -34,8 +37,8 @@ namespace MainApp.ViewModels
         {
             PcdmisClient.Initial();
             CalypsoClient.Initial();
-            LogicUnits.Add(new LogicUnitViewModel(0, PcdmisClient));
-            LogicUnits.Add(new LogicUnitViewModel(1, CalypsoClient));
+            LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
+            //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));
         }
 
         internal void Start()

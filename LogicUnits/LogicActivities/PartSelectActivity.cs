@@ -22,9 +22,9 @@ namespace Hrsw.XiAnPro.LogicActivities
                 {
                     foreach (var item in tray.Parts)
                     {
-                        if (item.Status == AAStatus.Idle)
+                        if (item.Status == PartStatus.PS_Idle)
                         {
-                            item.Status = AAStatus.Wait;
+                            item.Status = PartStatus.PS_Wait;
                             part = item;
                             break;
                         }

@@ -9,30 +9,39 @@ using System.Threading;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class MeasureTrayActivity : IAActivity<Tray>
+    public class MeasureTrayActivity : IAActivity<Tray, AActivityFlags>
     {
-        private ISelectorAActivity<Part> _selector;
-        private IAActivity<Part> _mesPartActivity;
+        private IAActivity<Tray, Part> _selector;
+        private IAActivity<Part, AActivityFlags> _mesPartActivity;
         
         public MeasureTrayActivity(ICMMControl cmmControl)
         {
-            _selector = new SelectorActivity<Part>();
+            _selector = new PartSelectActivity();
             _mesPartActivity = new MeasurePartActivity(cmmControl);
         }
 
-        public async Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)
+        public async Task<AActivityFlags> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
-            bool success = false;
+            AActivityFlags resp = new AActivityFlags() { Next = true };
+            AActivityFlags.IsExit = false;
+            Part part = null;
             while (true)
             {
-                Part part = await _selector.ExecuteAsync(obj.Parts, cts);
-                if (part == null)
+                if (cts.IsCancellationRequested || AActivityFlags.IsExit)
                     break;
-                success = await _mesPartActivity.ExecuteAsync(part, cts);
-                if (!success)
+                if (resp.Next)
+                {
+                    part = await _selector.ExecuteAsync(tray, cts);
+                }
+                if (part == null 
+                    || cts.IsCancellationRequested 
+                    || AActivityFlags.IsExit)
+                    break;
+                resp = await _mesPartActivity.ExecuteAsync(part, cts);
+                if (AActivityFlags.IsExit)
                     break;
             }
-            return success;
+            return resp;
         }
     }
 }

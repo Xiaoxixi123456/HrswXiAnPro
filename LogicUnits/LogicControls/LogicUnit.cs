@@ -15,8 +15,8 @@ namespace Hrsw.XiAnPro.LogicControls
     public class LogicUnit : BindableBase
     {
         private CancellationTokenSource _cts;
-        private ISelectorAActivity<Tray> _traySelector;
-        private IAActivity<Tray> _rootActivity;
+        private IAActivity<Rack, Tray> _traySelector;
+        private IAActivity<Tray, AActivityFlags> _rootActivity;
 
         [Bindable]
         public Tray CurrentTray { get; set; }
@@ -25,26 +25,33 @@ namespace Hrsw.XiAnPro.LogicControls
         [Bindable]
         public string CmmName { get; set; }
 
-        public LogicUnit(int cmmNo, ICMMControl cmmControl)
+        public LogicUnit(int cmmNo, string cmmName, ICMMControl cmmControl)
         {
             CmmNo = cmmNo;
-            _traySelector = new SelectorActivity<Tray>();
+            CmmName = cmmName;
+            _traySelector = new TraySelectActivity(cmmNo);
             _rootActivity = new RootActivity(cmmControl);
         }
 
         public async void CycleProcess(Rack _rack)
         {
             _cts = new CancellationTokenSource();
+            AActivityFlags flags = new AActivityFlags() { Next = true };
+            AActivityFlags.IsExit = false;
+            Tray tray = null;
             while (true)
             {
-                if (_cts.IsCancellationRequested)
+                if (_cts.IsCancellationRequested || AActivityFlags.IsExit)
                     break;
-                Tray tray = await _traySelector.ExecuteAsync(_rack.Trays, _cts);
-                if (tray == null || _cts.IsCancellationRequested)
+                if (flags.Next)
+                    tray = await _traySelector.ExecuteAsync(_rack, _cts);
+                if (tray == null 
+                    || _cts.IsCancellationRequested
+                    || AActivityFlags.IsExit)
                     break;
                 CurrentTray = tray;
-                bool success = await _rootActivity.ExecuteAsync(CurrentTray, _cts);
-                if (!success)
+                flags = await _rootActivity.ExecuteAsync(CurrentTray, _cts);
+                if (AActivityFlags.IsExit)
                     break;
             }
         }

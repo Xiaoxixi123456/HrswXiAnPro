@@ -6,27 +6,30 @@ using System.Threading;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class RootActivity : IAActivity<Tray>
+    public class RootActivity : IAActivity<Tray, AActivityFlags>
     {
-        private List<IAActivity<Tray>> AActivities;
+        private List<IAActivity<Tray, AActivityFlags>> AActivities;
 
         public RootActivity(ICMMControl cmmControl)
         {
-            AActivities = new List<IAActivity<Tray>>();
+            AActivities = new List<IAActivity<Tray, AActivityFlags>>();
             //AActivities.Add(new LoadActivity());
             AActivities.Add(new MeasureTrayActivity(cmmControl));
         }
 
-        public async Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)
+        public async Task<AActivityFlags> ExecuteAsync(Tray obj, CancellationTokenSource cts)
         {
-            bool result = false;
+            AActivityFlags flags = new AActivityFlags() { Next = true };
             foreach (var activity in AActivities)
             {
-                result = await activity.ExecuteAsync(obj, cts);
-                if (!result)
+                // TODO 重新测量整个料盘
+                // 不需要重复上下料
+                // 上下料动作中判断料盘是否相等
+                flags = await activity.ExecuteAsync(obj, cts);
+                if (!flags.Next)
                     break;
             }
-            return result;
+            return flags;
         }
     }
 }

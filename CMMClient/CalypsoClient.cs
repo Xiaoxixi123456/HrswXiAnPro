@@ -45,5 +45,15 @@ namespace Hrsw.XiAnPro.CMMClient
         {
             throw new NotImplementedException();
         }
+
+        Task<AActivityFlags> ICMMControl.GotoSafePositionAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<AActivityFlags> ICMMControl.MeasurePartAsync(Part part)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

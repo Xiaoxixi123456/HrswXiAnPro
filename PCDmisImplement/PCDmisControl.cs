@@ -109,9 +109,12 @@ namespace Hrsw.XiAnPro.PCDmisImplement
             Debug.Assert(!string.IsNullOrEmpty(partProgramFile));
             Debug.Assert(_pcdPartPrograms != null);
 
-            if (string.Compare(_pcdPartProgram.FullName, partProgramFile, true) == 0)
+            if (_pcdPartProgram != null && string.IsNullOrEmpty(_pcdPartProgram.FullName))
             {
-                return true;
+                if (string.Compare(_pcdPartProgram.FullName, partProgramFile, true) == 0)
+                {
+                    return true;
+                }
             }
 
             try

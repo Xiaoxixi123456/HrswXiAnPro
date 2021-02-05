@@ -19,6 +19,7 @@ namespace Client
             ServiceContractClient scc = new ServiceContractClient(context);
             scc.Open();
             scc.InnerChannel.Faulted += InnerDuplexChannel_Faulted;
+            scc.InnerDuplexChannel.Faulted += InnerDuplexChannel_Faulted1;
 
             scc.Hook();
 
@@ -55,6 +56,11 @@ namespace Client
             }
 
             Console.ReadLine();
+        }
+
+        private static void InnerDuplexChannel_Faulted1(object sender, EventArgs e)
+        {
+            Console.WriteLine("Duplex Timeout...");
         }
 
         private static void InnerDuplexChannel_Faulted(object sender, EventArgs e)

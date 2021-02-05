@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="IAActivity.cs" />
     <Compile Include="ICMMControl.cs" />
+    <Compile Include="AAStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
     <ProjectGuid>{7CD681E8-7414-4A7B-B865-67EE4200B289}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hrsw.XiAnPro.CMMClient</RootNamespace>
+    <RootNamespace>Hrsw.XiAnPro.CMMClients</RootNamespace>
     <AssemblyName>CMMClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -30,8 +30,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,8 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalypsoClient.cs" />
+    <Compile Include="PcdmisCallback.cs" />
     <Compile Include="PcdmisClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\PcdmisServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contracts\LogicContracts\LogicContracts.csproj">
@@ -53,6 +69,47 @@
       <Project>{5082865e-4d57-4080-84a3-19b5134e7416}</Project>
       <Name>Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Service References\PcdmisServiceReference\Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PCDmisService.wsdl" />
+    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\PcdmisServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PcdmisServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PcdmisServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\PcdmisServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

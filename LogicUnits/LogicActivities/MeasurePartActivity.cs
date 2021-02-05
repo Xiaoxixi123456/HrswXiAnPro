@@ -5,7 +5,7 @@ using System.Threading;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class MeasurePartActivity : IAActivity<Part>
+    public class MeasurePartActivity : IAActivity<Part, AActivityFlags>
     {
         private ICMMControl _cmm;
 
@@ -19,23 +19,10 @@ namespace Hrsw.XiAnPro.LogicActivities
             //_cmm = new CMMController();
         }
 
-        public async Task<bool> ExecuteAsync(Part obj, CancellationTokenSource cts)
+        public async Task<AActivityFlags> ExecuteAsync(Part obj, CancellationTokenSource cts)
         {
-            bool pass = false;
-
-            bool success = await _cmm.MeasurePartAsync(obj);
-            if (!success)
-            {
-                obj.Status = AAStatus.NoMeasured;
-                return success;
-            }
-            obj.Status = AAStatus.Measured;
-            success = await _cmm.AnalyseReportAsync(out pass);
-            if (!success)
-                return success;
-            obj.Pass = pass;
-
-            return success;
+            AActivityFlags astatus = await _cmm.MeasurePartAsync(obj);
+            return astatus;
         }
     }
 }

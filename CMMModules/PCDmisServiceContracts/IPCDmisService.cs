@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hrsw.XiAnPro.PCDmisServiceContracts
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(IPCDmisCallback))]
     public interface IPCDmisService
     {
         [OperationContract]
@@ -18,5 +18,9 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
         PCDResponse Connect();
         [OperationContract]
         PCDResponse Disconnect();
+        [OperationContract]
+        void Next();
+        [OperationContract]
+        void Retry();
     }
 }
