@@ -9,9 +9,24 @@ using System.Threading;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class UnloadActivity : IAActivity<Tray, AActivityFlags>
+    public class UnloadActivity : IAActivity<Tray, bool>
     {
-        public Task<AActivityFlags> ExecuteAsync(Tray tray, CancellationTokenSource cts)
+        public void Complete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Next()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
         {
             throw new NotImplementedException();
         }

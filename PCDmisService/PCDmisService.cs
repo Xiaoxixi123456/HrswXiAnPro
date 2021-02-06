@@ -125,6 +125,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             if (completed)
             {
                 bool pass = EvalReport();
+                resp.ReportFile = GetOutputFile();
                 resp.Success = true;
                 resp.Pass = pass;
                 resp.Message = "测量完成。";
@@ -137,6 +138,11 @@ namespace Hrsw.XiAnPro.PCDmisService
             }
 
             return resp;
+        }
+
+        private string GetOutputFile()
+        {
+            return _pcdmisControl.GetOutputFile();
         }
 
         private bool EvalReport()
@@ -154,7 +160,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private string SearchProgram(Part part)
         {
-            return @"E:\WorkDirs\PcdmisFiles\SafePlane4.prg";
+            return @"E:\PcdmisFiles\TestProgram.prg";
         }
 
         /// <summary>

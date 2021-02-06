@@ -161,7 +161,10 @@ namespace Hrsw.XiAnPro.PCDmisImplement
             return true;
         }
 
-
+        public string GetOutputFile()
+        {
+            return _pcdPartProgram.OutputFileName;
+        }
 
         public bool ExecuteProgramAsync()
         {

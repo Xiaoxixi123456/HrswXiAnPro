@@ -9,11 +9,16 @@ using Hrsw.XiAnPro.Models;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
-    public class LoadActivity : IAActivity<Tray, AActivityFlags>
+    public class LoadActivity : IAActivity<Tray, bool>
     {
+        public void Complete()
+        {
+            throw new NotImplementedException();
+        }
+
         //IPLCLoad _plcLoad;
- 
-        public async Task<AActivityFlags> ExecuteAsync(Tray tray, CancellationTokenSource cts)
+
+        public Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
             //bool success = await Task.Run(() =>
             //{
@@ -23,6 +28,16 @@ namespace Hrsw.XiAnPro.LogicActivities
             //return success;
             throw new NotImplementedException();
 
+        }
+
+        public void Next()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
+        {
+            throw new NotImplementedException();
         }
     }
 }
