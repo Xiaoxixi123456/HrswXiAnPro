@@ -13,6 +13,11 @@ namespace Hrsw.XiAnPro.LogicActivities
     {
         public static object syncLock = new object();
 
+        public void Complete()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Part> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
             return Task.Run(() =>
@@ -32,6 +37,16 @@ namespace Hrsw.XiAnPro.LogicActivities
                 }
                 return part;
             });
+        }
+
+        public void Next()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
+        {
+            throw new NotImplementedException();
         }
     }
 }

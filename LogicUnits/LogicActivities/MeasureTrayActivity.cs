@@ -21,15 +21,14 @@ namespace Hrsw.XiAnPro.LogicActivities
         
         public MeasureTrayActivity(ICMMControl cmmControl)
         {
+            _controlFlag = null;
             _controlEvent = new AutoResetEvent(false);
             _selector = new PartSelectActivity();
             _mesPartActivity = new MeasurePartActivity(cmmControl);
-            _controlFlag = null;
         }
 
         public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
-            bool result = true;
             Part part = null;
             _controlFlag = true;
             while (true)
@@ -44,7 +43,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                     || cts.IsCancellationRequested 
                     || !_controlFlag.HasValue)
                     break;
-                result = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+               bool result = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
                 // TODO false 表示测量失败，这里需要停止等待人位选择
                 if (!result)
                 {
@@ -52,7 +51,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                     _controlEvent.WaitOne();
                 }
             }
-            return result;
+            return true;
         }
 
         public void Next()

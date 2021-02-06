@@ -36,24 +36,29 @@ namespace Hrsw.XiAnPro.LogicControls
         public async void CycleProcess(Rack _rack)
         {
             _cts = new CancellationTokenSource();
-            AActivityFlags flags = new AActivityFlags() { Next = true };
-            AActivityFlags.IsExit = false;
             Tray tray = null;
+            bool success;
             while (true)
             {
-                if (_cts.IsCancellationRequested || AActivityFlags.IsExit)
+                if (_cts.IsCancellationRequested)
                     break;
-                if (flags.Next)
-                    tray = await _traySelector.ExecuteAsync(_rack, _cts);
+                tray = await _traySelector.ExecuteAsync(_rack, _cts);
                 if (tray == null 
-                    || _cts.IsCancellationRequested
-                    || AActivityFlags.IsExit)
+                    || _cts.IsCancellationRequested)
                     break;
                 CurrentTray = tray;
-                flags = await _rootActivity.ExecuteAsync(CurrentTray, _cts);
-                if (AActivityFlags.IsExit)
+                success = await _rootActivity.ExecuteAsync(CurrentTray, _cts).ConfigureAwait(false);
+                if (!success)
+                {
+                    // TODO 报告错误并跳出循环
                     break;
+                }
             }
+        }
+
+        public void Retry()
+        {
+
         }
 
         public void Stop()

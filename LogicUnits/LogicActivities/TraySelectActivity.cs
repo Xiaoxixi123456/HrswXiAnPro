@@ -19,6 +19,11 @@ namespace Hrsw.XiAnPro.LogicActivities
             _cmmNo = cmmNo;
         }
 
+        public void Complete()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Tray> ExecuteAsync(Rack rack, CancellationTokenSource cts)
         {
             return Task.Run(() =>
@@ -38,6 +43,16 @@ namespace Hrsw.XiAnPro.LogicActivities
                 }
                 return tray;
             });
+        }
+
+        public void Next()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
+        {
+            throw new NotImplementedException();
         }
     }
 }

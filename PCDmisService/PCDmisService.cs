@@ -154,7 +154,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private string SearchProgram(Part part)
         {
-            return @"E:\WorkDirs\PcdmisFiles\SafePlane4.prg";
+            return @"E:\PcdmisFiles\TestProgram.prg";
         }
 
         /// <summary>
