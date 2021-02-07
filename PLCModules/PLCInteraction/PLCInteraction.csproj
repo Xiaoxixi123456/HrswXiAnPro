@@ -41,9 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoadControl.cs" />
-    <Compile Include="LoadControl1.cs" />
     <Compile Include="PlcControlBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnloadControl.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\LogicContracts\LogicContracts.csproj">

@@ -6,19 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrsw.XiAnPro.Models;
 using System.Threading;
+using Hrsw.XiAnPro.PLCInteraction;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
     public class UnloadActivity : IAActivity<Tray, bool>
     {
+        UnloadControl _unloadControl;
+        public UnloadActivity()
+        {
+            _unloadControl = new UnloadControl();
+        }
         public void Complete()
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
+        public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
-            throw new NotImplementedException();
+            return await _unloadControl.ExecuteAsync(tray);
         }
 
         public void Next()

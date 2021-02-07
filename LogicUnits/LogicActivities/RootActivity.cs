@@ -16,6 +16,7 @@ namespace Hrsw.XiAnPro.LogicActivities
             AActivities = new List<IAActivity<Tray, bool>>();
             AActivities.Add(new LoadActivity());
             AActivities.Add(new MeasureTrayActivity(cmmControl));
+            AActivities.Add(new UnloadActivity());
         }
 
         public void Complete()
