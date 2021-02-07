@@ -2,6 +2,7 @@
 using Hrsw.XiAnPro.LogicControls;
 using Hrsw.XiAnPro.Models;
 using Hrsw.XiAnPro.Utilities;
+using PLCServices;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ namespace MainApp.ViewModels
 
         public void Initial()
         {
+            PLCAccessor.Instance.PlcIP = "192.168.18.18";
+            PLCAccessor.Instance.Connect();
             PcdmisClient.Initial();
             CalypsoClient.Initial();
             LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
