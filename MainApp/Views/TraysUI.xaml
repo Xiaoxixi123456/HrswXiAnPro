@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MainApp.Views.TraysUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" 
+                  ItemsSource="{Binding Trays}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="类别" Binding="{Binding Category}"/>
+                <DataGridTextColumn Header="料盘行数" Binding="{Binding ColumnCount}"/>
+                <DataGridTextColumn Header="料盘列数" Binding="{Binding RowCount}"/>
+                <DataGridTextColumn Header="CMM编号" Binding="{Binding CmmNo}"/>
+                <DataGridTemplateColumn Header="状态">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Viewbox>
+                                    <Ellipse Fill="{Binding TrayStatus}"/>
+                                </Viewbox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Button Content="添加料盘" Margin="2,5" Padding="5,0"/>
+            <Button Content="删除料盘" Margin="2,5" Padding="5,0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

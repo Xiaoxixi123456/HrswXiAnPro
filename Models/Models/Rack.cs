@@ -18,7 +18,7 @@ namespace Hrsw.XiAnPro.Models
             Trays = new ObservableCollection<Tray>();
             for (int i = 0; i < ColumnCount * RowCount; i++)
             {
-                Trays.Add(new Tray(3, 3) { Id = i, SlotNb = i, CmmNo = 2 });
+                Trays.Add(new Tray(3, 3) {Category = i, Id = i, SlotNb = i, CmmNo = 2 });
                 //Thread.Sleep(1000);
             }
         }

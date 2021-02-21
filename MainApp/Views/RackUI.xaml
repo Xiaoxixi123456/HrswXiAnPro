@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MainApp.Views.RackUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TreeView Name="RackTree" 
+                  Margin="5" Width="100" 
+                  ItemsSource="{Binding Racks}" SelectedItemChanged="RackTree_SelectedItemChanged"
+                  >
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Trays}">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Racks - {0}X{1}">
+                                <Binding Path="ColumnCount"/>
+                                <Binding Path="RowCount"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <!--料盘-->
+                    <HierarchicalDataTemplate.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Parts}">
+                            <!--<TextBlock Text="{Binding Category, StringFormat=料盘类别:{0}}"/>-->
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="料盘类别:{0}, 料盘ID:{1}">
+                                        <Binding Path="Category"/>
+                                        <Binding Path="Id"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                            <!--工件-->
+                            <HierarchicalDataTemplate.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="工件名:{0}, 工件号:{1}">
+                                                <Binding Path="Name"/>
+                                                <Binding Path="Id"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </HierarchicalDataTemplate.ItemTemplate>
+                        </HierarchicalDataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <Border Grid.Column="1" Margin="5" BorderBrush="Black" BorderThickness="1">
+            <ContentControl x:Name="trayContent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"></ContentControl>
+        </Border>
+    </Grid>
+</UserControl>

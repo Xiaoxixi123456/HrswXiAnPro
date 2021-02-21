@@ -28,6 +28,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
+        public int UseCmmNo { get; set; }
+        [Bindable]
         public TrayStatus Status { get; set; }
         [Bindable]
         public ObservableCollection<Part> Parts { get; set; }
@@ -49,7 +51,7 @@ namespace Hrsw.XiAnPro.Models
                     //if (rand.Next(1, 100) % 2 == 0)
                     //    Parts.Add(new Part() { SlotNb = i, Status = PartStatus.PS_Empty });
                     //else
-                        Parts.Add(new Part() { SlotNb = i, Status = PartStatus.PS_Idle});
+                        Parts.Add(new Part() {Id = i, SlotNb = i, Status = PartStatus.PS_Idle});
                 }
             }
         }
