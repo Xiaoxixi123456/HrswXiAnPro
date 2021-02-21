@@ -33,19 +33,22 @@ namespace Hrsw.XiAnPro.LogicActivities
             _controlFlag = true;
             while (true)
             {
-                if (cts.IsCancellationRequested || !_controlFlag.HasValue)
+                if (cts.IsCancellationRequested)
+                    return false;
+                else if (!_controlFlag.HasValue)
+                {
                     break;
+                }
                 if (_controlFlag.HasValue && _controlFlag.Value)
                 {
                     part = await _selector.ExecuteAsync(tray, cts);
                 }
-                if (part == null 
-                    || cts.IsCancellationRequested 
-                    || !_controlFlag.HasValue)
+                if (cts.IsCancellationRequested)
+                    return false;
+                if (part == null || !_controlFlag.HasValue)
                     break;
-               bool result = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
-                // TODO false 表示测量失败，这里需要停止等待人位选择
-                if (!result)
+               bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+                if (!success)
                 {
                     _controlEvent.Reset();
                     _controlEvent.WaitOne();

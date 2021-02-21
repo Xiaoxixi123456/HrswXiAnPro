@@ -7,7 +7,7 @@
     <ProjectGuid>{A3CC0CBC-6FF4-4AAB-B0D5-C464B8E457F9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PLCInteraction</RootNamespace>
+    <RootNamespace>Hrsw.XiAnPro.PLCInteraction</RootNamespace>
     <AssemblyName>PLCInteraction</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,7 +40,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoadControl.cs" />
+    <Compile Include="PlcControlBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnloadControl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\LogicContracts\LogicContracts.csproj">
+      <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
+      <Name>LogicContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Models\Models\Models.csproj">
+      <Project>{5082865E-4D57-4080-84A3-19B5134E7416}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PLCServices\PLCServices.csproj">
+      <Project>{258C3A08-DDAA-4A76-A88B-D1CF2966401C}</Project>
+      <Name>PLCServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -73,6 +73,14 @@
       <Project>{5082865E-4D57-4080-84A3-19B5134E7416}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PLCModules\PLCInteraction\PLCInteraction.csproj">
+      <Project>{A3CC0CBC-6FF4-4AAB-B0D5-C464B8E457F9}</Project>
+      <Name>PLCInteraction</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PLCModules\PLCServices\PLCServices.csproj">
+      <Project>{258C3A08-DDAA-4A76-A88B-D1CF2966401C}</Project>
+      <Name>PLCServices</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

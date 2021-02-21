@@ -6,28 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Hrsw.XiAnPro.Models;
+using PLCServices;
+using Hrsw.XiAnPro.PLCInteraction;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
     public class LoadActivity : IAActivity<Tray, bool>
     {
-        public void Complete()
+        private LoadControl _loadControl;
+        public LoadActivity()
         {
-            throw new NotImplementedException();
+            _loadControl = new LoadControl();
         }
 
-        //IPLCLoad _plcLoad;
-
-        public Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
+        public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
-            //bool success = await Task.Run(() =>
-            //{
-            //    tray.Id = 666;
-            //    return true;
-            //});
-            //return success;
-            throw new NotImplementedException();
-
+            bool success = await _loadControl.ExecuteAsync(tray);
+            return success;
         }
 
         public void Next()
@@ -36,6 +31,11 @@ namespace Hrsw.XiAnPro.LogicActivities
         }
 
         public void Retry()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Complete()
         {
             throw new NotImplementedException();
         }

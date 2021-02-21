@@ -26,6 +26,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int CmmNo { get; set; }
         [Bindable]
+        public int UseCmmNo { get; set; }
+        [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
         public int UseCmmNo { get; set; }

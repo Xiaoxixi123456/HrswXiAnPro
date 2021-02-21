@@ -2,6 +2,7 @@
 using PLCServices;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,41 +16,48 @@ namespace PLCServices.Tests
         [TestMethod()]
         public void PLCAccessorTest()
         {
-            plcAccessor = new PLCAccessor();
+            plcAccessor = PLCAccessor.Instance;
             plcAccessor.PlcIP = "192.168.18.18";
         }
 
         [TestMethod()]
         public void ConnectTest()
         {
-            plcAccessor = new PLCAccessor();
+            plcAccessor = PLCAccessor.Instance;
             plcAccessor.PlcIP = "192.168.18.18";
-            int success = plcAccessor.Connect();
+            /*int success = */plcAccessor.Connect();
         }
 
         [TestMethod()]
         public void DisconnectTest()
         {
-            int success = plcAccessor.Disconnect();
+            plcAccessor.Disconnect();
         }
 
         [TestMethod()]
         public void WriteMasksTest()
         {
-            plcAccessor = new PLCAccessor();
+            plcAccessor = PLCAccessor.Instance;
             plcAccessor.PlcIP = "192.168.18.18";
-            int success = plcAccessor.Connect();
-            success = plcAccessor.WriteMasks(1, 258, 0x0F);
-            success = plcAccessor.WriteMasks(1, 258, false, 0,1,2,3,4,5,6,7);
-            success = plcAccessor.WriteMasks(1, 258, true, 1, 3);
-            success = plcAccessor.WriteString(1, 0, 256, "abcdesffgassd");
-            //success = plcAccessor.WriteASCIIString(1, 258, "ab");
+            bool ok = false;
             string message = "";
-            success = plcAccessor.ReadASCIIString(1, 258, 2, out message);
-            success = plcAccessor.ReadString(1, 0, 256, out message);
-            bool ok;
-            success = plcAccessor.ReadMask(1, 258, 3, out ok);
-            plcAccessor.Disconnect();
+            try
+            {
+                plcAccessor.Connect();
+                plcAccessor.WriteMasks(1, 258, 0x0F);
+                plcAccessor.WriteMasks(1, 258, false, 0, 1, 2, 3, 4, 5, 6, 7);
+                plcAccessor.WriteMasks(1, 258, true, 1, 3);
+                plcAccessor.WriteString(1, 0, 256, "abcdesffgassd");
+                //plcAccessor.WriteASCIIString(1, 258, "ab");
+                plcAccessor.ReadASCIIString(1, 258, 2, out message);
+                plcAccessor.ReadString(1, 0, 256, out message);
+                plcAccessor.ReadMask(1, 258, 3, out ok);
+                plcAccessor.Disconnect();
+            }
+            catch (InvalidOperationException ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
             Assert.AreEqual(ok, true);
         }
 

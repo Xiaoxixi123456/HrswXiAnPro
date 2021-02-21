@@ -160,7 +160,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private string SearchProgram(Part part)
         {
-            return @"E:\PcdmisFiles\TestProgram.prg";
+            return @"E:\WorkDirs\PcdmisFiles\TestLoop.PRG";
         }
 
         /// <summary>
