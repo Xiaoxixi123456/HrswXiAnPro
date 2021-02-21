@@ -11,9 +11,11 @@ namespace Hrsw.XiAnPro.Models
     public class Part : BindableBase
     {
         [Bindable]
+        public int Id { get; set; }
+        [Bindable]
         public string Name { get; set; }
         [Bindable]
-        public int Id { get; set; }
+        public int PartNb { get; set; }
         [Bindable]
         public int Category { get; set; }
         [Bindable]

@@ -10,6 +10,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int Id { get; set; }
         [Bindable]
+        public int TrayNb { get; set; }
+        [Bindable]
         public int Category { get; set; }
         [Bindable]
         public int ColumnCount { get; set; }
@@ -29,8 +31,6 @@ namespace Hrsw.XiAnPro.Models
         public int UseCmmNo { get; set; }
         [Bindable]
         public int SlotNb { get; set; }
-        [Bindable]
-        public int UseCmmNo { get; set; }
         [Bindable]
         public TrayStatus Status { get; set; }
         [Bindable]

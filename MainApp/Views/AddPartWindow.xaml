@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="AddPartWindow" Height="308.78" Width="481.463">
+        Title="AddPartWindow" Height="308.78" Width="481.463" Background="#FFC1E5E8">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="235*"/>
@@ -76,12 +76,12 @@
         <StackPanel Grid.Row="1" 
                     Orientation="Horizontal" 
                     FlowDirection="RightToLeft" >
-            <Button Content="关闭" Margin="5" 
+            <Button Content="关闭" Margin="5" Padding="5"
                     VerticalContentAlignment="Center" 
                     HorizontalContentAlignment="Center" 
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Click="CloseHandler" />
-            <Button Content="添加" Margin="5"
+            <Button Content="添加" Margin="5" Padding="5"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Click="AddPartHandler"/>
         </StackPanel>

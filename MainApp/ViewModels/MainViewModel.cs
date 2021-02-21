@@ -55,8 +55,8 @@ namespace MainApp.ViewModels
             CurrentSelectCategory = "All";
             CategoriesRefresh();
             LogicUnits = new ObservableCollection<LogicUnitViewModel>();
-            PcdmisClient = PcdmisClient.Inst;
-            CalypsoClient = CalypsoClient.Inst;
+            //PcdmisClient = PcdmisClient.Inst;
+            //CalypsoClient = CalypsoClient.Inst;
 
         }
 

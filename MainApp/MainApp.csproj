@@ -87,6 +87,9 @@
     <Compile Include="Views\AddPartWindow.xaml.cs">
       <DependentUpon>AddPartWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddTrayWindow.xaml.cs">
+      <DependentUpon>AddTrayWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LogicUnitUI.xaml.cs">
       <DependentUpon>LogicUnitUI.xaml</DependentUpon>
     </Compile>
@@ -119,6 +122,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddPartWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddTrayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

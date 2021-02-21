@@ -35,14 +35,15 @@ namespace MainApp.Views
         {
             if (radioButton.IsChecked == true)
             {
-                if (Parts.Where(p => p.Category == PartVM.Category && p.Id == PartVM.DefId && string.Compare(p.Name, PartVM.PartName, true) == 0).Count() != 0)
+                if (Parts.Where(p => p.Category == PartVM.Category && p.PartNb == PartVM.DefId && string.Compare(p.Name, PartVM.PartName, true) == 0).Count() != 0)
                 {
                     return;
                 }
                 Part part = new Part();
+                part.Id = Parts.Count + 1;
                 part.Category = PartVM.Category;
                 part.Name = PartVM.PartName;
-                part.Id = PartVM.DefId;
+                part.PartNb = PartVM.DefId;
                 part.CmmNo = PartVM.CmmNo;
                 part.Status = PartStatus.PS_Idle;
                 part.TrayId = -1;
@@ -54,15 +55,16 @@ namespace MainApp.Views
             {
                 for (int i = 0; i < PartVM.Count; i++)
                 {
-                    int id = PartVM.StartId + i;
-                    if (Parts.Where(p => p.Category == PartVM.Category && p.Id == id && string.Compare(p.Name, PartVM.PartName, true) == 0).Count() != 0)
+                    int nb = PartVM.StartId + i;
+                    if (Parts.Where(p => p.Category == PartVM.Category && p.PartNb == nb && string.Compare(p.Name, PartVM.PartName, true) == 0).Count() != 0)
                     {
                         continue;
                     }
                     Part part = new Part();
+                    part.Id = Parts.Count + 1;
                     part.Category = PartVM.Category;
                     part.Name = PartVM.PartName;
-                    part.Id = id;
+                    part.PartNb = nb;
                     part.CmmNo = PartVM.CmmNo;
                     part.Status = PartStatus.PS_Idle;
                     part.TrayId = -1;
