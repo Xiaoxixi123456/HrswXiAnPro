@@ -32,6 +32,12 @@ namespace MainApp.ViewModels
         public ObservableCollection<string> Categories { get; set; }
         [Bindable]
         public string CurrentSelectCategory { get; set; }
+        [Bindable]
+        public Tray SelectedTray { get; set; }
+        [Bindable]
+        public Part SelectedPart { get; set; }
+        [Bindable]
+        public Rack SelectedRack { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }

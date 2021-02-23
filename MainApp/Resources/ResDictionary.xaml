@@ -35,4 +35,39 @@
             <TextBlock Text="{Binding Id}"/>
         </StackPanel>
     </DataTemplate>
+    <ItemsPanelTemplate x:Key="ItemsPanelTemplate2">
+        <UniformGrid IsItemsHost="True"
+                     Columns="{Binding Tray.ColumnCount}"
+                     Rows="{Binding Tray.RowCount}"/>
+    </ItemsPanelTemplate>
+    <ItemsPanelTemplate x:Key="RackItemsPanelTemplate">
+        <UniformGrid IsItemsHost="True"
+                     Columns="{Binding ColumnCount}"
+                     Rows="{Binding RowCount}"/>
+    </ItemsPanelTemplate>
+    <DataTemplate x:Key="TrayDataTemplate">
+        <Border BorderBrush="LightGray" 
+                BorderThickness="1">
+            <StackPanel>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="料盘编号" Width="100"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding TrayNb}"/>
+                </BulletDecorator>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="料盘类别" Width="100"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding Category}"/>
+                </BulletDecorator>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="三坐标编号" Width="100"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding CmmNo}"/>
+                </BulletDecorator>
+            </StackPanel>
+        </Border>
+    </DataTemplate>
 </ResourceDictionary>

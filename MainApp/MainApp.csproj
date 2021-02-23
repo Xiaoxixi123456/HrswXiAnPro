@@ -79,11 +79,15 @@
     <Compile Include="Convertors\PartBackgroundConverter.cs" />
     <Compile Include="Convertors\PartLedMultiConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
-    <Compile Include="ObjectDataProvider\PartsObjectDataProvider.cs" />
+    <Compile Include="Utilities\PartsOfTrayDataTemplateSelector.cs" />
+    <Compile Include="Utilities\TraysOfRackDataTemplateSelector.cs" />
     <Compile Include="ViewModels\LogicUnitViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModelCommands.cs" />
+    <Compile Include="ViewModels\PartsOfTrayViewModel.cs" />
     <Compile Include="ViewModels\PartViewModel.cs" />
+    <Compile Include="ViewModels\TraysOfRackViewModel.cs" />
+    <Compile Include="ViewModels\TrayViewModel.cs" />
     <Compile Include="Views\AddPartWindow.xaml.cs">
       <DependentUpon>AddPartWindow.xaml</DependentUpon>
     </Compile>
@@ -98,6 +102,15 @@
     </Compile>
     <Compile Include="Views\RackUI.xaml.cs">
       <DependentUpon>RackUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RackUserControl.xaml.cs">
+      <DependentUpon>RackUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TrayLoadPartsWindow.xaml.cs">
+      <DependentUpon>TrayLoadPartsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraysOfRackWindow.xaml.cs">
+      <DependentUpon>TraysOfRackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TraysUI.xaml.cs">
       <DependentUpon>TraysUI.xaml</DependentUpon>
@@ -138,6 +151,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RackUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RackUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TrayLoadPartsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TraysOfRackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

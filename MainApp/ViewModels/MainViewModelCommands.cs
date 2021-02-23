@@ -15,11 +15,96 @@ namespace MainApp.ViewModels
     {
         public DelegateCommand SelectCategoryCommand { get; set; }
         public DelegateCommand AddPartCommand { get; set; }
+        public DelegateCommand DeletePartCommand { get; set; }
+        public DelegateCommand AddTrayCommand { get; set; }
+        public DelegateCommand DeleteTrayCommand { get; set; }
+        public DelegateCommand LoadPartsCommand { get; set; }
+        public DelegateCommand LoadTraysCommand { get; set; }
 
         public void CreateCommands()
         {
             SelectCategoryCommand = new DelegateCommand(PartsUISelectCategory);
             AddPartCommand = new DelegateCommand(AddPart);
+            DeletePartCommand = new DelegateCommand(DeletePart);
+            AddTrayCommand = new DelegateCommand(AddTray);
+            DeleteTrayCommand = new DelegateCommand(DeleteTray);
+            LoadPartsCommand = new DelegateCommand(LoadPartsToTray);
+            LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
+        }
+
+        private void LoadTraysToRack()
+        {
+            if (SelectedRack == null)
+                return;
+            // TODO 测量过程中无法不能调整料库
+            if (SelectedRack.Status == RackStatus.RS_Busy)
+            {
+                return;
+            }
+            TraysOfRackViewModel trvm = new TraysOfRackViewModel();
+            trvm.Rack = SelectedRack;
+            trvm.Trays.Clear();
+            var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            foreach (var item in trays)
+            {
+                trvm.Trays.Add(item);
+            }
+            TraysOfRackWindow trWindow = new TraysOfRackWindow();
+            trWindow.DataContext = trvm;
+            trWindow.ShowDialog();
+        }
+
+        private void LoadPartsToTray()
+        {
+            if (SelectedTray == null)
+                return;
+            if (SelectedTray.Status != TrayStatus.TS_Idle)
+            {
+                // 警告：料盘装载中，无法删除
+                return;
+            }
+            PartsOfTrayViewModel partsOfTrayViewModel = new PartsOfTrayViewModel();
+            partsOfTrayViewModel.Tray = SelectedTray;
+            var parts = Parts.Where(p => p.Category == SelectedTray.Category);
+            foreach (var item in parts)
+            {
+                partsOfTrayViewModel.Parts.Add(item);
+            }
+            TrayLoadPartsWindow loadPartsWindow = new TrayLoadPartsWindow();
+            loadPartsWindow.DataContext = partsOfTrayViewModel;
+            loadPartsWindow.ShowDialog();
+        }
+
+        private void DeletePart()
+        {
+            if (SelectedPart == null)
+                return;
+            if (SelectedPart.Status != PartStatus.PS_Idle)
+            {
+                return;
+            }
+            Parts.Remove(SelectedPart);
+            SelectParts.Remove(SelectedPart);
+            CategoriesRefresh();
+        }
+
+        private void DeleteTray()
+        {
+            if (SelectedTray == null)
+                return;
+            if (SelectedTray.Status != TrayStatus.TS_Idle)
+            {
+                // 警告：料盘装载中，无法删除
+                return;
+            }
+            Trays.Remove(SelectedTray);
+        }
+
+        private void AddTray()
+        {
+            AddTrayWindow addTrayWindow = new AddTrayWindow();
+            addTrayWindow.Trays = Trays;
+            addTrayWindow.ShowDialog();
         }
 
         private void AddPart()

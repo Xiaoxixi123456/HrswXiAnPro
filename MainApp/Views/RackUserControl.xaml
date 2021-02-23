@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="MainApp.Views.RackUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MainApp.Views"
+             xmlns:utl="clr-namespace:MainApp.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="DefaultRackTemplate">
+            <StackPanel>
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>-->
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="料盘编号"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding TrayNb}"/>
+                </BulletDecorator>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="料盘类别"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding Category}"/>
+                </BulletDecorator>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="三坐标编号"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding CmmNo}"/>
+                </BulletDecorator>
+                <BulletDecorator >
+                    <BulletDecorator.Bullet>
+                        <Label Content="使用三坐标编号"/>
+                    </BulletDecorator.Bullet>
+                    <TextBlock Text="{Binding UseCmmNo}"/>
+                </BulletDecorator>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="EmptyRackTemplate">
+            <Grid Background="LightGray">
+                <Label Content="空槽"/>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <ListBox x:Name="TraysListBox" 
+                 ItemsPanel="{DynamicResource RackItemsPanelTemplate}" 
+                 ItemsSource="{Binding Trays}"
+                 HorizontalContentAlignment="Stretch"
+                 VerticalContentAlignment="Stretch">
+            <ListBox.ItemTemplateSelector>
+                <utl:TraysOfRackDataTemplateSelector 
+                    DefaultDataTemplate="{StaticResource DefaultRackTemplate}"
+                    EmptyDataTemplate="{StaticResource EmptyRackTemplate}"/>
+            </ListBox.ItemTemplateSelector>
+        </ListBox>
+    </Grid>
+</UserControl>

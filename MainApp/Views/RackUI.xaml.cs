@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.Models;
+using MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +29,27 @@ namespace MainApp.Views
 
         private void RackTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
+            loadTrayButton.IsEnabled = false;
             var eType = e.NewValue.GetType();
             if (eType == typeof(Tray))
             {
-                TrayUI trayUI = new TrayUI();
-                trayUI.DataContext = e.NewValue;
-                trayContent.Content = trayUI;
+                var tray = (Tray)e.NewValue;
+                if (tray.Status != TrayStatus.TS_Empty)
+                {
+                    TrayUI trayUI = new TrayUI();
+                    trayUI.DataContext = tray;
+                    ShowContent.Content = trayUI;
+                }
+            }
+            else if (eType == typeof(Rack))
+            {
+                loadTrayButton.IsEnabled = true;
+                Rack rack = (Rack)e.NewValue;
+                RackUserControl rc = new RackUserControl();
+                rc.DataContext = rack;
+                ShowContent.Content = rc;
+                var dataContext = DataContext as MainViewModel;
+                dataContext.SelectedRack = rack;
             }
         }
     }

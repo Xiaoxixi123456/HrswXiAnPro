@@ -30,7 +30,8 @@
         <DataGrid ItemsSource="{Binding SelectParts}"
                   Grid.Row="1"
                   Margin="3"
-                  AutoGenerateColumns="False" Grid.RowSpan="1">
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedPart}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="工件类别" Binding="{Binding Category}"/>
@@ -39,9 +40,10 @@
         </DataGrid>
         <StackPanel Margin="3" Orientation="Horizontal"
                     Grid.Row="2">
-            <Button Content="添加工件" Margin="2,5" Padding="5,0"
+            <Button Content="添加工件" Margin="2,5" Padding="5"
                     Command="{Binding AddPartCommand}"/>
-            <Button Content="删除工件" Margin="2,5" Padding="5,0"/>
+            <Button Content="删除工件" Margin="2,5" Padding="5"
+                    Command="{Binding DeletePartCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

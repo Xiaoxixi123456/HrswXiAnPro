@@ -22,6 +22,6 @@ namespace MainApp.ViewModels
         [Bindable]
         public int DefId { get; set; }
         [Bindable]
-        public int CmmNo { get; set; } = 2;
+        public int CmmNo { get; set; }
     }
 }

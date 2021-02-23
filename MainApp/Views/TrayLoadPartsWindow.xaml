@@ -1,0 +1,146 @@
+﻿<Window x:Class="MainApp.Views.TrayLoadPartsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MainApp.Views"
+        xmlns:sel="clr-namespace:MainApp.Utilities"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="TrayLoadPartsWindow" Height="433.821" Width="654.121"
+        Background="#FFC1E5E8">
+    <Window.Resources>
+        <DataTemplate x:Key="DefaultPartDataTemplate">
+            <Border BorderThickness="1" BorderBrush="Black"
+                    Margin="5">
+                <Grid Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <BulletDecorator Grid.Row="0">
+                        <BulletDecorator.Bullet>
+                            <Label Content="工件名"/>
+                        </BulletDecorator.Bullet>
+                        <Label Content="{Binding Name}"/>
+                    </BulletDecorator>
+                    <BulletDecorator Grid.Row="1">
+                        <BulletDecorator.Bullet>
+                            <Label Content="工件号"/>
+                        </BulletDecorator.Bullet>
+                        <Label Content="{Binding PartNb}"/>
+                    </BulletDecorator>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="EmptyPartDataTemplate">
+            <Border BorderThickness="1" BorderBrush="Black"
+                    Margin="5">
+                <Grid Margin="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Grid.Row="0">
+                        <Rectangle Margin="3" Width="30" Height="30" Fill="Gray"/>
+                    </Viewbox>
+                    <Label Grid.Row="1" Content="空位" 
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="284*"/>
+            <ColumnDefinition Width="91*"/>
+            <ColumnDefinition Width="273*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0">料盘</Label>
+            <ListBox x:Name="TrayPartListbox"
+                     Grid.Row="1" Margin="3" 
+                     ItemsSource="{Binding Tray.Parts}" 
+                     ItemsPanel="{DynamicResource ItemsPanelTemplate2}" 
+                     HorizontalContentAlignment="Stretch" 
+                     VerticalContentAlignment="Stretch" 
+                     VerticalAlignment="Stretch" 
+                     HorizontalAlignment="Stretch" 
+                     SelectionMode="Multiple"
+                     SelectionChanged="TrayPartListbox_SelectionChanged">
+                <ListBox.ItemTemplateSelector>
+                    <sel:PartsOfTrayDataTemplateSelector 
+                        DefaultPartDataTemplate="{StaticResource DefaultPartDataTemplate}" 
+                        EmptyPartDataTemplate="{StaticResource EmptyPartDataTemplate}">
+                    </sel:PartsOfTrayDataTemplateSelector>
+                </ListBox.ItemTemplateSelector>
+                <!--<i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" 
+                                               CommandParameter="{Binding SelectedItems, ElementName=TrayPartListbox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>-->
+            </ListBox>
+            <BulletDecorator Grid.Row="2">
+                <BulletDecorator.Bullet>
+                    <Label Content="选中数:"/>
+                </BulletDecorator.Bullet>
+                <TextBlock Text="{Binding SelectedNumOfPartsInTray}"/>
+            </BulletDecorator>
+            <StackPanel Grid.Row="3" HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Button Content="选择所有" Margin="5,8" Padding="5" Width="80" 
+                        Click="Button_Click"/>
+                <Button Content="重置" Margin="5,8" Padding="5" Width="80" Click="Button_Click_1"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="2" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition />
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Content="可选择工件列表"/>
+            <ListBox x:Name="partsListBox" Grid.Row="1" Margin="3" 
+                     ItemsSource="{Binding Parts}"
+                     ItemTemplate="{StaticResource DefaultPartDataTemplate}"
+                     HorizontalContentAlignment="Stretch"
+                     VerticalContentAlignment="Stretch"
+                     SelectionMode="Multiple"
+                     SelectionChanged="partsListBox_SelectionChanged">
+                <!--<i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding PartsSelectionChangedCommand}" 
+                                               CommandParameter="{Binding SelectedItems, ElementName=partsListBox}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>-->
+            </ListBox>
+            <BulletDecorator Grid.Row="2">
+                <BulletDecorator.Bullet>
+                    <Label Content="选中数:"/>
+                </BulletDecorator.Bullet>
+                <TextBlock Text="{Binding SelectedNumOfParts}"/>
+            </BulletDecorator>
+            <StackPanel Grid.Row="3" HorizontalAlignment="Left">
+                <Button Content="重置" Margin="5,8" Padding="5" Width="80" 
+                        Click="Button_Click_2"/>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="5">
+            <Button x:Name="load" Margin="0,10" Padding="8"  Content="装载" 
+                    Command="{Binding LoadCommand}"/>
+            <Button x:Name="unload" Margin="0, 10" Padding="8" Content="卸载" 
+                    Command="{Binding UnloadCommand}"/>
+            <Button x:Name="closeBtn" Margin="0,10" Padding="8" Content="关闭"
+                    Click="closeBtn_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

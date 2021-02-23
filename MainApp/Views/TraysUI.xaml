@@ -4,20 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" 
-                  ItemsSource="{Binding Trays}" >
+                  ItemsSource="{Binding Trays}" 
+                  AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedTray}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="料盘编号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="类别" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="料盘行数" Binding="{Binding ColumnCount}"/>
                 <DataGridTextColumn Header="料盘列数" Binding="{Binding RowCount}"/>
+                <DataGridTextColumn Header="行偏置" Binding="{Binding ColumnOffset}"/>
+                <DataGridTextColumn Header="列偏置" Binding="{Binding RowOffset}"/>
+                <DataGridTextColumn Header="基准行偏置" Binding="{Binding BaseColumnOffset}"/>
+                <DataGridTextColumn Header="基准列偏置" Binding="{Binding BaseRowOffset}"/>
                 <DataGridTextColumn Header="CMM编号" Binding="{Binding CmmNo}"/>
                 <DataGridTemplateColumn Header="状态">
                     <DataGridTemplateColumn.CellTemplate>
@@ -33,8 +39,12 @@
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Orientation="Horizontal" Grid.Row="1">
-            <Button Content="添加料盘" Margin="2,5" Padding="5,0"/>
-            <Button Content="删除料盘" Margin="2,5" Padding="5,0"/>
+            <Button Content="添加料盘" Margin="5" Padding="5" 
+                    Command="{Binding AddTrayCommand}"/>
+            <Button Content="删除料盘" Margin="5" Padding="5" 
+                    Command="{Binding DeleteTrayCommand}"/>
+            <Button Content="加载工件" Margin="5" Padding="5"
+                    Command="{Binding LoadPartsCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
