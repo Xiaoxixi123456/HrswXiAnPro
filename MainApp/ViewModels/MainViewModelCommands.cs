@@ -16,20 +16,33 @@ namespace MainApp.ViewModels
         public DelegateCommand SelectCategoryCommand { get; set; }
         public DelegateCommand AddPartCommand { get; set; }
         public DelegateCommand DeletePartCommand { get; set; }
+        public DelegateCommand DeleteAllPartsCommand { get; set; }
         public DelegateCommand AddTrayCommand { get; set; }
         public DelegateCommand DeleteTrayCommand { get; set; }
         public DelegateCommand LoadPartsCommand { get; set; }
         public DelegateCommand LoadTraysCommand { get; set; }
+        public DelegateCommand ReadPartsCommand { get; set; }
 
         public void CreateCommands()
         {
             SelectCategoryCommand = new DelegateCommand(PartsUISelectCategory);
             AddPartCommand = new DelegateCommand(AddPart);
             DeletePartCommand = new DelegateCommand(DeletePart);
+            DeleteAllPartsCommand = new DelegateCommand(DeleteAllParts);
             AddTrayCommand = new DelegateCommand(AddTray);
             DeleteTrayCommand = new DelegateCommand(DeleteTray);
             LoadPartsCommand = new DelegateCommand(LoadPartsToTray);
             LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
+            ReadPartsCommand = new DelegateCommand(ReadParts);
+        }
+
+
+        private void DeleteAllParts()
+        {
+            Parts.Clear();
+            if (SelectParts != null)
+                SelectParts.Clear();
+            CategoriesRefresh();
         }
 
         private void LoadTraysToRack()
@@ -65,7 +78,7 @@ namespace MainApp.ViewModels
             }
             PartsOfTrayViewModel partsOfTrayViewModel = new PartsOfTrayViewModel();
             partsOfTrayViewModel.Tray = SelectedTray;
-            var parts = Parts.Where(p => p.Category == SelectedTray.Category);
+            var parts = Parts.Where(p => p.Category == SelectedTray.Category && p.Status == PartStatus.PS_Idle);
             foreach (var item in parts)
             {
                 partsOfTrayViewModel.Parts.Add(item);
@@ -109,6 +122,7 @@ namespace MainApp.ViewModels
 
         private void AddPart()
         {
+            CategoriesRefresh();
             AddPartWindow addPartWindow = new AddPartWindow();
             addPartWindow.Parts = Parts;
             addPartWindow.ShowDialog();

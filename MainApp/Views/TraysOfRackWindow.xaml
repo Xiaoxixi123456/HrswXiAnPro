@@ -10,41 +10,52 @@
         Background="#FFC1E5E8">
     <Window.Resources>
         <DataTemplate x:Key="DefaultRackTemplate">
-            <StackPanel>
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>-->
-                <BulletDecorator >
-                    <BulletDecorator.Bullet>
-                        <Label Content="料盘编号"/>
-                    </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding TrayNb}"/>
-                </BulletDecorator>
-                <BulletDecorator >
-                    <BulletDecorator.Bullet>
-                        <Label Content="料盘类别"/>
-                    </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding Category}"/>
-                </BulletDecorator>
-                <BulletDecorator >
-                    <BulletDecorator.Bullet>
-                        <Label Content="三坐标编号"/>
-                    </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding CmmNo}"/>
-                </BulletDecorator>
-                <BulletDecorator >
-                    <BulletDecorator.Bullet>
-                        <Label Content="使用三坐标编号"/>
-                    </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding UseCmmNo}"/>
-                </BulletDecorator>
-            </StackPanel>
+            <Border Background="{Binding Status, 
+                Converter={StaticResource TrayBackgroundConverter}}"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                <StackPanel>
+                    <!--<Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>-->
+                    <BulletDecorator >
+                        <BulletDecorator.Bullet>
+                            <Label Content="料盘编号"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="{Binding TrayNb}"/>
+                    </BulletDecorator>
+                    <BulletDecorator >
+                        <BulletDecorator.Bullet>
+                            <Label Content="料盘类别"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="{Binding Category}"/>
+                    </BulletDecorator>
+                    <BulletDecorator >
+                        <BulletDecorator.Bullet>
+                            <Label Content="三坐标编号"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="{Binding CmmNo}"/>
+                    </BulletDecorator>
+                    <BulletDecorator >
+                        <BulletDecorator.Bullet>
+                            <Label Content="使用三坐标编号"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="{Binding UseCmmNo}"/>
+                    </BulletDecorator>
+                </StackPanel>
+            </Border>
         </DataTemplate>
         <DataTemplate x:Key="EmptyRackTemplate">
-            <Grid Background="LightGray">
-                <Label Content="空槽"/>
-            </Grid>
+            <Border Background="LightGray"
+                    BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="2">
+                <Grid >
+                    <Label Content="空槽"/>
+                </Grid>
+            </Border>
         </DataTemplate>
     </Window.Resources>
     <Grid>

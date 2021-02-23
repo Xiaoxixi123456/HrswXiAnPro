@@ -22,9 +22,25 @@ namespace MainApp.Convertors
             {
                 int Flag = (int)values[1];
                 if (Flag % 2 == 0)
+                    return new SolidColorBrush(Colors.Yellow);
+                else
+                    return new SolidColorBrush(Colors.Red);
+            }
+            if (status == PartStatus.PS_Measured)
+            {
+                bool pass = (bool)values[2];
+                if (pass)
                     return new SolidColorBrush(Colors.Green);
                 else
-                    return new SolidColorBrush(Colors.White);
+                    return new SolidColorBrush(Colors.Red);
+            }
+            if (status == PartStatus.PS_Error)
+            {
+                return new SolidColorBrush(Colors.Red);
+            }
+            if (status == PartStatus.PS_Placed)
+            {
+                return new SolidColorBrush(Colors.LightBlue);
             }
             return new SolidColorBrush(Colors.Gray); ;
         }

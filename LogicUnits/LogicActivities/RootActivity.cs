@@ -14,9 +14,9 @@ namespace Hrsw.XiAnPro.LogicActivities
         public RootActivity(ICMMControl cmmControl)
         {
             AActivities = new List<IAActivity<Tray, bool>>();
-            AActivities.Add(new LoadActivity());
+            //AActivities.Add(new LoadActivity());
             AActivities.Add(new MeasureTrayActivity(cmmControl));
-            AActivities.Add(new UnloadActivity());
+            //AActivities.Add(new UnloadActivity());
         }
 
         public void Complete()
@@ -34,6 +34,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                 {
                     // TODO 如果是上下料过程返回false，错误不可恢复
                     // 测量料盘总返回true，错误内部处理
+                    obj.Status = TrayStatus.TS_Error;
                     break;
                 }
             }

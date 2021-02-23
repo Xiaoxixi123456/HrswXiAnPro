@@ -23,7 +23,9 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int CmmNo { get; set; }
         [Bindable]
-        public int TrayId { get; set; }
+        public int UseCmmNo { get; set; }
+        [Bindable]
+        public int TrayNb { get; set; }
         [Bindable]
         public int SlotNb { get; set; }
         [Bindable]

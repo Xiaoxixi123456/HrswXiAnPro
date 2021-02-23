@@ -36,7 +36,7 @@ namespace MainApp.Views
                 var tray = (Tray)e.NewValue;
                 if (tray.Status != TrayStatus.TS_Empty)
                 {
-                    TrayUI trayUI = new TrayUI();
+                    TrayUIWithLight trayUI = new TrayUIWithLight();
                     trayUI.DataContext = tray;
                     ShowContent.Content = trayUI;
                 }

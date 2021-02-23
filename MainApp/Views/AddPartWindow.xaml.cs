@@ -24,6 +24,7 @@ namespace MainApp.Views
     {
         public PartViewModel PartVM { get; set; }
         public ObservableCollection<Part> Parts { get; set; }
+        //public ObservableCollection<Part> SelectedParts { get; set; }
         public AddPartWindow()
         {
             InitializeComponent();
@@ -46,10 +47,11 @@ namespace MainApp.Views
                 part.PartNb = PartVM.DefId;
                 part.CmmNo = PartVM.CmmNo;
                 part.Status = PartStatus.PS_Idle;
-                part.TrayId = -1;
+                part.TrayNb = -1;
                 part.SlotNb = -1;
                 part.Pass = false;
                 Parts.Add(part);
+                //SelectedParts.Add(part);
             }
             else if (radioButton1.IsChecked == true)
             {
@@ -67,10 +69,11 @@ namespace MainApp.Views
                     part.PartNb = nb;
                     part.CmmNo = PartVM.CmmNo;
                     part.Status = PartStatus.PS_Idle;
-                    part.TrayId = -1;
+                    part.TrayNb = -1;
                     part.SlotNb = -1;
                     part.Pass = false;
                     Parts.Add(part);
+                    //SelectedParts.Add(part);
                 }
             }
             else

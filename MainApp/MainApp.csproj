@@ -78,12 +78,16 @@
     </ApplicationDefinition>
     <Compile Include="Convertors\PartBackgroundConverter.cs" />
     <Compile Include="Convertors\PartLedMultiConverter.cs" />
+    <Compile Include="Convertors\PartResultMultiConverter.cs" />
+    <Compile Include="Convertors\PartStatusConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
+    <Compile Include="Convertors\TrayStatusConverter.cs" />
     <Compile Include="Utilities\PartsOfTrayDataTemplateSelector.cs" />
     <Compile Include="Utilities\TraysOfRackDataTemplateSelector.cs" />
     <Compile Include="ViewModels\LogicUnitViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModelCommands.cs" />
+    <Compile Include="ViewModels\MainViewModelForPartsHandle.cs" />
     <Compile Include="ViewModels\PartsOfTrayViewModel.cs" />
     <Compile Include="ViewModels\PartViewModel.cs" />
     <Compile Include="ViewModels\TraysOfRackViewModel.cs" />
@@ -93,6 +97,9 @@
     </Compile>
     <Compile Include="Views\AddTrayWindow.xaml.cs">
       <DependentUpon>AddTrayWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CmmsUI.xaml.cs">
+      <DependentUpon>CmmsUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogicUnitUI.xaml.cs">
       <DependentUpon>LogicUnitUI.xaml</DependentUpon>
@@ -118,6 +125,9 @@
     <Compile Include="Views\TrayUI.xaml.cs">
       <DependentUpon>TrayUI.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TrayUIWithLight.xaml.cs">
+      <DependentUpon>TrayUIWithLight.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -139,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddTrayWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CmmsUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +185,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TrayUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TrayUIWithLight.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -212,6 +230,10 @@
     <ProjectReference Include="..\Contracts\LogicContracts\LogicContracts.csproj">
       <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
       <Name>LogicContracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Contracts\RepositoryContracts\RepositoryContracts.csproj">
+      <Project>{CB0EC248-C463-45D5-A9AF-2EF2437216BD}</Project>
+      <Name>RepositoryContracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\LogicUnits\LogicControls\LogicControls.csproj">
       <Project>{F3126C8F-8C60-40F2-9B74-5B4D5EDC2D8C}</Project>

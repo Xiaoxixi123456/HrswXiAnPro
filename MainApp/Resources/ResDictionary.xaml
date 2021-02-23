@@ -4,7 +4,11 @@
                     xmlns:Convertors="clr-namespace:MainApp.Convertors">
     <Convertors:PartBackgroundConverter x:Key="PartBackgroundConverter"/>
     <Convertors:PartLedMultiConverter x:Key="PartLedMultiConverter"/>
-    
+    <Convertors:TrayBackgroundConverter x:Key="TrayBackgroundConverter"/>
+    <Convertors:TrayStatusConverter x:Key="TrayStatusConverter"/>
+    <Convertors:PartResultMultiConverter x:Key="PartResultMultiConverter"/>
+    <Convertors:PartStatusConverter x:Key="PartStatusConverter"/>
+
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 
                      Columns="{Binding CurrentTray.ColumnCount}"
@@ -46,8 +50,11 @@
                      Rows="{Binding RowCount}"/>
     </ItemsPanelTemplate>
     <DataTemplate x:Key="TrayDataTemplate">
-        <Border BorderBrush="LightGray" 
-                BorderThickness="1">
+        <Border Background="{Binding Status, 
+                Converter={StaticResource TrayBackgroundConverter}}"
+                BorderBrush="Black" 
+                BorderThickness="1"
+                CornerRadius="2">
             <StackPanel>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>

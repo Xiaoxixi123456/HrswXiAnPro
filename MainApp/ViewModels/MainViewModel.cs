@@ -46,23 +46,17 @@ namespace MainApp.ViewModels
         {
             CreateCommands();
 
-            //Rack = new Rack(5, 5);
             Racks = new ObservableCollection<Rack>();
             Trays = new ObservableCollection<Tray>();
             Parts = new ObservableCollection<Part>();
             Categories = new ObservableCollection<string>();
 
             Racks.Add(new Rack(3, 3));
-            Parts.Add(new Part() { Id = 1, Category = 2, Name = "abc", Status = PartStatus.PS_Empty });
-            Parts.Add(new Part() { Id = 2, Category = 2, Name = "abc1", Status = PartStatus.PS_Empty });
-            Parts.Add(new Part() { Id = 3, Category = 1, Name = "abc2", Status = PartStatus.PS_Empty });
-            Parts.Add(new Part() { Id = 4, Category = 2, Name = "abc", Status = PartStatus.PS_Empty });
-            SelectParts = Parts;
             CurrentSelectCategory = "All";
             CategoriesRefresh();
             LogicUnits = new ObservableCollection<LogicUnitViewModel>();
-            //PcdmisClient = PcdmisClient.Inst;
-            //CalypsoClient = CalypsoClient.Inst;
+            PcdmisClient = PcdmisClient.Inst;
+            CalypsoClient = CalypsoClient.Inst;
 
         }
 
@@ -75,12 +69,13 @@ namespace MainApp.ViewModels
                 Categories.Add(item.ToString());
             }
             Categories.Add("All");
+            CurrentSelectCategory = "All";
         }
 
         public void Initial()
         {
-            //PcdmisClient.Initial();
-            //CalypsoClient.Initial();
+            PcdmisClient.Initial();
+            CalypsoClient.Initial();
             LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
             //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));
         }

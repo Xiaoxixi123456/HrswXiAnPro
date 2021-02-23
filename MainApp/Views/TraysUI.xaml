@@ -4,13 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
-             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Margin="5">
+             mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="594.4">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" 
+        <DataGrid x:Name="dataGrid" 
+                  Grid.Row="0" 
+                  Grid.Column="0"
+                  Margin="8"
                   ItemsSource="{Binding Trays}" 
                   AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedTray}">
@@ -25,7 +32,10 @@
                 <DataGridTextColumn Header="基准行偏置" Binding="{Binding BaseColumnOffset}"/>
                 <DataGridTextColumn Header="基准列偏置" Binding="{Binding BaseRowOffset}"/>
                 <DataGridTextColumn Header="CMM编号" Binding="{Binding CmmNo}"/>
-                <DataGridTemplateColumn Header="状态">
+                <DataGridTextColumn Header="使用的CMM编号" Binding="{Binding UseCmmNo}"/>
+                <DataGridTextColumn Header="料库槽号" Binding="{Binding SlotNb}"/>
+                <DataGridTextColumn Header="状态" Binding="{Binding Status,Converter={StaticResource TrayStatusConverter}}"/>
+                <!--<DataGridTemplateColumn Header="状态">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -35,10 +45,16 @@
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <local:TrayUIWithLight Grid.Column="1" 
+                               Grid.Row="0"
+                               Margin="5"
+                               DataContext="{Binding SelectedItem, ElementName=dataGrid}"/>
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Row="1"
+                    Grid.Column="0">
             <Button Content="添加料盘" Margin="5" Padding="5" 
                     Command="{Binding AddTrayCommand}"/>
             <Button Content="删除料盘" Margin="5" Padding="5" 

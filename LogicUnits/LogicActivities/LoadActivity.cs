@@ -21,6 +21,7 @@ namespace Hrsw.XiAnPro.LogicActivities
 
         public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
+            tray.Status = TrayStatus.TS_Loading;
             bool success = await _loadControl.ExecuteAsync(tray);
             return success;
         }

@@ -6,50 +6,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media;
 
 namespace MainApp.Convertors
 {
-    public class TrayBackgroundConverter : IValueConverter
+    public class TrayStatusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TrayStatus ts = (TrayStatus)value;
-            SolidColorBrush result = null;
+            string status = "";
             switch (ts)
             {
-                case TrayStatus.TS_Empty:
-                    result = new SolidColorBrush(Colors.Gray);
-                    break;
                 case TrayStatus.TS_Idle:
-                    result = new SolidColorBrush(Colors.White);
-                    break;
-                case TrayStatus.TS_Wait:
-                    result = new SolidColorBrush(Colors.Blue);
-                    break;
-                case TrayStatus.TS_Loading:
-                    result = new SolidColorBrush(Colors.LightBlue);
-                    break;
-                case TrayStatus.TS_Measuring:
-                    result = new SolidColorBrush(Colors.LightBlue);
-                    break;
-                case TrayStatus.TS_Measured:
-                    result = new SolidColorBrush(Colors.LightBlue);
-                    break;
-                case TrayStatus.TS_Unloading:
-                    result = new SolidColorBrush(Colors.LightBlue);
-                    break;
-                case TrayStatus.TS_Error:
-                    result = new SolidColorBrush(Colors.Red);
+                    status = "空闲";
                     break;
                 case TrayStatus.TS_Placed:
-                    result = new SolidColorBrush(Colors.LightYellow);
+                    status = "放置";
+                    break;
+                case TrayStatus.TS_Wait:
+                    status = "等待测量";
+                    break;
+                case TrayStatus.TS_Loading:
+                    status = "上料中";
+                    break;
+                case TrayStatus.TS_Measuring:
+                    status = "测量中";
+                    break;
+                case TrayStatus.TS_Measured:
+                    status = "测量完成";
+                    break;
+                case TrayStatus.TS_Unloading:
+                    status = "下料中";
+                    break;
+                case TrayStatus.TS_Error:
+                    status = "错误";
                     break;
                 default:
-                    result = new SolidColorBrush(Colors.Gray);
+                    status = "";
                     break;
             }
-            return result;
+            return status;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

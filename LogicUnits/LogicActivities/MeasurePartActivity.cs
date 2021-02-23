@@ -22,6 +22,7 @@ namespace Hrsw.XiAnPro.LogicActivities
 
         public async Task<bool> ExecuteAsync(Part obj, CancellationTokenSource cts)
         {
+            
             bool success = await _cmm.MeasurePartAsync(obj);
             return success;
         }

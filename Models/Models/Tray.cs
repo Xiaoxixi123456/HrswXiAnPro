@@ -38,24 +38,17 @@ namespace Hrsw.XiAnPro.Models
 
         public Tray(int cols = 0, int rows = 0)
         {
-            //Random rand = new Random(DateTime.Now.Second);
-            ColumnCount = cols;
-            RowCount = rows;
-            //if (rand.Next(1, 100) % 2 == 0)
-            //    Status = TrayStatus.TS_Empty;
-            //else
-                Status = TrayStatus.TS_Idle;
-            if (Status == TrayStatus.TS_Idle)
+            Parts = new ObservableCollection<Part>();
+            for (int i = 0; i < ColumnCount * RowCount; i++)
             {
-                Parts = new ObservableCollection<Part>();
-                for (int i = 0; i < ColumnCount * RowCount; i++)
+                Parts.Add(new Part()
                 {
-                    //if (rand.Next(1, 100) % 2 == 0)
-                    //    Parts.Add(new Part() { SlotNb = i, Status = PartStatus.PS_Empty });
-                    //else
-                        Parts.Add(new Part() {Id = i, SlotNb = i, Status = PartStatus.PS_Idle});
-                }
+                    Id = i,
+                    SlotNb = i + 1,
+                    Status = PartStatus.PS_Empty,
+                });
             }
+
         }
     }
 }

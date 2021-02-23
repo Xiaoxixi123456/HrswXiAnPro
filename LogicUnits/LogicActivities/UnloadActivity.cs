@@ -24,6 +24,7 @@ namespace Hrsw.XiAnPro.LogicActivities
 
         public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
+            tray.Status = TrayStatus.TS_Unloading;
             return await _unloadControl.ExecuteAsync(tray);
         }
 

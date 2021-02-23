@@ -31,6 +31,7 @@ namespace Hrsw.XiAnPro.LogicActivities
         {
             Part part = null;
             _controlFlag = true;
+            tray.Status = TrayStatus.TS_Measuring;
             while (true)
             {
                 if (cts.IsCancellationRequested)
@@ -47,13 +48,15 @@ namespace Hrsw.XiAnPro.LogicActivities
                     return false;
                 if (part == null || !_controlFlag.HasValue)
                     break;
-               bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+                part.UseCmmNo = tray.UseCmmNo;
+                bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
                 if (!success)
                 {
                     _controlEvent.Reset();
                     _controlEvent.WaitOne();
                 }
             }
+            tray.Status = TrayStatus.TS_Measured;
             return true;
         }
 

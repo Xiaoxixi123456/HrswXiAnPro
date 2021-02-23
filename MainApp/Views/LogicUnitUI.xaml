@@ -5,21 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500"
-             DataContext="{Binding LogicUnits[0].LogicUnit}">
-    <Grid>
+             d:DesignHeight="506.4" d:DesignWidth="500">
+    <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="227*"/>
-            <RowDefinition Height="73*"/>
+            <RowDefinition/>
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        <ListBox x:Name="listBox" 
+        <!--ItemTemplate="{DynamicResource CmmPartDataTemplate}"--> 
+        <!--<ListBox x:Name="listBox" 
                  Margin="3" 
                  Grid.Row="0"
                  Grid.Column="0" 
                  ItemsPanel="{DynamicResource ItemsPanelTemplate1}" 
-                 ItemTemplate="{DynamicResource CmmPartDataTemplate}" 
                  ItemsSource="{Binding CurrentTray.Parts}"
-                 />
+                 />-->
+        <local:TrayUIWithLight x:Name="curentTray"
+                      Margin="3"
+                      Grid.Row="0"
+                      Grid.Column="0"
+                      DataContext="{Binding CurrentTray}"/>
         <StackPanel Orientation="Vertical" Margin="3" Grid.Column="0" Grid.Row="1">
             <BulletDecorator Margin="0,2" >
                 <BulletDecorator.Bullet>
@@ -27,13 +31,40 @@
                 </BulletDecorator.Bullet>
                 <Label VerticalContentAlignment="Center" Content="{Binding CmmName}" />
             </BulletDecorator>
-            <BulletDecorator Margin="0,2" >
+            <!--<BulletDecorator Margin="0,2" >
                 <BulletDecorator.Bullet>
-                    <Label VerticalContentAlignment="Center" Content="CMM:"/>
+                    <Label VerticalContentAlignment="Center" Content="当前料盘:"/>
                 </BulletDecorator.Bullet>
-                <Label VerticalContentAlignment="Center" Content="{Binding CurrentTray.Id}" />
-            </BulletDecorator>
+                <Label VerticalContentAlignment="Center" Content="{Binding CurrentTray.TrayNb}" />
+            </BulletDecorator>-->
+            <GroupBox Header="料盘" Margin="0,2">
+                <StackPanel>
+                    <BulletDecorator Margin="0,2" >
+                        <BulletDecorator.Bullet>
+                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘编号:"/>
+                        </BulletDecorator.Bullet>
+                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding CurrentTray.TrayNb}" />
+                    </BulletDecorator>
+                    <BulletDecorator Margin="0,2" >
+                        <BulletDecorator.Bullet>
+                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘类别:"/>
+                        </BulletDecorator.Bullet>
+                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding CurrentTray.Category}" />
+                    </BulletDecorator>
+                    <BulletDecorator Margin="0,2" >
+                        <BulletDecorator.Bullet>
+                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘槽位:"/>
+                        </BulletDecorator.Bullet>
+                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding CurrentTray.SlotNb}" />
+                    </BulletDecorator>
+                </StackPanel>
+            </GroupBox>
         </StackPanel>
-
     </Grid>
 </UserControl>

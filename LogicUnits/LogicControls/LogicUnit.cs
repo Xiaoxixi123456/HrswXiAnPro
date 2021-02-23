@@ -47,12 +47,15 @@ namespace Hrsw.XiAnPro.LogicControls
                     || _cts.IsCancellationRequested)
                     break;
                 CurrentTray = tray;
+                CurrentTray.UseCmmNo = CmmNo;
                 success = await _rootActivity.ExecuteAsync(CurrentTray, _cts).ConfigureAwait(false);
                 if (!success)
                 {
                     // TODO 报告错误并跳出循环
+                    tray.Status = TrayStatus.TS_Error;
                     break;
                 }
+                tray.Status = TrayStatus.TS_Measured;
             }
         }
 

@@ -102,7 +102,7 @@ namespace MainApp.ViewModels
                 Tray.Parts[index - 1] = pt;
                 Tray.Parts[index - 1].Status = PartStatus.PS_Placed;
                 Tray.Parts[index - 1].SlotNb = index;
-                Tray.Parts[index - 1].TrayId = Tray.Id;
+                Tray.Parts[index - 1].TrayNb = Tray.TrayNb;
                 Parts.Remove(pt);
             }
         }
