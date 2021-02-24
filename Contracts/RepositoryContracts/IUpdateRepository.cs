@@ -12,6 +12,5 @@ namespace Hrsw.XiAnPro.RepositoryContracts
         Task<T> AddAsync(T item);
         Task<T> UpdateAsync(T item);
         Task<T> DeleteAsync(TKey id);
-        
     }
 }

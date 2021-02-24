@@ -23,6 +23,7 @@ namespace MainApp.ViewModels
         public DelegateCommand LoadTraysCommand { get; set; }
         public DelegateCommand UnLoadTraysFromSlotCommand { get; set; }
         public DelegateCommand ReadPartsCommand { get; set; }
+        public DelegateCommand StartAutoflowCommand { get; set; }
 
         public void CreateCommands()
         {
@@ -36,6 +37,12 @@ namespace MainApp.ViewModels
             LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
             UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot);
             ReadPartsCommand = new DelegateCommand(ReadParts);
+            StartAutoflowCommand = new DelegateCommand(StartAutoflow);
+        }
+
+        private void StartAutoflow()
+        {
+            Start();
         }
 
         private void UnloadTraysFromSlot()

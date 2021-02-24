@@ -15,12 +15,14 @@
             <ColumnDefinition Width="162*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="424.8"/>
-            <RowDefinition Height="33*"/>
-            <RowDefinition Height="18*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Menu Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
+        <Menu Grid.ColumnSpan="3" 
+              Grid.Column="0" 
+              Grid.Row="0"
+              Margin="0,5">
             <Menu.ItemsPanel >
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Left" Margin="0,0,3,0" />
@@ -48,7 +50,7 @@
             </TabItem>
         </TabControl>
         <!--<ListBox x:Name="listBox" Grid.Column="1" HorizontalAlignment="Left" Height="357" Margin="10,10.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="169" ItemsSource="{Binding Rack.Trays}" DisplayMemberPath="Id"/>-->
-        <Button x:Name="button" Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="52.4,354.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <!--<Button x:Name="button" Content="Button" Grid.Column="2" HorizontalAlignment="Left" Margin="52.4,354.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75" Click="button_Click"/>-->
         <!--<ListBox x:Name="listBox1" Grid.Column="1" HorizontalAlignment="Left" Height="284" Margin="226,17.4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="168" ItemsSource="{Binding SelectedItem.Parts, ElementName=listBox}" DisplayMemberPath="Id"/>
         <Label x:Name="label" Grid.Column="1" Grid.Row="1">
             <localViews:LogicUnitUI />
