@@ -29,11 +29,16 @@ namespace MainApp.Views
 
         private void RackTree_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            loadTrayButton.IsEnabled = false;
+            //loadTrayButton.IsEnabled = true;
+            if (e.NewValue == null)
+                return;
             var eType = e.NewValue.GetType();
             if (eType == typeof(Tray))
             {
                 var tray = (Tray)e.NewValue;
+                var dataContext = DataContext as MainViewModel;
+                dataContext.SelectedTrayInRack = tray;
+                dataContext.SelectedTypeId = 0;
                 if (tray.Status != TrayStatus.TS_Empty)
                 {
                     TrayUIWithLight trayUI = new TrayUIWithLight();
@@ -43,13 +48,14 @@ namespace MainApp.Views
             }
             else if (eType == typeof(Rack))
             {
-                loadTrayButton.IsEnabled = true;
+                //loadTrayButton.IsEnabled = true;
                 Rack rack = (Rack)e.NewValue;
                 RackUserControl rc = new RackUserControl();
                 rc.DataContext = rack;
                 ShowContent.Content = rc;
                 var dataContext = DataContext as MainViewModel;
                 dataContext.SelectedRack = rack;
+                dataContext.SelectedTypeId = 1;
             }
         }
     }

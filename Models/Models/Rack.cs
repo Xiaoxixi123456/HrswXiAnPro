@@ -27,8 +27,6 @@ namespace Hrsw.XiAnPro.Models
                 {
                     Status = TrayStatus.TS_Empty,
                     SlotNb = i + 1,
-                    Id = 0,
-                    TrayNb = i
                 });
                 //Thread.Sleep(1000);
             }

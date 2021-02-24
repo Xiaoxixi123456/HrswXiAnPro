@@ -39,9 +39,15 @@
                             <!--<TextBlock Text="{Binding Category, StringFormat=料盘类别:{0}}"/>-->
                             <TextBlock>
                                 <TextBlock.Text>
-                                    <MultiBinding StringFormat="料盘类别:{0}, 料盘ID:{1}">
+                                    <!--<MultiBinding StringFormat="料盘类别:{0}, 料盘ID:{1}">
                                         <Binding Path="Category"/>
                                         <Binding Path="Id"/>
+                                    </MultiBinding>-->
+                                    <MultiBinding Converter="{StaticResource TreeTrayItemConverter}">
+                                        <Binding Path="Status"/>
+                                        <Binding Path="SlotNb"/>
+                                        <Binding Path="Category"/>
+                                        <Binding Path="TrayNb"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -50,9 +56,11 @@
                                 <DataTemplate>
                                     <TextBlock>
                                         <TextBlock.Text>
-                                            <MultiBinding StringFormat="工件名:{0}, 工件号:{1}">
+                                            <MultiBinding Converter="{StaticResource TreePartItemConverter}">
+                                                <Binding Path="Status"/>
+                                                <Binding Path="SlotNb"/>
                                                 <Binding Path="Name"/>
-                                                <Binding Path="Id"/>
+                                                <Binding Path="PartNb"/>
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
@@ -76,9 +84,14 @@
                     Orientation="Horizontal">
             <Button x:Name="loadTrayButton"
                     Content="装载料盘"
-                    Margin="20,10"
+                    Margin="10,5"
                     Padding="10,5"
                     Command="{Binding LoadTraysCommand}"/>
+            <Button x:Name="unloadTrayButton"
+                    Content="卸载料盘"
+                    Margin="10,5"
+                    Padding="10,5"
+                    Command="{Binding UnLoadTraysFromSlotCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>

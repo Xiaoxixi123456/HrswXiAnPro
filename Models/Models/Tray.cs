@@ -43,7 +43,6 @@ namespace Hrsw.XiAnPro.Models
             {
                 Parts.Add(new Part()
                 {
-                    Id = i,
                     SlotNb = i + 1,
                     Status = PartStatus.PS_Empty,
                 });

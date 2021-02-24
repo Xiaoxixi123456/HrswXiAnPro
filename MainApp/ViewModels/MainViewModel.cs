@@ -35,6 +35,10 @@ namespace MainApp.ViewModels
         [Bindable]
         public Tray SelectedTray { get; set; }
         [Bindable]
+        public Tray SelectedTrayInRack { get; set; }
+        [Bindable]
+        public int SelectedTypeId { get; set; }
+        [Bindable]
         public Part SelectedPart { get; set; }
         [Bindable]
         public Rack SelectedRack { get; set; }
@@ -74,8 +78,8 @@ namespace MainApp.ViewModels
 
         public void Initial()
         {
-            PcdmisClient.Initial();
-            CalypsoClient.Initial();
+            //PcdmisClient.Initial();
+            //CalypsoClient.Initial();
             LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
             //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));
         }

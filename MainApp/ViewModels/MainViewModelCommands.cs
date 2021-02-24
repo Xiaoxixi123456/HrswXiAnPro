@@ -21,6 +21,7 @@ namespace MainApp.ViewModels
         public DelegateCommand DeleteTrayCommand { get; set; }
         public DelegateCommand LoadPartsCommand { get; set; }
         public DelegateCommand LoadTraysCommand { get; set; }
+        public DelegateCommand UnLoadTraysFromSlotCommand { get; set; }
         public DelegateCommand ReadPartsCommand { get; set; }
 
         public void CreateCommands()
@@ -33,9 +34,32 @@ namespace MainApp.ViewModels
             DeleteTrayCommand = new DelegateCommand(DeleteTray);
             LoadPartsCommand = new DelegateCommand(LoadPartsToTray);
             LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
+            UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot);
             ReadPartsCommand = new DelegateCommand(ReadParts);
         }
 
+        private void UnloadTraysFromSlot()
+        {
+            if (SelectedTypeId == 0)
+            {
+                if (SelectedTrayInRack == null ||
+                    SelectedTrayInRack.Status == TrayStatus.TS_Empty)
+                    return;
+                // TODO 测量过程中无法不能调整料库
+                if (Racks[0].Status == RackStatus.RS_Busy)
+                {
+                    return;
+                }
+                int index = SelectedTrayInRack.SlotNb - 1;
+                Tray tray = SelectedTrayInRack;
+                tray.Status = TrayStatus.TS_Idle;
+                tray.SlotNb = -1;
+                Tray emptyTray = new Tray() {
+                    SlotNb = index + 1,
+                    Status = TrayStatus.TS_Empty };
+                Racks[0].Trays[index] = emptyTray;
+            }
+        }
 
         private void DeleteAllParts()
         {
@@ -46,6 +70,18 @@ namespace MainApp.ViewModels
         }
 
         private void LoadTraysToRack()
+        {
+            if (SelectedTypeId == 1)
+            {
+                LoadTraysAll();
+            }
+            else if (SelectedTypeId == 0)
+            {
+                LoadTraysOneByOne();
+            }
+        }
+
+        private void LoadTraysAll()
         {
             if (SelectedRack == null)
                 return;
@@ -67,6 +103,28 @@ namespace MainApp.ViewModels
             trWindow.ShowDialog();
         }
 
+        private void LoadTraysOneByOne()
+        {
+            if (SelectedTrayInRack == null)
+                return;
+            // TODO 测量过程中无法不能调整料库
+            if (Racks[0].Status == RackStatus.RS_Busy)
+            {
+                return;
+            }
+            LoadTraysViewModel ltvm = new LoadTraysViewModel();
+            ltvm.SelectedTrayInRack = SelectedTrayInRack;
+            ltvm.Rack = Racks[0];
+            ltvm.Trays.Clear();
+            var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            foreach (var item in trays)
+            {
+                ltvm.Trays.Add(item);
+            }
+            LoadTraysWindow ltWnd = new LoadTraysWindow();
+            ltWnd.DataContext = ltvm;
+            ltWnd.ShowDialog();
+        }
         private void LoadPartsToTray()
         {
             if (SelectedTray == null)

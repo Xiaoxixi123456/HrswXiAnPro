@@ -8,6 +8,8 @@
     <Convertors:TrayStatusConverter x:Key="TrayStatusConverter"/>
     <Convertors:PartResultMultiConverter x:Key="PartResultMultiConverter"/>
     <Convertors:PartStatusConverter x:Key="PartStatusConverter"/>
+    <Convertors:TreeTrayItemConverter x:Key="TreeTrayItemConverter"/>
+    <Convertors:TreePartItemConverter x:Key="TreePartItemConverter"/>
 
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 

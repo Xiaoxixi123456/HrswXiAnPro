@@ -82,8 +82,11 @@
     <Compile Include="Convertors\PartStatusConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
     <Compile Include="Convertors\TrayStatusConverter.cs" />
+    <Compile Include="Convertors\TreePartItemConverter.cs" />
+    <Compile Include="Convertors\TreeTrayItemConverter.cs" />
     <Compile Include="Utilities\PartsOfTrayDataTemplateSelector.cs" />
     <Compile Include="Utilities\TraysOfRackDataTemplateSelector.cs" />
+    <Compile Include="ViewModels\LoadTraysViewModel.cs" />
     <Compile Include="ViewModels\LogicUnitViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModelCommands.cs" />
@@ -100,6 +103,9 @@
     </Compile>
     <Compile Include="Views\CmmsUI.xaml.cs">
       <DependentUpon>CmmsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadTraysWindow.xaml.cs">
+      <DependentUpon>LoadTraysWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogicUnitUI.xaml.cs">
       <DependentUpon>LogicUnitUI.xaml</DependentUpon>
@@ -153,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CmmsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoadTraysWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
