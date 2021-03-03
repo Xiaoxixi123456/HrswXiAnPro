@@ -77,6 +77,8 @@ namespace MainApp.ViewModels
                     continue;
                 Tray.Parts[item - 1].Status = PartStatus.PS_Idle;
                 Tray.Parts[item - 1].SlotNb = -1;
+                Tray.Parts[item - 1].TrayNb = -1;
+                Tray.Parts[item - 1].Placed = false;
                 Parts.Add(Tray.Parts[item - 1]);
                 Tray.Parts[item - 1] = new Part()
                 {
@@ -98,11 +100,20 @@ namespace MainApp.ViewModels
             int pos = 0;
             foreach (var index in indexs)
             {
+                if (SelectedPartsOfTray[pos].Status != PartStatus.PS_Empty)
+                {
+                    SelectedPartsOfTray[pos].Status = PartStatus.PS_Idle;
+                    SelectedPartsOfTray[pos].SlotNb = -1;
+                    SelectedPartsOfTray[pos].TrayNb = -1;
+                    SelectedPartsOfTray[pos].Placed = false;
+                    Parts.Add(SelectedPartsOfTray[pos]);
+                }
                 Part pt = SelectedParts[pos];
                 Tray.Parts[index - 1] = pt;
-                Tray.Parts[index - 1].Status = PartStatus.PS_Placed;
+                Tray.Parts[index - 1].Status = PartStatus.PS_Idle;
                 Tray.Parts[index - 1].SlotNb = index;
                 Tray.Parts[index - 1].TrayNb = Tray.TrayNb;
+                Tray.Parts[index - 1].Placed = true;
                 Parts.Remove(pt);
             }
         }

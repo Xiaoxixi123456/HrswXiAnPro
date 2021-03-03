@@ -42,6 +42,10 @@ namespace MainApp.Convertors
             {
                 return new SolidColorBrush(Colors.LightBlue);
             }
+            if (status == PartStatus.PS_Idle)
+            {
+                return new SolidColorBrush(Colors.LightBlue);
+            }
             return new SolidColorBrush(Colors.Gray); ;
         }
 

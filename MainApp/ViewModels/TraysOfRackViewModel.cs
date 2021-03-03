@@ -43,6 +43,7 @@ namespace MainApp.ViewModels
             int index = SelectedTrayInRack.SlotNb;
             SelectedTrayInRack.Status = TrayStatus.TS_Idle;
             SelectedTrayInRack.SlotNb = -1;
+            SelectedTrayInRack.Placed = false;
             Trays.Add(SelectedTrayInRack);
             Rack.Trays[index - 1] = new Tray()
             {
@@ -58,8 +59,9 @@ namespace MainApp.ViewModels
             //SelectedTrayInRack = SelectedTray;
             int index = SelectedTrayInRack.SlotNb;
             Rack.Trays[index - 1] = SelectedTray;
-            Rack.Trays[index - 1].Status = TrayStatus.TS_Placed;
+            Rack.Trays[index - 1].Status = TrayStatus.TS_Idle;
             Rack.Trays[index - 1].SlotNb = index;
+            Rack.Trays[index - 1].Placed = true;
             Trays.Remove(SelectedTray);
         }
     }

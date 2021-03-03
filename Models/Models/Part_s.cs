@@ -20,6 +20,6 @@ namespace Hrsw.XiAnPro.Models
         public int CmmNo { get; set; }
         public bool Pass { get; set; }
         public int UseCmmNb { get; set; }
-        public PartStatus Status { get; set; }
+        //public PartStatus Status { get; set; }
     }
 }

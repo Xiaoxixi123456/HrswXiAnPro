@@ -50,6 +50,7 @@ namespace MainApp.Views
                 part.TrayNb = -1;
                 part.SlotNb = -1;
                 part.Pass = false;
+                part.Placed = false;
                 Parts.Add(part);
                 //SelectedParts.Add(part);
             }
@@ -72,6 +73,7 @@ namespace MainApp.Views
                     part.TrayNb = -1;
                     part.SlotNb = -1;
                     part.Pass = false;
+                    part.Placed = false;
                     Parts.Add(part);
                     //SelectedParts.Add(part);
                 }

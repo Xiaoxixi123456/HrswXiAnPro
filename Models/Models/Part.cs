@@ -35,6 +35,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public double YOffset { get; set; }
         [Bindable]
+        public bool Placed { get; set; }
+        [Bindable]
         public int Flag { get; set; }
         [Bindable]
         public PartStatus Status { get; set; }

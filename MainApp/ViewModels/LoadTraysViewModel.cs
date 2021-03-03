@@ -39,11 +39,13 @@ namespace MainApp.ViewModels
             {
                 SelectedTrayInRack.Status = TrayStatus.TS_Idle;
                 SelectedTrayInRack.SlotNb = -1;
+                SelectedTrayInRack.Placed = false;
             }
             Tray tray = SelectedTray;
             Rack.Trays[index] = tray;
             Rack.Trays[index].SlotNb = index + 1;
-            Rack.Trays[index].Status = TrayStatus.TS_Placed;
+            Rack.Trays[index].Status = TrayStatus.TS_Idle;
+            Rack.Trays[index].Placed = true;
             if (wd != null)
                 wd.Close();
         }

@@ -55,6 +55,7 @@ namespace MainApp.Views
                 RowOffset = TrayViewModel.RowOffset,
                 BaseColumnOffset = TrayViewModel.BaseColumnOffset,
                 BaseRowOffset = TrayViewModel.BaseRowOffset,
+                Placed = false,
                 Parts = new ObservableCollection<Part>()
             };
             for (int i = 0; i < tray.ColumnCount * tray.RowCount; i++)

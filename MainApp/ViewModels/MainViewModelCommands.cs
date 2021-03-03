@@ -61,6 +61,7 @@ namespace MainApp.ViewModels
                 Tray tray = SelectedTrayInRack;
                 tray.Status = TrayStatus.TS_Idle;
                 tray.SlotNb = -1;
+                tray.Placed = false;
                 Tray emptyTray = new Tray() {
                     SlotNb = index + 1,
                     Status = TrayStatus.TS_Empty };
@@ -70,6 +71,7 @@ namespace MainApp.ViewModels
 
         private void DeleteAllParts()
         {
+            // TODO 必须判断是否放置在料盘中
             Parts.Clear();
             if (SelectParts != null)
                 SelectParts.Clear();
@@ -100,7 +102,8 @@ namespace MainApp.ViewModels
             TraysOfRackViewModel trvm = new TraysOfRackViewModel();
             trvm.Rack = SelectedRack;
             trvm.Trays.Clear();
-            var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            //var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            var trays = Trays.Where(t => !t.Placed).ToList();
             foreach (var item in trays)
             {
                 trvm.Trays.Add(item);
@@ -123,7 +126,8 @@ namespace MainApp.ViewModels
             ltvm.SelectedTrayInRack = SelectedTrayInRack;
             ltvm.Rack = Racks[0];
             ltvm.Trays.Clear();
-            var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            //var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
+            var trays = Trays.Where(t => !t.Placed).ToList();
             foreach (var item in trays)
             {
                 ltvm.Trays.Add(item);
@@ -143,7 +147,8 @@ namespace MainApp.ViewModels
             }
             PartsOfTrayViewModel partsOfTrayViewModel = new PartsOfTrayViewModel();
             partsOfTrayViewModel.Tray = SelectedTray;
-            var parts = Parts.Where(p => p.Category == SelectedTray.Category && p.Status == PartStatus.PS_Idle);
+            //var parts = Parts.Where(p => p.Category == SelectedTray.Category && p.Status == PartStatus.PS_Idle);
+            var parts = Parts.Where(p => p.Category == SelectedTray.Category && !p.Placed);
             foreach (var item in parts)
             {
                 partsOfTrayViewModel.Parts.Add(item);
@@ -157,7 +162,11 @@ namespace MainApp.ViewModels
         {
             if (SelectedPart == null)
                 return;
-            if (SelectedPart.Status != PartStatus.PS_Idle)
+            //if (SelectedPart.Status != PartStatus.PS_Idle)
+            //{
+            //    return;
+            //}
+            if (SelectedPart.Placed)
             {
                 return;
             }
@@ -170,10 +179,21 @@ namespace MainApp.ViewModels
         {
             if (SelectedTray == null)
                 return;
-            if (SelectedTray.Status != TrayStatus.TS_Idle)
+            //if (SelectedTray.Status != TrayStatus.TS_Idle)
+            //{
+            //    // 警告：料盘装载中，无法删除
+            //    return;
+            //}
+            if (SelectedTray.Placed)
             {
                 // 警告：料盘装载中，无法删除
                 return;
+            }
+            foreach (var item in SelectedTray.Parts)
+            {
+                item.Placed = false;
+                item.SlotNb = -1;
+                item.TrayNb = -1;
             }
             Trays.Remove(SelectedTray);
         }

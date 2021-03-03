@@ -33,7 +33,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                 {
                     foreach (var item in rack.Trays)
                     {
-                        if ((item.Status == TrayStatus.TS_Placed) && (item.CmmNo == 2 || item.CmmNo == _cmmNo))
+                        if ((item.Status == TrayStatus.TS_Idle) && (item.CmmNo == 2 || item.CmmNo == _cmmNo))
                         {
                             item.Status = TrayStatus.TS_Wait;
                             tray = item;

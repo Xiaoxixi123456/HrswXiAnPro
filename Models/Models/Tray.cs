@@ -32,6 +32,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
+        public bool Placed { get; set; }
+        [Bindable]
         public TrayStatus Status { get; set; }
         [Bindable]
         public ObservableCollection<Part> Parts { get; set; }
