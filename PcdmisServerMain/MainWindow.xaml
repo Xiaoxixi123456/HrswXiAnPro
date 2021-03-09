@@ -17,9 +17,10 @@
               HorizontalContentAlignment="Stretch" 
               VerticalContentAlignment="Stretch">
             <MenuItem Header="设置">
-                <MenuItem Header="程序设置"/>
+                <MenuItem Header="程序设置" 
+                          Command="{Binding ProgsSetupCommand}"/>
                 <MenuItem Header="目录设置"/>
-                <MenuItem Header="报告目录"/>
+                <MenuItem Header="退出"/>
             </MenuItem>
             <MenuItem Header="日志">
                 <MenuItem Header="日志记录"/>

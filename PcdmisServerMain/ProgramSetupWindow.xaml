@@ -5,21 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcdmisServerMain"
         mc:Ignorable="d"
-        Title="测量程序设置" Height="300" Width="300">
+        Title="测量程序设置" Height="600" Width="600">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="241*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <DataGrid x:Name="dataGrid" 
+                  Grid.Row="0"
                   ItemsSource="{Binding MeasProgs}"
-                  Margin="5">
-            <DataGridTextColumn Header="标号" Binding="{Binding Id}"/>
-            <DataGridTextColumn Header="测量程序名" Binding="{Binding FileName}"/>
-            <DataGridTemplateColumn Header="">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <Button Content="..."/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-            </DataGridTemplateColumn>
+                  Margin="5,5,4.6,5.4" 
+                  AutoGenerateColumns="False"
+                  CanUserReorderColumns="False" 
+                  CanUserResizeRows="False" 
+                  CanUserSortColumns="False" 
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  ColumnWidth="*" 
+                  IsSynchronizedWithCurrentItem="True" 
+                  SelectionMode="Single"
+                  SelectedItem="{Binding SelectedMeasProg}" 
+                  Grid.RowSpan="1" 
+                  CellEditEnding="dataGrid_CellEditEnding"
+                  IsReadOnly="True"
+                  >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="标号" 
+                                    Binding="{Binding Id}"
+                                    Width="80"/>
+                <DataGridTextColumn Header="测量程序名" 
+                                    Binding="{Binding FileName}"/>
+                <DataGridTemplateColumn Header="" Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="..." 
+                                    Command="{Binding DataContext.SetupProgFileCommand, 
+                                RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=DataGrid}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
         </DataGrid>
-
+        <StackPanel Grid.Row="1" Margin="5,5,5,10">
+            <BulletDecorator Margin="0,3">
+                <BulletDecorator.Bullet>
+                    <Label Content="ID(类别）" Width="80"
+                           VerticalContentAlignment="Center"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding Id}" 
+                         Margin="2"
+                         VerticalContentAlignment="Center"/>
+            </BulletDecorator>
+            <BulletDecorator Margin="0, 3">
+                <BulletDecorator.Bullet>
+                    <Label Content="测量程序：" Width="80" 
+                           VerticalContentAlignment="Center"/>
+                </BulletDecorator.Bullet>
+                <BulletDecorator.Child>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Grid.Column="0" 
+                                 Margin="2"
+                                 Text="{Binding ProgramFileName}"
+                                 VerticalContentAlignment="Center"/>
+                        <Button Grid.Column="1" 
+                                Content="..." 
+                                Margin="2"
+                                Width="30"
+                                Command="{Binding FindFileNameCommand}"/>
+                    </Grid>
+                </BulletDecorator.Child>
+            </BulletDecorator>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="添加" Margin="5, 0"
+                        Padding="5,2"
+                        Command="{Binding AddProgFileCommand}"/>
+                <Button Content="删除" Margin="5, 0"
+                        Padding="5,2"
+                        Command="{Binding DeleteProgFileCommand}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

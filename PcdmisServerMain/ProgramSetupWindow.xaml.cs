@@ -23,5 +23,31 @@ namespace PcdmisServerMain
         {
             InitializeComponent();
         }
+
+        private void dataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            ProgsSetupViewModel vm = DataContext as ProgsSetupViewModel;
+            // 空行会自动添加ID = 0的MeasProg
+            if (e.Column.DisplayIndex == 0)
+            {
+                var idStr = (e.EditingElement as TextBox).Text;
+                int id;
+                bool ok = int.TryParse(idStr, out id);
+                if (ok)
+                {
+                    if (id == 0)
+                    {
+                        MessageBox.Show("ID不能为0", "警告", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        return;
+                    }
+                    int count = vm.MeasProgs.Where(p => p.Id == id).Count();
+                    if (count > 0)
+                    {
+                        MessageBox.Show("输入ID重复", "警告", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    }
+                }
+            }
+        }
+
     }
 }

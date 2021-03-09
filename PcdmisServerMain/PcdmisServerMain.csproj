@@ -71,9 +71,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ProgramSetupWindow.xaml.cs">
-      <DependentUpon>ProgramSetupWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="ProgramSetupWindow.xaml.cs" />
+    <Compile Include="ProgsSetupViewModel.cs" />
     <Compile Include="ViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -88,8 +87,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ProgramSetupWindow.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

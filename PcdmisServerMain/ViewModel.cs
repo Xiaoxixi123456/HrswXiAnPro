@@ -1,5 +1,6 @@
 ﻿using Hrsw.XiAnPro.PCDmisService;
 using Hrsw.XiAnPro.Utilities;
+using Prism.Commands;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -20,16 +21,47 @@ namespace PcdmisServerMain
         [Bindable]
         public ServerLog Logs { get; set; }
         [Bindable]
-        public MeasProgManager MeasProgs { get; set; }
+        public MeasProgManager MeasProgsManager { get; set; }
         [Bindable]
         public ServerDirManager ServerDirs { get; set; }
+
+        public DelegateCommand ProgsSetupCommand { get; set; }
+        public DelegateCommand DirsSetupCommand { get; set; }
+        public DelegateCommand LogsCommand { get; set; }
+
 
         public ViewModel()
         {
             PcdmisService = new PCDmisService();
             Logs = ServerLog.Logs;
-            MeasProgs = MeasProgManager.Inst;
+            MeasProgsManager = MeasProgManager.Inst;
+            MeasProgsManager.SavFileName = "MeasProgs.xml";
+            MeasProgsManager.MeasProgs.Add(new MeasProg() { Id = 1, FileName = "aaa" });
             ServerDirs = ServerDirManager.Inst;
+
+            ProgsSetupCommand = new DelegateCommand(ProgsSetup);
+            DirsSetupCommand = new DelegateCommand(DirsSetup);
+            LogsCommand = new DelegateCommand(ShowLogs);
+        }
+
+        private void ShowLogs()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DirsSetup()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ProgsSetup()
+        {
+            ProgramSetupWindow psWnd = new ProgramSetupWindow();
+            psWnd.Topmost = true;
+            ProgsSetupViewModel psVm = new ProgsSetupViewModel();
+            psVm.MeasProgs = MeasProgsManager.MeasProgs;
+            psWnd.DataContext = psVm;
+            psWnd.ShowDialog();
         }
 
         public void Initialize()
