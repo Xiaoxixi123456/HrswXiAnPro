@@ -37,7 +37,7 @@
                 <DataGridTextColumn Header="工件名" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="工件类别" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="图号" Binding="{Binding DrawingNo}"/>
-                <DataGridTextColumn Header="放置状态" Binding="{Binding Placed}"/>
+                <DataGridTextColumn Header="放置状态" Binding="{Binding Placed, Converter={StaticResource PlacedStatusConverter}}"/>
                 <DataGridTextColumn Header="料盘号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="料盘槽号" Binding="{Binding SlotNb}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,

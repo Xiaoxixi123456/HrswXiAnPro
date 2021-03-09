@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Convertors\PartBackgroundConverter.cs" />
     <Compile Include="Convertors\PartLedMultiConverter.cs" />
+    <Compile Include="Convertors\PartPlacedStatusConverter.cs" />
     <Compile Include="Convertors\PartResultMultiConverter.cs" />
     <Compile Include="Convertors\PartStatusConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />

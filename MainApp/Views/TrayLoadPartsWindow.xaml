@@ -24,13 +24,15 @@
                         <BulletDecorator.Bullet>
                             <Label Content="工件名"/>
                         </BulletDecorator.Bullet>
-                        <Label Content="{Binding Name}"/>
+                        <Label Content="{Binding Name}" 
+                               VerticalContentAlignment="Center"/>
                     </BulletDecorator>
                     <BulletDecorator Grid.Row="1">
                         <BulletDecorator.Bullet>
                             <Label Content="工件号"/>
                         </BulletDecorator.Bullet>
-                        <Label Content="{Binding PartNb}"/>
+                        <Label Content="{Binding PartNb}"
+                               VerticalContentAlignment="Center"/>
                     </BulletDecorator>
                 </Grid>
             </Border>

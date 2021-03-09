@@ -19,9 +19,11 @@ namespace Hrsw.XiAnPro.PLCInteraction
             return Task.Run(() => _plcAccessor.WriteMasks(_dbNumber, 258, 0x01));
         }
 
-        public override void Setup(Tray tray)
+        public override void Initialize(Tray tray)
         {
-            _dbNumber = tray.UseCmmNo;
+            //_dbNumber = tray.UseCmmNo;
+            // TODO 存储块号选择
+            _dbNumber = tray.UseCmmNo == 0 ? 3 : 4;
         }
 
         public override bool OnCompleted()

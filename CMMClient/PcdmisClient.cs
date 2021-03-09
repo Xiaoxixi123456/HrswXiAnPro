@@ -105,10 +105,8 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private PCDResponse Measure(Part part)
         {
-            PCDResponse response;
-            PCDRequest request = new PCDRequest();
-            request.Part = part;
-            response = _pcdmisService.MeasurePart(request);
+            PCDRequest request = new PCDRequest() { Part = part };
+            PCDResponse response = _pcdmisService.MeasurePart(request);
             return response;
         }
 

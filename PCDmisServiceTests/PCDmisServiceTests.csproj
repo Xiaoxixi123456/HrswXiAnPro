@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F019150D-11C6-46F3-89A2-1CEBD1C6B9FA}</ProjectGuid>
+    <ProjectGuid>{A13EA16E-0D5C-440C-8617-342C45700FB6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PLCServicesTests</RootNamespace>
-    <AssemblyName>PLCServicesTests</AssemblyName>
+    <RootNamespace>PCDmisServiceTests</RootNamespace>
+    <AssemblyName>PCDmisServiceTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -36,7 +36,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net45\Prism.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -51,27 +59,17 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MeasureTrayActivityTests.cs" />
-    <Compile Include="PLCAccessorTests.cs" />
+    <Compile Include="MeasProgManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\LogicContracts\LogicContracts.csproj">
-      <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
-      <Name>LogicContracts</Name>
+    <ProjectReference Include="..\PCDmisService\PCDmisService.csproj">
+      <Project>{280B648D-EF14-43E7-8E02-38EA80C6B66B}</Project>
+      <Name>PCDmisService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\LogicUnits\LogicActivities\LogicActivities.csproj">
-      <Project>{FE17D7F1-AE13-4908-AB07-2D96E05F18F9}</Project>
-      <Name>LogicActivities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Models\Models\Models.csproj">
-      <Project>{5082865E-4D57-4080-84A3-19B5134E7416}</Project>
-      <Name>Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PLCServices\PLCServices.csproj">
-      <Project>{258C3A08-DDAA-4A76-A88B-D1CF2966401C}</Project>
-      <Name>PLCServices</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

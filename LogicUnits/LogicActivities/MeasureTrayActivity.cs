@@ -48,8 +48,10 @@ namespace Hrsw.XiAnPro.LogicActivities
                     return false;
                 if (part == null || !_controlFlag.HasValue)
                     break;
-                part.UseCmmNo = tray.UseCmmNo;
+                SetupPartParams(tray, part);
+
                 bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+
                 if (!success)
                 {
                     _controlEvent.Reset();
@@ -58,6 +60,29 @@ namespace Hrsw.XiAnPro.LogicActivities
             }
             tray.Status = TrayStatus.TS_Measured;
             return true;
+        }
+
+        private void SetupPartParams(Tray tray, Part part)
+        {
+            part.UseCmmNo = tray.UseCmmNo;
+            CalcPartOffset(tray, part);
+        }
+
+        public void CalcPartOffset(Tray tray, Part part)
+        {
+            // 第一个工件基准坐标
+            double yOrgBas = tray.BaseRowOffset;
+            double xOrgBas = tray.BaseColumnOffset;
+
+            int nb = part.SlotNb;
+            int rnb = (nb - 1) / tray.ColumnCount;
+            int cnb = (nb - 1) % tray.ColumnCount;
+
+            double xBas = xOrgBas + cnb * tray.ColumnOffset;
+            double yBas = yOrgBas - rnb * tray.RowOffset;
+
+            part.XOffset = xBas;
+            part.YOffset = yBas;
         }
 
         public void Next()

@@ -20,10 +20,10 @@ namespace Hrsw.XiAnPro.PLCInteraction
         }
         public async Task<bool> ExecuteAsync(Tray tray)
         {
-            Setup(tray);
             bool success;
             try
             {
+                Initialize(tray);
                 await Startup(tray).ConfigureAwait(false);
                 success = await OnMonitor().ConfigureAwait(false);
             }
@@ -63,7 +63,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
             });
         }
 
-        public virtual void Setup(Tray tray)
+        public virtual void Initialize(Tray tray)
         {
             throw new NotImplementedException();
         }

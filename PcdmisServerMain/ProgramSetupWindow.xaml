@@ -1,0 +1,25 @@
+﻿<Window x:Class="PcdmisServerMain.ProgramSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PcdmisServerMain"
+        mc:Ignorable="d"
+        Title="测量程序设置" Height="300" Width="300">
+    <Grid>
+        <DataGrid x:Name="dataGrid" 
+                  ItemsSource="{Binding MeasProgs}"
+                  Margin="5">
+            <DataGridTextColumn Header="标号" Binding="{Binding Id}"/>
+            <DataGridTextColumn Header="测量程序名" Binding="{Binding FileName}"/>
+            <DataGridTemplateColumn Header="">
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                        <Button Content="..."/>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+            </DataGridTemplateColumn>
+        </DataGrid>
+
+    </Grid>
+</Window>

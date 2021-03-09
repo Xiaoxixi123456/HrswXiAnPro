@@ -10,6 +10,7 @@
     <Convertors:PartStatusConverter x:Key="PartStatusConverter"/>
     <Convertors:TreeTrayItemConverter x:Key="TreeTrayItemConverter"/>
     <Convertors:TreePartItemConverter x:Key="TreePartItemConverter"/>
+    <Convertors:PlacedStatusConverter x:Key="PlacedStatusConverter"/>
 
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 
@@ -62,19 +63,22 @@
                     <BulletDecorator.Bullet>
                         <Label Content="料盘编号" Width="100"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding TrayNb}"/>
+                    <TextBlock Text="{Binding TrayNb}" 
+                               VerticalAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>
                         <Label Content="料盘类别" Width="100"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding Category}"/>
+                    <TextBlock Text="{Binding Category}" 
+                               VerticalAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>
                         <Label Content="三坐标编号" Width="100"/>
                     </BulletDecorator.Bullet>
-                    <TextBlock Text="{Binding CmmNo}"/>
+                    <TextBlock Text="{Binding CmmNo}" 
+                               VerticalAlignment="Center"/>
                 </BulletDecorator>
             </StackPanel>
         </Border>
