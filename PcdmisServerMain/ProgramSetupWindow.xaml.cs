@@ -19,6 +19,7 @@ namespace PcdmisServerMain
     /// </summary>
     public partial class ProgramSetupWindow : Window
     {
+        private int bkId;
         public ProgramSetupWindow()
         {
             InitializeComponent();
@@ -35,19 +36,23 @@ namespace PcdmisServerMain
                 bool ok = int.TryParse(idStr, out id);
                 if (ok)
                 {
-                    if (id == 0)
-                    {
-                        MessageBox.Show("ID不能为0", "警告", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
-                        return;
-                    }
                     int count = vm.MeasProgs.Where(p => p.Id == id).Count();
                     if (count > 0)
                     {
                         MessageBox.Show("输入ID重复", "警告", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                        (e.EditingElement as TextBox).Text = bkId.ToString();
                     }
                 }
             }
         }
 
+        private void dataGrid_BeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            ProgsSetupViewModel vm = DataContext as ProgsSetupViewModel;
+            if (e.Column.DisplayIndex == 0)
+            {
+                bkId = vm.MeasProgs[e.Row.GetIndex()].Id;
+            }
+        }
     }
 }

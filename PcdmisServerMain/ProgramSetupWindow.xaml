@@ -27,7 +27,7 @@
                   SelectedItem="{Binding SelectedMeasProg}" 
                   Grid.RowSpan="1" 
                   CellEditEnding="dataGrid_CellEditEnding"
-                  IsReadOnly="True"
+                  IsReadOnly="False" BeginningEdit="dataGrid_BeginningEdit"
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="标号" 
