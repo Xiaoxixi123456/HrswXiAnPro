@@ -132,10 +132,6 @@ namespace Hrsw.XiAnPro.CMMClient
             throw new NotImplementedException();
         }
 
-        Task<bool> ICMMControl.GotoSafePositionAsync()
-        {
-            throw new NotImplementedException();
-        }
 
         public void Dispose()
         {
