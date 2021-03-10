@@ -78,7 +78,7 @@ namespace MainApp.ViewModels
 
         public void Initial()
         {
-            //PcdmisClient.Initial();
+            PcdmisClient.Initial();
             //CalypsoClient.Initial();
             LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
             //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));

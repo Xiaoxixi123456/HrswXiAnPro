@@ -68,9 +68,6 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsNextField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -89,19 +86,6 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsNext {
-            get {
-                return this.IsNextField;
-            }
-            set {
-                if ((this.IsNextField.Equals(value) != true)) {
-                    this.IsNextField = value;
-                    this.RaisePropertyChanged("IsNext");
-                }
             }
         }
         
@@ -177,6 +161,9 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ErrorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -189,6 +176,19 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Error {
+            get {
+                return this.ErrorField;
+            }
+            set {
+                if ((this.ErrorField.Equals(value) != true)) {
+                    this.ErrorField = value;
+                    this.RaisePropertyChanged("Error");
+                }
             }
         }
         
@@ -238,6 +238,12 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/MeasurePart", ReplyAction="http://tempuri.org/IPCDmisService/MeasurePartResponse")]
         System.Threading.Tasks.Task<Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse> MeasurePartAsync(Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDRequest request);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/ReleaseMeasure", ReplyAction="http://tempuri.org/IPCDmisService/ReleaseMeasureResponse")]
+        void ReleaseMeasure();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/ReleaseMeasure", ReplyAction="http://tempuri.org/IPCDmisService/ReleaseMeasureResponse")]
+        System.Threading.Tasks.Task ReleaseMeasureAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/GotoSafePostion", ReplyAction="http://tempuri.org/IPCDmisService/GotoSafePostionResponse")]
         Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse GotoSafePostion();
         
@@ -255,18 +261,6 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/Disconnect", ReplyAction="http://tempuri.org/IPCDmisService/DisconnectResponse")]
         System.Threading.Tasks.Task<Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse> DisconnectAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/Next", ReplyAction="http://tempuri.org/IPCDmisService/NextResponse")]
-        void Next();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/Next", ReplyAction="http://tempuri.org/IPCDmisService/NextResponse")]
-        System.Threading.Tasks.Task NextAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/Retry", ReplyAction="http://tempuri.org/IPCDmisService/RetryResponse")]
-        void Retry();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPCDmisService/Retry", ReplyAction="http://tempuri.org/IPCDmisService/RetryResponse")]
-        System.Threading.Tasks.Task RetryAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -312,6 +306,14 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
             return base.Channel.MeasurePartAsync(request);
         }
         
+        public void ReleaseMeasure() {
+            base.Channel.ReleaseMeasure();
+        }
+        
+        public System.Threading.Tasks.Task ReleaseMeasureAsync() {
+            return base.Channel.ReleaseMeasureAsync();
+        }
+        
         public Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse GotoSafePostion() {
             return base.Channel.GotoSafePostion();
         }
@@ -334,22 +336,6 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         
         public System.Threading.Tasks.Task<Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse> DisconnectAsync() {
             return base.Channel.DisconnectAsync();
-        }
-        
-        public void Next() {
-            base.Channel.Next();
-        }
-        
-        public System.Threading.Tasks.Task NextAsync() {
-            return base.Channel.NextAsync();
-        }
-        
-        public void Retry() {
-            base.Channel.Retry();
-        }
-        
-        public System.Threading.Tasks.Task RetryAsync() {
-            return base.Channel.RetryAsync();
         }
     }
 }

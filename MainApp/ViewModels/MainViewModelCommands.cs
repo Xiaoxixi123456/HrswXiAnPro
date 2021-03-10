@@ -148,7 +148,7 @@ namespace MainApp.ViewModels
             PartsOfTrayViewModel partsOfTrayViewModel = new PartsOfTrayViewModel();
             partsOfTrayViewModel.Tray = SelectedTray;
             //var parts = Parts.Where(p => p.Category == SelectedTray.Category && p.Status == PartStatus.PS_Idle);
-            var parts = Parts.Where(p => p.Category == SelectedTray.Category && !p.Placed);
+            var parts = Parts.Where(p => p.Category == SelectedTray.Category && !p.Placed && (p.CmmNo == 2 || SelectedTray.CmmNo == 2 || p.CmmNo == SelectedTray.CmmNo));
             foreach (var item in parts)
             {
                 partsOfTrayViewModel.Parts.Add(item);

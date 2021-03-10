@@ -98,6 +98,7 @@
                     Content="启动测量"
                     Margin="10,5"
                     Padding="10,5"
+                    Command="{Binding StartAutoflowCommand}"
                     />
             <Button x:Name="stopButton"
                     Content="停止"

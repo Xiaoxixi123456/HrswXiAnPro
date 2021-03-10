@@ -46,6 +46,7 @@ namespace MainApp.Views
                 part.Name = PartVM.PartName;
                 part.PartNb = PartVM.DefId;
                 part.CmmNo = PartVM.CmmNo;
+                part.UseCmmNo = -1;
                 part.Status = PartStatus.PS_Idle;
                 part.TrayNb = -1;
                 part.SlotNb = -1;
@@ -69,6 +70,7 @@ namespace MainApp.Views
                     part.Name = PartVM.PartName;
                     part.PartNb = nb;
                     part.CmmNo = PartVM.CmmNo;
+                    part.UseCmmNo = -1;
                     part.Status = PartStatus.PS_Idle;
                     part.TrayNb = -1;
                     part.SlotNb = -1;

@@ -18,7 +18,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         [Bindable]
         public ObservableCollection<MeasProg> MeasProgs { get; set; }
         [Bindable]
-        public string SavFileName { get; set; }
+        public string SavFileName { get; set; } = "MeasProgs.xml";
 
         private static MeasProgManager _inst;
         public static MeasProgManager Inst => _inst ?? (_inst = new MeasProgManager()); 
@@ -89,7 +89,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             }
             catch (Exception)
             {
-                new FileNotFoundException("测量程序未找到");
+                throw new FileNotFoundException("测量程序未找到");
             }
             return resultProg;
         }

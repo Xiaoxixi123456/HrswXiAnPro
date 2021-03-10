@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PCDmisService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsp:Policy wsu:Id="NetTcpBinding_IPCDmisService_policy">
+  <wsp:Policy wsu:Id="PcdmisServiceEp_policy">
     <wsp:ExactlyOne>
       <wsp:All>
         <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
@@ -10,11 +10,11 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.PCDmisServiceContracts" />
-      <xsd:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.Models" />
-      <xsd:import schemaLocation="http://localhost/PcdmisServiceUrl?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Prism.Mvvm" />
+      <xsd:import schemaLocation="http://localhost:7777/PcdmisService?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:7777/PcdmisService?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:7777/PcdmisService?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.PCDmisServiceContracts" />
+      <xsd:import schemaLocation="http://localhost:7777/PcdmisService?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Hrsw.XiAnPro.Models" />
+      <xsd:import schemaLocation="http://localhost:7777/PcdmisService?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Prism.Mvvm" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPCDmisService_MeasurePart_InputMessage">
@@ -22,6 +22,12 @@
   </wsdl:message>
   <wsdl:message name="IPCDmisService_MeasurePart_OutputMessage">
     <wsdl:part name="parameters" element="tns:MeasurePartResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPCDmisService_ReleaseMeasure_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseMeasure" />
+  </wsdl:message>
+  <wsdl:message name="IPCDmisService_ReleaseMeasure_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReleaseMeasureResponse" />
   </wsdl:message>
   <wsdl:message name="IPCDmisService_GotoSafePostion_InputMessage">
     <wsdl:part name="parameters" element="tns:GotoSafePostion" />
@@ -41,18 +47,6 @@
   <wsdl:message name="IPCDmisService_Disconnect_OutputMessage">
     <wsdl:part name="parameters" element="tns:DisconnectResponse" />
   </wsdl:message>
-  <wsdl:message name="IPCDmisService_Next_InputMessage">
-    <wsdl:part name="parameters" element="tns:Next" />
-  </wsdl:message>
-  <wsdl:message name="IPCDmisService_Next_OutputMessage">
-    <wsdl:part name="parameters" element="tns:NextResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPCDmisService_Retry_InputMessage">
-    <wsdl:part name="parameters" element="tns:Retry" />
-  </wsdl:message>
-  <wsdl:message name="IPCDmisService_Retry_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetryResponse" />
-  </wsdl:message>
   <wsdl:message name="IPCDmisService_SendMessage_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:SendMessage" />
   </wsdl:message>
@@ -63,6 +57,10 @@
     <wsdl:operation name="MeasurePart">
       <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/MeasurePart" message="tns:IPCDmisService_MeasurePart_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/MeasurePartResponse" message="tns:IPCDmisService_MeasurePart_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseMeasure">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/ReleaseMeasure" message="tns:IPCDmisService_ReleaseMeasure_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/ReleaseMeasureResponse" message="tns:IPCDmisService_ReleaseMeasure_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GotoSafePostion">
       <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/GotoSafePostion" message="tns:IPCDmisService_GotoSafePostion_InputMessage" />
@@ -76,24 +74,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/Disconnect" message="tns:IPCDmisService_Disconnect_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/DisconnectResponse" message="tns:IPCDmisService_Disconnect_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Next">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/Next" message="tns:IPCDmisService_Next_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/NextResponse" message="tns:IPCDmisService_Next_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="Retry">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/Retry" message="tns:IPCDmisService_Retry_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/RetryResponse" message="tns:IPCDmisService_Retry_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <wsdl:output wsaw:Action="http://tempuri.org/IPCDmisService/SendMessage" message="tns:IPCDmisService_SendMessage_OutputCallbackMessage" />
       <wsdl:input wsaw:Action="http://tempuri.org/IPCDmisService/SendMessageResponse" message="tns:IPCDmisService_SendMessage_InputCallbackMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="NetTcpBinding_IPCDmisService" type="tns:IPCDmisService">
-    <wsp:PolicyReference URI="#NetTcpBinding_IPCDmisService_policy" />
+  <wsdl:binding name="PcdmisServiceEp" type="tns:IPCDmisService">
+    <wsp:PolicyReference URI="#PcdmisServiceEp_policy" />
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="MeasurePart">
       <soap12:operation soapAction="http://tempuri.org/IPCDmisService/MeasurePart" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReleaseMeasure">
+      <soap12:operation soapAction="http://tempuri.org/IPCDmisService/ReleaseMeasure" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
@@ -128,24 +127,6 @@
         <soap12:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Next">
-      <soap12:operation soapAction="http://tempuri.org/IPCDmisService/Next" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="Retry">
-      <soap12:operation soapAction="http://tempuri.org/IPCDmisService/Retry" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="SendMessage">
       <soap12:operation soapAction="http://tempuri.org/IPCDmisService/SendMessage" style="document" />
       <wsdl:input>
@@ -157,10 +138,10 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="PCDmisService">
-    <wsdl:port name="NetTcpBinding_IPCDmisService" binding="tns:NetTcpBinding_IPCDmisService">
-      <soap12:address location="net.tcp://localhost/PcdmisService" />
+    <wsdl:port name="PcdmisServiceEp" binding="tns:PcdmisServiceEp">
+      <soap12:address location="net.tcp://localhost:6666/PcdmisService" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost/PcdmisService</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost:6666/PcdmisService</wsa10:Address>
       </wsa10:EndpointReference>
     </wsdl:port>
   </wsdl:service>

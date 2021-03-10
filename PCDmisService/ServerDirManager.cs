@@ -2,6 +2,7 @@
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,5 +19,30 @@ namespace Hrsw.XiAnPro.PCDmisService
         public string MeasureProgDirectory { get; set; }
         [Bindable]
         public string ResultProgDirectory { get; set; }
+        [Bindable]
+        public string SavFileName { get; set; } = "Dirs.xml";
+
+        public void SaveDirs()
+        {
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SavFileName);
+            if (File.Exists(fileName))
+            {
+                File.Delete(fileName);
+            }
+            File.WriteAllLines(SavFileName, new string[] { MeasureProgDirectory, ResultProgDirectory });
+        }
+
+        public void LoadDirs()
+        {
+            string fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, SavFileName);
+            if (!File.Exists(fileName))
+            {
+                return;
+            }
+
+           var files = File.ReadAllLines(fileName);
+            MeasureProgDirectory = files[0];
+            ResultProgDirectory = files[1];
+        }
     }
 }

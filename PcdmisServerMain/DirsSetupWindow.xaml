@@ -1,0 +1,45 @@
+﻿<Window x:Class="PcdmisServerMain.DirsSetupWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PcdmisServerMain"
+        mc:Ignorable="d"
+        Title="目录设置" Height="134.635" Width="420.731" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <BulletDecorator Grid.Row="0" VerticalAlignment="Center">
+            <BulletDecorator.Bullet>
+                <Label Content="程序目录:" Width="80" VerticalContentAlignment="Center"/>
+            </BulletDecorator.Bullet>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Dirs.MeasureProgDirectory}"
+                           VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="..." Width="30"
+                        Command="{Binding SelectProgDirCommand}"/>
+            </Grid>
+        </BulletDecorator>
+        <BulletDecorator Grid.Row="1" VerticalAlignment="Center">
+            <BulletDecorator.Bullet>
+                <Label Content="结果目录:" Width="80" VerticalContentAlignment="Center"/>
+            </BulletDecorator.Bullet>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Dirs.ResultProgDirectory}"
+                           VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="..." Width="30"
+                        Command="{Binding SelectReportDirCommand}"/>
+            </Grid>
+        </BulletDecorator>
+    </Grid>
+</Window>

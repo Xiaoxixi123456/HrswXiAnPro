@@ -29,13 +29,21 @@ namespace Hrsw.XiAnPro.LogicActivities
             bool success = true;
             foreach (var activity in AActivities)
             {
-                success = await activity.ExecuteAsync(obj, cts);
-                if (!success)
+                try
                 {
-                    // TODO 如果是上下料过程返回false，错误不可恢复
-                    // 测量料盘总返回true，错误内部处理
+                    success = await activity.ExecuteAsync(obj, cts);
+                    if (!success)
+                    {
+                        // TODO 如果是上下料过程返回false，错误不可恢复
+                        // 测量料盘时断开与服务器的连接，返回false
+                        // 其他情况下都是返回true
+                        obj.Status = TrayStatus.TS_Error;
+                        break;
+                    }
+                }
+                catch (Exception)
+                {
                     obj.Status = TrayStatus.TS_Error;
-                    break;
                 }
             }
             return success;

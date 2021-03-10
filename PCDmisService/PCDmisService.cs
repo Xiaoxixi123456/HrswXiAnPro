@@ -46,7 +46,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         {
             // TODO 取消测量需人工干预是否进行下一个测量
             _completed = false;
-            RespondMessage(e.Message);
+            RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
         }
 
@@ -54,7 +54,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         {
             // TODO 取消测量需人工干预是否进行下一个测量
             _completed = false;
-            RespondMessage(e.Message);
+            RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
         }
 
@@ -64,7 +64,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             {
                 // TODO 取消测量需人工干预是否进行下一个测量
                 _completed = false;
-                RespondMessage(e.Message);
+                RespondMessage(true, e.Message);
                 ServerLog.Logs.AddLog(e.Message);
             }
             else
@@ -84,7 +84,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             }
             catch (PcdmisServiceException e)
             {
-                RespondMessage(e.Message);
+                RespondMessage(true, e.Message);
                 ServerLog.Logs.AddLog(e.Message);
             }
         }
@@ -98,11 +98,20 @@ namespace Hrsw.XiAnPro.PCDmisService
             {
                 response.Success = false;
                 response.Message = "回连失败";
+                ServerLog.Logs.AddLog("回连失败");
             }
             Connected = response.Success;
             OperationContext.Current.Channel.Closed += Channel_Closed;
+            OperationContext.Current.Channel.Opened += Channel_Opened;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
             return response;
+        }
+
+        private void Channel_Opened(object sender, EventArgs e)
+        {
+            StatusMessage = "控制端连接";
+            Connected = true;
+            ServerLog.Logs.AddLog("控制端连接");
         }
 
         public PCDResponse Disconnect()
@@ -110,6 +119,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             try
             {
                 OperationContext.Current.Channel.Closed -= Channel_Closed;
+                OperationContext.Current.Channel.Opened -= Channel_Opened;
                 OperationContext.Current.Channel.Faulted -= Channel_Faulted;
             }
             catch
@@ -167,6 +177,11 @@ namespace Hrsw.XiAnPro.PCDmisService
                 ServerLog.Logs.AddLog(pe.Message);
             }
             return resp;
+        }
+
+        public void ReleaseMeasure()
+        {
+            _are.Set();
         }
 
         private void GenerateMeasureParameterFile(Part part)
@@ -228,7 +243,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             string prg = string.Empty;
             try
             {
-                prg = MeasProgManager.Inst.GetMeasProg(part.Id);
+                prg = MeasProgManager.Inst.GetMeasProg(part.Category);
             }
             catch (Exception ex)
             {
@@ -242,9 +257,9 @@ namespace Hrsw.XiAnPro.PCDmisService
         /// </summary>
         /// <param name="result"></param>
         /// <param name="message"></param>
-        private void RespondMessage(string message)
+        private void RespondMessage(bool err, string message)
         {
-            PCDMessage mage = new PCDMessage() { Result = true, Message = message };
+            PCDMessage mage = new PCDMessage() { Error = true, Result = true, Message = message };
             _pcdmisCallback?.SendMessage(mage);
         }
 

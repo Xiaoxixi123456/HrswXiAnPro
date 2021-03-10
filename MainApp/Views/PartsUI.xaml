@@ -40,6 +40,8 @@
                 <DataGridTextColumn Header="放置状态" Binding="{Binding Placed, Converter={StaticResource PlacedStatusConverter}}"/>
                 <DataGridTextColumn Header="料盘号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="料盘槽号" Binding="{Binding SlotNb}"/>
+                <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
+                <DataGridTextColumn Header="测量三坐标号" Binding="{Binding UseCmmNo}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,
                     Converter={StaticResource PartStatusConverter}}"/>
                 <DataGridTextColumn Header="是否合格">

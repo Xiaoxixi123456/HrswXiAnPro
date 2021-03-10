@@ -1,6 +1,7 @@
 ﻿using Hrsw.XiAnPro.CMMClients.PcdmisServiceReference;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.Models;
+using Hrsw.XiAnPro.Utilities;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,10 @@ namespace Hrsw.XiAnPro.CMMClient
         private PcdmisCallback _pcdmisCallback;
 
         private PcdmisClient() { }
-
         private Timer _timer;
+
+        [Bindable]
+        public bool MeasError { get; set; }
 
         public bool Initial()
         {
@@ -39,7 +42,9 @@ namespace Hrsw.XiAnPro.CMMClient
         private void InnerDuplexChannel_Opened(object sender, EventArgs e)
         {
             Debug.WriteLine("channel opened..");
-            _pcdmisService.Connect();
+            var response = _pcdmisService.Connect();
+            if (!response.Success)
+            { }
         }
 
         private void InnerDuplexChannel_Faulted(object sender, EventArgs e)
@@ -93,14 +98,21 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception) 
             {
-                // 通讯失败中终止测量
-                AActivityFlags.IsExit = true;
+                // TODO 通讯失败中终止测量
+                //AActivityFlags.IsExit = true;
                 success = false;
                 part.Pass = false;
-                part.Status = PartStatus.PS_Error;
+                part.Status = PartStatus.PS_Idle;
+                throw new InvalidOperationException("远程测量异常");
             }
 
             return success;
+        }
+
+        // TODO 释放测量
+        public void ReleaseMeasure()
+        {
+            _pcdmisService.ReleaseMeasure();
         }
 
         private PCDResponse Measure(Part part)

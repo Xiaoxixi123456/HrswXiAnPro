@@ -13,6 +13,8 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
         [DataMember]
         public bool Result { get; set; }
         [DataMember]
+        public bool Error { get; set; }
+        [DataMember]
         public string Message { get; set; }
     }
 }

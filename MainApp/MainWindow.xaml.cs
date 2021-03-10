@@ -31,7 +31,15 @@ namespace MainApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MainViewModel.Initial();
+            // TODO Window_Loaded 错误处理
+            try
+            {
+                MainViewModel.Initial();
+            }
+            catch (Exception)
+            {
+                Application.Current.Shutdown(0);
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)

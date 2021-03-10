@@ -58,6 +58,7 @@ namespace PcdmisServerMain
                 return;
             }
             MeasProgs.Add(new MeasProg() { Id = Id, FileName = ProgramFileName });
+            
         }
 
         private void DeleteProgFile()

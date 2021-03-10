@@ -1,15 +1,21 @@
-﻿using Prism.Mvvm;
+﻿using Hrsw.XiAnPro.Utilities;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace Hrsw.XiAnPro.PCDmisService
 {
     public class ServerLog : BindableBase
     {
+        public Dispatcher Dispatcher { get; set; }
+        private object syncObj = new object();
+        [Bindable]
         public ObservableCollection<string> Messages { get; set; }
 
         private static ServerLog _inst = new ServerLog();
@@ -17,6 +23,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         private ServerLog()
         {
             Messages = new ObservableCollection<string>();
+            BindingOperations.EnableCollectionSynchronization(Messages, syncObj);
         }
 
         public void AddLog(string message)

@@ -13,6 +13,8 @@ namespace Hrsw.XiAnPro.PCDmisServiceContracts
         [OperationContract]
         PCDResponse MeasurePart(PCDRequest request);
         [OperationContract]
+        void ReleaseMeasure();
+        [OperationContract]
         PCDResponse GotoSafePostion();
         [OperationContract]
         PCDResponse Connect();

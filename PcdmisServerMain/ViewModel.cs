@@ -16,10 +16,8 @@ namespace PcdmisServerMain
         private ServiceHost _host;
 
         public PCDmisService PcdmisService { get; set; }
-        [Bindable]
-        public string StatusInfo { get; set; }
-        [Bindable]
-        public ServerLog Logs { get; set; }
+        //[Bindable]
+        //public string StatusInfo { get; set; }
         [Bindable]
         public MeasProgManager MeasProgsManager { get; set; }
         [Bindable]
@@ -33,10 +31,9 @@ namespace PcdmisServerMain
         public ViewModel()
         {
             PcdmisService = new PCDmisService();
-            Logs = ServerLog.Logs;
             MeasProgsManager = MeasProgManager.Inst;
             MeasProgsManager.SavFileName = "MeasProgs.xml";
-            MeasProgsManager.MeasProgs.Add(new MeasProg() { Id = 1, FileName = "aaa" });
+            MeasProgsManager.LoadPrograms();
             ServerDirs = ServerDirManager.Inst;
 
             ProgsSetupCommand = new DelegateCommand(ProgsSetup);
@@ -46,12 +43,19 @@ namespace PcdmisServerMain
 
         private void ShowLogs()
         {
-            throw new NotImplementedException();
+            LogsWindow lgWnd = new LogsWindow();
+            LogsViewModel lgVm = new LogsViewModel();
+            lgWnd.DataContext = lgVm;
+            lgWnd.Topmost = true;
+            lgWnd.ShowDialog();
         }
 
         private void DirsSetup()
         {
-            throw new NotImplementedException();
+            DirsSetupWindow dsWnd = new DirsSetupWindow();
+            dsWnd.Topmost = true;
+            dsWnd.DataContext = new DirsSetupViewModel();
+            dsWnd.ShowDialog();
         }
 
         private void ProgsSetup()
@@ -80,12 +84,15 @@ namespace PcdmisServerMain
 
         private void _host_Opened(object sender, EventArgs e)
         {
-            StatusInfo = "Listen....";
+            PcdmisService.StatusMessage = "服务已开启";
             ServerLog.Logs.AddLog("服务器开启！");
         }
 
         public void Dispose()
         {
+            PcdmisService?.Dispose();
+            MeasProgsManager.SavePrograms();
+            ServerDirs.SaveDirs();
             if (_host == null)
                 return;
             if (_host.State == CommunicationState.Opened)
@@ -96,7 +103,6 @@ namespace PcdmisServerMain
             {
                 _host.Abort();
             }
-            PcdmisService.Dispose();
         }
     }
 }

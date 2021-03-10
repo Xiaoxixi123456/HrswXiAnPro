@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PostSharp.5.0.44\build\PostSharp.props" Condition="Exists('..\packages\PostSharp.5.0.44\build\PostSharp.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,6 +12,8 @@
     <AssemblyName>CMMClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PostSharp, Version=5.0.44.0, Culture=neutral, PublicKeyToken=b13fd38b8f9c99d7, processorArchitecture=MSIL">
+      <HintPath>..\packages\PostSharp.Redist.5.0.44\lib\net45\PostSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.8.0.0.1909\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
@@ -69,28 +76,16 @@
       <Project>{5082865e-4d57-4080-84a3-19b5134e7416}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utilities\Utilities.csproj">
+      <Project>{2F3106C7-9975-488D-844E-39A00FE7714E}</Project>
+      <Name>Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Service References\PcdmisServiceReference\Hrsw.XiAnPro.CMMClients.PcdmisServiceReference.PCDResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\PcdmisServiceReference\PCDmisService.wsdl" />
-    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\PcdmisServiceReference\PcdmisServiceUrl4.xsd">
-      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -106,12 +101,36 @@
     <None Include="Service References\PcdmisServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\PcdmisServiceReference\PcdmisService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PCDmisService1.wsdl" />
+    <None Include="Service References\PcdmisServiceReference\PcdmisService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PcdmisServiceReference\PcdmisService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\PcdmisServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.44\build\PostSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.44\build\PostSharp.props'))" />
+    <Error Condition="!Exists('..\packages\PostSharp.5.0.44\build\PostSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PostSharp.5.0.44\build\PostSharp.targets'))" />
+  </Target>
+  <Import Project="..\packages\PostSharp.5.0.44\build\PostSharp.targets" Condition="Exists('..\packages\PostSharp.5.0.44\build\PostSharp.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

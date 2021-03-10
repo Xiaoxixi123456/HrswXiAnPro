@@ -18,10 +18,12 @@ namespace Hrsw.XiAnPro.LogicActivities
         /// 控制标志，null退出，false重试，true下一个
         /// </summary>
         private bool? _controlFlag;
+        private bool _commuFault;
         
         public MeasureTrayActivity(ICMMControl cmmControl)
         {
             _controlFlag = null;
+            _commuFault = false;
             _controlEvent = new AutoResetEvent(false);
             _selector = new PartSelectActivity();
             _mesPartActivity = new MeasurePartActivity(cmmControl);
@@ -31,35 +33,52 @@ namespace Hrsw.XiAnPro.LogicActivities
         {
             Part part = null;
             _controlFlag = true;
+            _commuFault = false;
             tray.Status = TrayStatus.TS_Measuring;
             while (true)
             {
                 if (cts.IsCancellationRequested)
+                {
                     return false;
+                }
                 else if (!_controlFlag.HasValue)
                 {
                     break;
                 }
-                if (_controlFlag.HasValue && _controlFlag.Value)
+
+                if (_controlFlag.Value)
                 {
                     part = await _selector.ExecuteAsync(tray, cts);
                 }
+
                 if (cts.IsCancellationRequested)
+                {
                     return false;
-                if (part == null || !_controlFlag.HasValue)
+                }
+                if (part == null)
+                {
                     break;
+                }
+
                 SetupPartParams(tray, part);
 
-                bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+                //try // TODO 与服务器连接断开，测量抛出无效操作异常
+                //{
+                    bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
 
-                if (!success)
-                {
-                    _controlEvent.Reset();
-                    _controlEvent.WaitOne();
-                }
+                    if (!success)
+                    {
+                        _controlEvent.Reset();
+                        _controlEvent.WaitOne();
+                    }
+                //}
+                //catch (Exception)
+                //{
+                //    throw new InvalidOperationException();
+                //}
             }
-            tray.Status = TrayStatus.TS_Measured;
-            return true;
+            tray.Status = _commuFault ? TrayStatus.TS_Error : TrayStatus.TS_Measured;
+            return !_commuFault;
         }
 
         private void SetupPartParams(Tray tray, Part part)
@@ -88,19 +107,19 @@ namespace Hrsw.XiAnPro.LogicActivities
         public void Next()
         {
             _controlFlag = true;
-            _controlEvent.WaitOne();
+            _controlEvent.Set();
         }
 
         public void Retry()
         {
             _controlFlag = false;
-            _controlEvent.WaitOne();
+            _controlEvent.Set();
         }
 
         public void Complete()
         {
             _controlFlag = null;
-            _controlEvent.WaitOne();
+            _controlEvent.Set();
         }
     }
 }

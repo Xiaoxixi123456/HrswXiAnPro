@@ -5,7 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PcdmisServerMain"
         mc:Ignorable="d"
-        Title="PcdmisServer" Height="171.586" Width="355.122" ResizeMode="NoResize">
+        Title="PcdmisServer" Height="171.586" Width="355.122" 
+        ResizeMode="NoResize" 
+        Closed="Window_Closed" 
+        Loaded="Window_Loaded"
+        StateChanged="Window_StateChanged" Background="#FFADC5C8"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -19,17 +24,22 @@
             <MenuItem Header="设置">
                 <MenuItem Header="程序设置" 
                           Command="{Binding ProgsSetupCommand}"/>
-                <MenuItem Header="目录设置"/>
-                <MenuItem Header="退出"/>
+                <MenuItem Header="目录设置"
+                          Command="{Binding DirsSetupCommand}"/>
+                <MenuItem Header="退出" Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="日志">
-                <MenuItem Header="日志记录"/>
+                <MenuItem Header="日志记录"
+                          Command="{Binding LogsCommand}"/>
             </MenuItem>
         </Menu>
-        <Button Content="最小化" Grid.Row="1" 
-                Margin="20, 10"/>
+        <StackPanel Grid.Row="1" >
+            <Button Content="最小化"
+                    Margin="20, 10" 
+                    Click="Button_Click"/>
+        </StackPanel>
         <StatusBar Grid.Row="3">
-            <Label Content="{Binding StatusInfo}"/>
+            <Label Content="{Binding PcdmisService.StatusMessage}"/>
         </StatusBar>
     </Grid>
 </Window>

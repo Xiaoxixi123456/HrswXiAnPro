@@ -241,7 +241,7 @@ namespace Hrsw.XiAnPro.PCDmisImplement
 
         public void Close()
         {
-            Debug.Assert(_pcdApplication != null);
+            //Debug.Assert(_pcdApplication != null);
 
             try
             {
