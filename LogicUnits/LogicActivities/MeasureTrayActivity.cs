@@ -13,18 +13,11 @@ namespace Hrsw.XiAnPro.LogicActivities
     {
         private IAActivity<Tray, Part> _selector;
         private IAActivity<Part, bool> _mesPartActivity;
-        private AutoResetEvent _controlEvent;
-        /// <summary>
-        /// 控制标志，null退出，false重试，true下一个
-        /// </summary>
-        private bool? _controlFlag;
-        private bool _commuFault;
+        private ActivityController _ac;
         
-        public MeasureTrayActivity(ICMMControl cmmControl)
+        public MeasureTrayActivity(ICMMControl cmmControl, ActivityController ac)
         {
-            _controlFlag = null;
-            _commuFault = false;
-            _controlEvent = new AutoResetEvent(false);
+            _ac = ac;
             _selector = new PartSelectActivity();
             _mesPartActivity = new MeasurePartActivity(cmmControl);
         }
@@ -32,53 +25,27 @@ namespace Hrsw.XiAnPro.LogicActivities
         public async Task<bool> ExecuteAsync(Tray tray, CancellationTokenSource cts)
         {
             Part part = null;
-            _controlFlag = true;
-            _commuFault = false;
             tray.Status = TrayStatus.TS_Measuring;
             while (true)
             {
-                if (cts.IsCancellationRequested)
-                {
-                    return false;
-                }
-                else if (!_controlFlag.HasValue)
-                {
-                    break;
-                }
-
-                if (_controlFlag.Value)
+                if (_ac.Mark.Value)
                 {
                     part = await _selector.ExecuteAsync(tray, cts);
-                }
-
-                if (cts.IsCancellationRequested)
-                {
-                    return false;
-                }
-                if (part == null)
-                {
-                    break;
+                    if (part == null) break;
                 }
 
                 SetupPartParams(tray, part);
 
-                //try // TODO 与服务器连接断开，测量抛出无效操作异常
-                //{
-                    bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
+                bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
 
-                    if (!success)
-                    {
-                        _controlEvent.Reset();
-                        _controlEvent.WaitOne();
-                    }
-                //}
-                //catch (Exception)
-                //{
-                //    throw new InvalidOperationException();
-                //}
+                if (success) continue;
+                part.Status = PartStatus.PS_Error;
+
+                // 测量失败跳转 retry - true, next - false, nexttray - null
+                if (_ac.Mark == null) break;
+                if (!_ac.Success) return false;
             }
-            tray.Status = _commuFault ? TrayStatus.TS_Error : TrayStatus.TS_Measured;
-            return !_commuFault;
+            return true;
         }
 
         private void SetupPartParams(Tray tray, Part part)
@@ -106,20 +73,18 @@ namespace Hrsw.XiAnPro.LogicActivities
 
         public void Next()
         {
-            _controlFlag = true;
-            _controlEvent.Set();
+            throw new NotImplementedException();
         }
 
         public void Retry()
         {
-            _controlFlag = false;
-            _controlEvent.Set();
+            throw new NotImplementedException();
         }
 
         public void Complete()
         {
-            _controlFlag = null;
-            _controlEvent.Set();
+            throw new NotImplementedException();
         }
+
     }
 }

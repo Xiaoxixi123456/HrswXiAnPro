@@ -11,11 +11,11 @@ namespace Hrsw.XiAnPro.LogicActivities
     {
         private List<IAActivity<Tray, bool>> AActivities;
 
-        public RootActivity(ICMMControl cmmControl)
+        public RootActivity(ICMMControl cmmControl, ActivityController ac)
         {
             AActivities = new List<IAActivity<Tray, bool>>();
             //AActivities.Add(new LoadActivity());
-            AActivities.Add(new MeasureTrayActivity(cmmControl));
+            AActivities.Add(new MeasureTrayActivity(cmmControl, ac));
             //AActivities.Add(new UnloadActivity());
         }
 

@@ -39,16 +39,17 @@ namespace Hrsw.XiAnPro.PLCInteraction
         public override bool OnError()
         {
             bool result;
-            bool retry = true;
-            // TODO LoadActivity暂停不可继续
+            //bool retry = true;
+            // LoadActivity暂停不可继续
             // 返回两种可能
             _plcAccessor.ReadMask(_dbNumber, 258, 5, out result);
             // 如果设置了错误标志，提示人工选择处理方式
-            if (result)
-            {
-                retry = false;
-            }
-            return retry;
+            //if (result)
+            //{
+            //    retry = false;
+            //}
+            //return retry;
+            return !result;
         }
     }
 }

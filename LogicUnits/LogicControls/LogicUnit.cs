@@ -17,6 +17,7 @@ namespace Hrsw.XiAnPro.LogicControls
         private CancellationTokenSource _cts;
         private IAActivity<Rack, Tray> _traySelector;
         private IAActivity<Tray, bool> _rootActivity;
+        private ActivityController _actCtrl;
 
         [Bindable]
         public Tray CurrentTray { get; set; }
@@ -25,12 +26,16 @@ namespace Hrsw.XiAnPro.LogicControls
         [Bindable]
         public string CmmName { get; set; }
 
+        private ICMMControl _cmmControl;
+
         public LogicUnit(int cmmNo, string cmmName, ICMMControl cmmControl)
         {
             CmmNo = cmmNo;
             CmmName = cmmName;
+            _cmmControl = cmmControl;
+            _actCtrl = new ActivityController() { Mark = null };
             _traySelector = new TraySelectActivity(cmmNo);
-            _rootActivity = new RootActivity(cmmControl);
+            _rootActivity = new RootActivity(cmmControl, _actCtrl);
         }
 
         public async void CycleProcess(Rack _rack)
@@ -51,7 +56,7 @@ namespace Hrsw.XiAnPro.LogicControls
                 success = await _rootActivity.ExecuteAsync(CurrentTray, _cts).ConfigureAwait(false);
                 if (!success)
                 {
-                    // TODO 报告错误并跳出循环
+                    // 报告错误并跳出循环
                     tray.Status = TrayStatus.TS_Error;
                     break;
                 }
@@ -59,9 +64,22 @@ namespace Hrsw.XiAnPro.LogicControls
             }
         }
 
+        public void NextPart()
+        {
+            _actCtrl.Mark = false;
+            _actCtrl.Success = _cmmControl.ReleaseMeasure();
+        }
+
+        public void NextTray()
+        {
+            _actCtrl.Mark = null;
+            _actCtrl.Success = _cmmControl.ReleaseMeasure();
+        }
+
         public void Retry()
         {
-
+            _actCtrl.Mark = true;
+            _actCtrl.Success = _cmmControl.ReleaseMeasure();
         }
 
         public void Stop()

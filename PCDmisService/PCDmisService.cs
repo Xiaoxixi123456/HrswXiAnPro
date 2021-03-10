@@ -64,12 +64,13 @@ namespace Hrsw.XiAnPro.PCDmisService
             {
                 // TODO 取消测量需人工干预是否进行下一个测量
                 _completed = false;
-                RespondMessage(true, e.Message);
-                ServerLog.Logs.AddLog(e.Message);
+                RespondMessage(true, "测量取消");
+                ServerLog.Logs.AddLog("测量取消");
             }
             else
             {
                 _completed = true;
+                RespondMessage(false, "测量完成");
                 _are.Set();
             }
         }

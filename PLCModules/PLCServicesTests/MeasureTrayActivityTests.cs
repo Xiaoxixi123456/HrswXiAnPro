@@ -15,7 +15,7 @@ namespace Hrsw.XiAnPro.LogicActivities.Tests
         [TestMethod()]
         public void CalcPartOffsetTest()
         {
-            MeasureTrayActivity mta = new MeasureTrayActivity(null);
+            MeasureTrayActivity mta = new MeasureTrayActivity(null, null);
             Tray tray = new Tray()
             {
                 BaseColumnOffset = -20,

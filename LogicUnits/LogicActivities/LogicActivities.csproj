@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivityControl.cs" />
     <Compile Include="LoadActivity.cs" />
     <Compile Include="MeasurePartActivity.cs" />
     <Compile Include="MeasureTrayActivity.cs" />

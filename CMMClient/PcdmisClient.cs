@@ -30,7 +30,7 @@ namespace Hrsw.XiAnPro.CMMClient
         public bool Initial()
         {
             bool result = false;
-            // TODO 连接服务器端
+            //连接服务器端
             _pcdmisCallback = new PcdmisCallback();
             _pcdmisService = new PCDmisServiceClient(new InstanceContext(_pcdmisCallback));
             _pcdmisService.InnerDuplexChannel.Faulted += InnerDuplexChannel_Faulted;
@@ -98,8 +98,7 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception) 
             {
-                // TODO 通讯失败中终止测量
-                //AActivityFlags.IsExit = true;
+                //通讯失败中终止测量
                 success = false;
                 part.Pass = false;
                 part.Status = PartStatus.PS_Idle;
@@ -109,10 +108,18 @@ namespace Hrsw.XiAnPro.CMMClient
             return success;
         }
 
-        // TODO 释放测量
-        public void ReleaseMeasure()
+        // 当选择流程分支时，释放测量
+        public bool ReleaseMeasure()
         {
-            _pcdmisService.ReleaseMeasure();
+            try
+            {
+                _pcdmisService.ReleaseMeasure();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private PCDResponse Measure(Part part)

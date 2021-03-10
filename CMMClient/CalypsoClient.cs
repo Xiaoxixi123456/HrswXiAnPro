@@ -18,6 +18,7 @@ namespace Hrsw.XiAnPro.CMMClient
         {
             return true;
         }
+
         public Task<bool> AnalyseReportAsync(out bool pass)
         {
             pass = false;
@@ -42,6 +43,11 @@ namespace Hrsw.XiAnPro.CMMClient
         }
 
         public void Stop()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReleaseMeasure()
         {
             throw new NotImplementedException();
         }

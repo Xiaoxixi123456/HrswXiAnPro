@@ -11,6 +11,7 @@ namespace Hrsw.XiAnPro.LogicContracts
     {
         Task<bool> GotoSafePositionAsync();
         Task<bool> MeasurePartAsync(Part part);
+        bool ReleaseMeasure();
         void PauseMeasure();
         void Stop();
     }
