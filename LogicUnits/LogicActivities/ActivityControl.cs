@@ -11,5 +11,6 @@ namespace Hrsw.XiAnPro.LogicActivities
         public bool? Mark { get; set; }
 
         public bool Success { get; set; }
+        public bool IsOffline { get; set; }
     }
 }

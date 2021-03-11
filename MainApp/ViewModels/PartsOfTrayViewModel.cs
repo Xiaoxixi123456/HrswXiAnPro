@@ -75,7 +75,7 @@ namespace MainApp.ViewModels
             {
                 if (Tray.Parts[item - 1].Status == PartStatus.PS_Empty)
                     continue;
-                Tray.Parts[item - 1].Status = PartStatus.PS_Idle;
+                //Tray.Parts[item - 1].Status = PartStatus.PS_Idle;
                 Tray.Parts[item - 1].SlotNb = -1;
                 Tray.Parts[item - 1].TrayNb = -1;
                 Tray.Parts[item - 1].Placed = false;

@@ -37,7 +37,7 @@ namespace Hrsw.XiAnPro.LogicControls
             CmmName = cmmName;
             _cmmControl = cmmControl;
             CmmOnline = true;
-            _actCtrl = new ActivityController() { Mark = true };
+            _actCtrl = new ActivityController() { Mark = true, IsOffline = false };
             _traySelector = new TraySelectActivity(cmmNo);
             _rootActivity = new RootActivity(cmmControl, _actCtrl);
         }
@@ -114,12 +114,14 @@ namespace Hrsw.XiAnPro.LogicControls
         public void Offline()
         {
             _cts?.Cancel();
+            _actCtrl.IsOffline = true;
             CmmOnline = false;
         }
 
         public void Online()
         {
             CmmOnline = true;
+            _actCtrl.IsOffline = false;
             _cmmControl.Online();
         }
     }

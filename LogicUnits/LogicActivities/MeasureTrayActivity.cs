@@ -28,10 +28,18 @@ namespace Hrsw.XiAnPro.LogicActivities
             tray.Status = TrayStatus.TS_Measuring;
             while (true)
             {
+                if (_ac.IsOffline) break;
+
                 if (_ac.Mark.Value)
                 {
                     part = await _selector.ExecuteAsync(tray, cts);
                     if (part == null) break;
+                }
+
+                if (_ac.IsOffline)
+                {
+                    part.Status = PartStatus.PS_Idle;
+                    break;
                 }
 
                 SetupPartParams(tray, part);
@@ -39,6 +47,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                 bool success = await _mesPartActivity.ExecuteAsync(part, cts).ConfigureAwait(false);
 
                 if (success) continue;
+
                 part.Status = PartStatus.PS_Error;
 
                 // 测量失败跳转 retry - true, next - false, nexttray - null
