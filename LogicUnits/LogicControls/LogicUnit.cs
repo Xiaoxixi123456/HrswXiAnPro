@@ -25,6 +25,9 @@ namespace Hrsw.XiAnPro.LogicControls
         public int CmmNo { get; set; }
         [Bindable]
         public string CmmName { get; set; }
+        [Bindable]
+        public bool CmmOnline { get; set; }
+
 
         private ICMMControl _cmmControl;
 
@@ -33,13 +36,16 @@ namespace Hrsw.XiAnPro.LogicControls
             CmmNo = cmmNo;
             CmmName = cmmName;
             _cmmControl = cmmControl;
-            _actCtrl = new ActivityController() { Mark = null };
+            CmmOnline = true;
+            _actCtrl = new ActivityController() { Mark = true };
             _traySelector = new TraySelectActivity(cmmNo);
             _rootActivity = new RootActivity(cmmControl, _actCtrl);
         }
 
         public async void CycleProcess(Rack _rack)
         {
+            if (!CmmOnline) return;
+
             _cts = new CancellationTokenSource();
             Tray tray = null;
             bool success;
@@ -47,13 +53,20 @@ namespace Hrsw.XiAnPro.LogicControls
             {
                 if (_cts.IsCancellationRequested)
                     break;
+
                 tray = await _traySelector.ExecuteAsync(_rack, _cts);
-                if (tray == null 
-                    || _cts.IsCancellationRequested)
+                if (tray == null) break;
+
+                if (_cts.IsCancellationRequested)
+                {
+                    tray.Status = TrayStatus.TS_Idle;
                     break;
-                CurrentTray = tray;
-                CurrentTray.UseCmmNo = CmmNo;
+                }
+
+                SetupTray(tray);
+
                 success = await _rootActivity.ExecuteAsync(CurrentTray, _cts).ConfigureAwait(false);
+
                 if (!success)
                 {
                     // 报告错误并跳出循环
@@ -62,6 +75,17 @@ namespace Hrsw.XiAnPro.LogicControls
                 }
                 tray.Status = TrayStatus.TS_Measured;
             }
+
+            if (!CmmOnline)
+            {
+                _cmmControl.Offline();
+            }
+        }
+
+        private void SetupTray(Tray tray)
+        {
+            CurrentTray = tray;
+            CurrentTray.UseCmmNo = CmmNo;
         }
 
         public void NextPart()
@@ -85,6 +109,18 @@ namespace Hrsw.XiAnPro.LogicControls
         public void Stop()
         {
             _cts.Cancel();
+        }
+
+        public void Offline()
+        {
+            _cts?.Cancel();
+            CmmOnline = false;
+        }
+
+        public void Online()
+        {
+            CmmOnline = true;
+            _cmmControl.Online();
         }
     }
 }

@@ -79,6 +79,7 @@ namespace PcdmisServerMain
 
         private void _host_Faulted(object sender, EventArgs e)
         {
+            PcdmisService.StatusMessage = "服务器错误";
             ServerLog.Logs.AddLog("服务器错误！");
         }
 

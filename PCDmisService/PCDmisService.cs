@@ -22,12 +22,12 @@ namespace Hrsw.XiAnPro.PCDmisService
         private AutoResetEvent _are;
         private bool _completed;
 
-        [Bindable]
-        public string MeasProgDir { get; set; } = @"E:\WorkDirs\PcdmisFiles";
+        //[Bindable]
+        //public string MeasProgDir { get; set; } = @"E:\WorkDirs\PcdmisFiles";
         [Bindable]
         public string MeasProgsFileName { get; set; } = "MeasProg.xml";
-        [Bindable]
-        public string ResultFilesDir { get; set; } = @"E:\WorkDirs\PcdmisFiles";
+        //[Bindable]
+        //public string ResultFilesDir { get; set; } = @"E:\WorkDirs\PcdmisFiles";
         [Bindable]
         public bool Connected { get; set; }
         [Bindable]
@@ -167,7 +167,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
                 resp = EvalMeasure(_completed);
             }
-            catch (PcdmisServiceException pe)
+            catch (Exception pe)
             {
                 resp = new PCDResponse()
                 {
@@ -188,7 +188,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         private void GenerateMeasureParameterFile(Part part)
         {
             // TODO 固定文件名
-            string fileName = Path.Combine(MeasProgDir, "MeasParams.Par");
+            string fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "MeasParams.Par");
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);

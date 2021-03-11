@@ -83,4 +83,10 @@
             </StackPanel>
         </Border>
     </DataTemplate>
+    <ItemsPanelTemplate x:Key="CmmItemsPanelTemplate">
+        <UniformGrid IsItemsHost="True"
+                     Columns="2"
+                     Rows="1"/>
+    </ItemsPanelTemplate>
+
 </ResourceDictionary>

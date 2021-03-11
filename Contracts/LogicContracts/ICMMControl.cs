@@ -14,5 +14,7 @@ namespace Hrsw.XiAnPro.LogicContracts
         bool ReleaseMeasure();
         void PauseMeasure();
         void Stop();
+        void Offline();
+        void Online();
     }
 }

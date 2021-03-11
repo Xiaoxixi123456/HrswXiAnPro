@@ -29,14 +29,45 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public bool Initial()
         {
-            bool result = false;
+            bool result = true;
             //连接服务器端
+            try
+            {
+                OpenPcdmisService();
+            }
+            catch (Exception)
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        private void OpenPcdmisService()
+        {
             _pcdmisCallback = new PcdmisCallback();
             _pcdmisService = new PCDmisServiceClient(new InstanceContext(_pcdmisCallback));
             _pcdmisService.InnerDuplexChannel.Faulted += InnerDuplexChannel_Faulted;
             _pcdmisService.InnerDuplexChannel.Opened += InnerDuplexChannel_Opened;
             _pcdmisService.Open();
-            return result;
+        }
+
+        public void ClosePcdmisService()
+        {
+            if (_pcdmisService != null)
+            {
+                _pcdmisService.InnerDuplexChannel.Faulted -= InnerDuplexChannel_Faulted;
+                _pcdmisService.InnerDuplexChannel.Opened -= InnerDuplexChannel_Opened;
+                if (_pcdmisService.State == CommunicationState.Faulted)
+                {
+                    _pcdmisService.Abort();
+                }
+                else if (_pcdmisService.State == CommunicationState.Opened)
+                {
+                    _pcdmisService.Disconnect();
+                    _pcdmisService.Close();
+                }
+            }
+            _pcdmisService = null;
         }
 
         private void InnerDuplexChannel_Opened(object sender, EventArgs e)
@@ -52,19 +83,6 @@ namespace Hrsw.XiAnPro.CMMClient
             _pcdmisService.Abort();
         }
 
-        public void Close()
-        {
-            if (_pcdmisService != null)
-            {
-                if (_pcdmisService.State == CommunicationState.Faulted)
-                    _pcdmisService.Abort();
-                else if (_pcdmisService.State == CommunicationState.Opened)
-                {
-                    _pcdmisService.Disconnect();
-                    _pcdmisService.Close();
-                }
-            }
-        }
 
         public Task<bool> AnalyseReportAsync(out bool pass)
         {
@@ -143,6 +161,16 @@ namespace Hrsw.XiAnPro.CMMClient
         public void Dispose()
         {
             throw new NotImplementedException();
+        }
+
+        public void Offline()
+        {
+            ClosePcdmisService();
+        }
+
+        public void Online()
+        {
+            OpenPcdmisService();
         }
     }
 }

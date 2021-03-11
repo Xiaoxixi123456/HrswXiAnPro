@@ -80,7 +80,7 @@ namespace MainApp.ViewModels
         {
             PcdmisClient.Initial();
             //CalypsoClient.Initial();
-            LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient));
+            LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient) { CanOffline = true, CanOnline = false });
             //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));
         }
 

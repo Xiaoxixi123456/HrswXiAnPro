@@ -51,5 +51,15 @@ namespace Hrsw.XiAnPro.CMMClient
         {
             throw new NotImplementedException();
         }
+
+        public void Offline()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Online()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

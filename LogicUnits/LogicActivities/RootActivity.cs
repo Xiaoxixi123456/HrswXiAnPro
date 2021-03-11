@@ -34,7 +34,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                     success = await activity.ExecuteAsync(obj, cts);
                     if (!success)
                     {
-                        // TODO 如果是上下料过程返回false，错误不可恢复
+                        // 如果是上下料过程返回false，错误不可恢复
                         // 测量料盘时断开与服务器的连接，返回false
                         // 其他情况下都是返回true
                         obj.Status = TrayStatus.TS_Error;
@@ -44,6 +44,8 @@ namespace Hrsw.XiAnPro.LogicActivities
                 catch (Exception)
                 {
                     obj.Status = TrayStatus.TS_Error;
+                    // TODO 测量错误后料盘是否可以继续下料
+                    success = false;
                 }
             }
             return success;

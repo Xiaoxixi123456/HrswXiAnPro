@@ -7,13 +7,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <local:LogicUnitUI Grid.Column="0" Margin="3"
-                     DataContext="{Binding LogicUnits[0].LogicUnit}"/>
+                     DataContext="{Binding LogicUnits[0]}"/>
         <local:LogicUnitUI Grid.Column="1" Margin="3"
-                     DataContext="{Binding LogicUnits[1].LogicUnit}"/>
+                     DataContext="{Binding LogicUnits[1]}"/>-->
+        <ItemsControl x:Name="CmmLstBx" 
+                 ItemsSource="{Binding LogicUnits}"
+                 Margin="3" 
+                 Background="{x:Null}" 
+                 ItemsPanel="{DynamicResource CmmItemsPanelTemplate}" 
+                 VerticalContentAlignment="Stretch"
+                 HorizontalContentAlignment="Stretch"
+                 >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:LogicUnitUI Grid.Column="0" Margin="3"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
