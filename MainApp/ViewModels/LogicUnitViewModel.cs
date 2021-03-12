@@ -35,17 +35,31 @@ namespace MainApp.ViewModels
 
         private void CmmOnline()
         {
-            MessageBox.Show("online");
-            LogicUnit.Online();
             CanOnline = false;
-            CanOffline = true;
+            LogicUnit.Online();
+            if (LogicUnit.CmmOnline)
+            {
+                CanOffline = true;
+            }
+            else
+            {
+                CanOnline = true;
+            }
         }
 
-        private void CmmOffline()
+        private async void CmmOffline()
         {
-            MessageBox.Show("offline");
-            LogicUnit.Offline();
             CanOffline = false;
+            try
+            {
+                await LogicUnit.Offline();
+            }
+            catch (Exception)
+            {
+                // TODO 记录超时无法离线情况
+                CanOffline = true;
+                return;
+            }
             CanOnline = true;
         }
     }

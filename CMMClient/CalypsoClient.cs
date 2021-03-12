@@ -52,12 +52,12 @@ namespace Hrsw.XiAnPro.CMMClient
             throw new NotImplementedException();
         }
 
-        public void Offline()
+        public bool Offline()
         {
             throw new NotImplementedException();
         }
 
-        public void Online()
+        public bool Online()
         {
             throw new NotImplementedException();
         }

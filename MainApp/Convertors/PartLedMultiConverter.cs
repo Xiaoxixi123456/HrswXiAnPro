@@ -20,11 +20,13 @@ namespace MainApp.Convertors
             PartStatus status = (PartStatus)values[0];
             if (status == PartStatus.PS_Measuring)
             {
-                int Flag = (int)values[1];
-                if (Flag % 2 == 0)
-                    return new SolidColorBrush(Colors.Yellow);
-                else
-                    return new SolidColorBrush(Colors.Red);
+                //int Flag = (int)values[1];
+                //if (Flag % 2 == 0)
+                //    return new SolidColorBrush(Colors.Yellow);
+                //else
+                //return new SolidColorBrush(Colors.Red);
+                /*new SolidColorBrush(Color.FromRgb(0xFF, 0xFF, 0xFF));*/
+                return "Transparent";
             }
             if (status == PartStatus.PS_Measured)
             {

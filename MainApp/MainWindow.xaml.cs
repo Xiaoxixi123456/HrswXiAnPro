@@ -1,4 +1,5 @@
-﻿using MainApp.ViewModels;
+﻿using MahApps.Metro.Controls;
+using MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace MainApp
     /// <summary>
     /// MainWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public MainViewModel MainViewModel { get; set; }
         public MainWindow()
@@ -45,6 +46,11 @@ namespace MainApp
         private void button_Click(object sender, RoutedEventArgs e)
         {
             MainViewModel.Start();
+        }
+
+        private void MetroWindow_Closed(object sender, EventArgs e)
+        {
+            MainViewModel.Dispose();
         }
     }
 }

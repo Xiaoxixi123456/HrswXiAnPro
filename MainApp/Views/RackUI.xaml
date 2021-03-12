@@ -21,7 +21,8 @@
                   SelectedItemChanged="RackTree_SelectedItemChanged" 
                   Grid.RowSpan="1" 
                   Grid.ColumnSpan="1"
-                  Width="200"
+                  Width="300"
+                  Background="Transparent"
                   >
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Trays}">

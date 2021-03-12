@@ -18,6 +18,7 @@ namespace Hrsw.XiAnPro.LogicControls
         private IAActivity<Rack, Tray> _traySelector;
         private IAActivity<Tray, bool> _rootActivity;
         private ActivityController _actCtrl;
+        private AutoResetEvent _offlineWaitFlag;
 
         [Bindable]
         public Tray CurrentTray { get; set; }
@@ -27,6 +28,8 @@ namespace Hrsw.XiAnPro.LogicControls
         public string CmmName { get; set; }
         [Bindable]
         public bool CmmOnline { get; set; }
+        [Bindable]
+        public bool Working { get; set; }
 
 
         private ICMMControl _cmmControl;
@@ -37,15 +40,19 @@ namespace Hrsw.XiAnPro.LogicControls
             CmmName = cmmName;
             _cmmControl = cmmControl;
             CmmOnline = true;
+            Working = false;
             _actCtrl = new ActivityController() { Mark = true, IsOffline = false };
             _traySelector = new TraySelectActivity(cmmNo);
             _rootActivity = new RootActivity(cmmControl, _actCtrl);
+
+            _offlineWaitFlag = new AutoResetEvent(false);
         }
 
         public async void CycleProcess(Rack _rack)
         {
             if (!CmmOnline) return;
 
+            Working = true;
             _cts = new CancellationTokenSource();
             Tray tray = null;
             bool success;
@@ -75,11 +82,14 @@ namespace Hrsw.XiAnPro.LogicControls
                 }
                 tray.Status = TrayStatus.TS_Measured;
             }
-
-            if (!CmmOnline)
-            {
-                _cmmControl.Offline();
-            }
+            // TODO 如果运行到这里，设置离线可能会断不开连接
+            // 在cmmControl中增加标志位，是否还在连接
+            //if (!CmmOnline)
+            //{
+            //    _cmmControl.Offline();
+            //}
+            Working = false;
+            _offlineWaitFlag.Set();
         }
 
         private void SetupTray(Tray tray)
@@ -111,18 +121,40 @@ namespace Hrsw.XiAnPro.LogicControls
             _cts.Cancel();
         }
 
-        public void Offline()
+        public async Task Offline()
         {
+            if (!CmmOnline) return;
+
             _cts?.Cancel();
             _actCtrl.IsOffline = true;
+
+            bool ok = await Task.Run(() =>
+            {
+                bool result = true;
+                if (Working)
+                {
+                    result = _offlineWaitFlag.WaitOne(TimeSpan.FromMinutes(10));
+                }
+                return result;
+            }).ConfigureAwait(false);
+            if (!ok)
+            {
+                throw new TimeoutException("等待工作停止超时,无法离线!");
+            }
+            _cmmControl.Offline();
             CmmOnline = false;
         }
 
         public void Online()
         {
-            CmmOnline = true;
+            if (CmmOnline) return;
+
             _actCtrl.IsOffline = false;
-            _cmmControl.Online();
+
+            if (!CmmOnline)
+            {
+                CmmOnline = _cmmControl.Online();
+            }
         }
     }
 }

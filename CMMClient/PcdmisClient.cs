@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hrsw.XiAnPro.CMMClient
 {
-    public class PcdmisClient : BindableBase, ICMMControl
+    public class PcdmisClient : BindableBase, ICMMControl, IDisposable
     {
         private static PcdmisClient _inst = new PcdmisClient();
         public static PcdmisClient Inst => _inst ?? (_inst = new PcdmisClient());
@@ -25,7 +25,7 @@ namespace Hrsw.XiAnPro.CMMClient
         private Timer _timer;
 
         [Bindable]
-        public bool MeasError { get; set; }
+        public bool Connected { get; set; }
 
         public bool Initial()
         {
@@ -48,26 +48,57 @@ namespace Hrsw.XiAnPro.CMMClient
             _pcdmisService = new PCDmisServiceClient(new InstanceContext(_pcdmisCallback));
             _pcdmisService.InnerDuplexChannel.Faulted += InnerDuplexChannel_Faulted;
             _pcdmisService.InnerDuplexChannel.Opened += InnerDuplexChannel_Opened;
+            _pcdmisService.InnerDuplexChannel.Closed += InnerDuplexChannel_Closed;
             _pcdmisService.Open();
+            Connected = true;
+        }
+
+        private void InnerDuplexChannel_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                if (_pcdmisService.State == CommunicationState.Opened)
+                {
+                    _pcdmisService.Close();
+                }
+                else if (_pcdmisService.State == CommunicationState.Faulted)
+                {
+                    _pcdmisService.Abort();
+                }
+                _pcdmisService.InnerDuplexChannel.Faulted -= InnerDuplexChannel_Faulted;
+                _pcdmisService.InnerDuplexChannel.Opened -= InnerDuplexChannel_Opened;
+                _pcdmisService.InnerDuplexChannel.Closed -= InnerDuplexChannel_Closed;
+                _pcdmisService = null;
+            }
+            catch (Exception)
+            {
+            }
+            Connected = false;
         }
 
         public void ClosePcdmisService()
         {
-            if (_pcdmisService != null)
+            try
             {
-                _pcdmisService.InnerDuplexChannel.Faulted -= InnerDuplexChannel_Faulted;
-                _pcdmisService.InnerDuplexChannel.Opened -= InnerDuplexChannel_Opened;
-                if (_pcdmisService.State == CommunicationState.Faulted)
+                if (_pcdmisService != null)
                 {
-                    _pcdmisService.Abort();
-                }
-                else if (_pcdmisService.State == CommunicationState.Opened)
-                {
-                    _pcdmisService.Disconnect();
-                    _pcdmisService.Close();
+                    if (_pcdmisService.State == CommunicationState.Faulted)
+                    {
+                        _pcdmisService.Abort();
+                    }
+                    else if (_pcdmisService.State == CommunicationState.Opened)
+                    {
+                        _pcdmisService.Disconnect();
+                        _pcdmisService.Close();
+                    }
                 }
             }
-            _pcdmisService = null;
+            catch (Exception)
+            {
+                // TODO 关闭通讯失败
+                _pcdmisService.Abort();
+            }
+            Connected = false;
         }
 
         private void InnerDuplexChannel_Opened(object sender, EventArgs e)
@@ -80,6 +111,7 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void InnerDuplexChannel_Faulted(object sender, EventArgs e)
         {
+            // TODO 服务器断开提醒
             _pcdmisService.Abort();
         }
 
@@ -97,18 +129,18 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public async Task<bool> MeasurePartAsync(Part part)
         {
-            // TODO 判断结果，并启动文件回传
+            //判断结果，并启动文件回传
             bool success = true;
             try
             {
                 part.Status = PartStatus.PS_Measuring;
-                part.Flag = 1;
-                _timer = new Timer(_ => ++part.Flag, part, 0, 2000);
+                part.Flag = 0;
+                _timer = new Timer(TestBack/*_ => part.Flag = ++part.Flag % 2*/, part, 0, 2000);
 
                 PCDResponse response = await Task.Run(() => Measure(part));
 
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
-
+                part.Flag = 0;
                 success = response.Success;
                 part.Pass = response.Pass;
                 part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
@@ -124,6 +156,12 @@ namespace Hrsw.XiAnPro.CMMClient
             }
 
             return success;
+        }
+
+        private void TestBack(object obj)
+        {
+            Part part = (Part)obj;
+            part.Flag = ++part.Flag % 2;
         }
 
         // 当选择流程分支时，释放测量
@@ -160,17 +198,25 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public void Dispose()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Offline()
-        {
             ClosePcdmisService();
         }
 
-        public void Online()
+        public bool Offline()
         {
-            OpenPcdmisService();
+            ClosePcdmisService();
+            return Connected;
+        }
+
+        public bool Online()
+        {
+            if (!Connected)
+            {
+                return Initial();
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }

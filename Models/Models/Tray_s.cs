@@ -11,6 +11,7 @@ namespace Hrsw.XiAnPro.Models
     public class Tray_s
     {
         public int Id { get; set; }
+        public int TrayNb { get; set; }
         public int Category { get; set; }
         public int ColumnCount { get; set; }
         public int RowCount { get; set; }

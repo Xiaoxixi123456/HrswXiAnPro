@@ -25,6 +25,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
+                        <RowDefinition/>
                     </Grid.RowDefinitions>
                     <BulletDecorator Grid.Row="0">
                         <BulletDecorator.Bullet>
@@ -38,6 +39,13 @@
                             <Label Content="工件号"/>
                         </BulletDecorator.Bullet>
                         <Label Content="{Binding PartNb}"
+                               VerticalContentAlignment="Center"/>
+                    </BulletDecorator>
+                    <BulletDecorator Grid.Row="2">
+                        <BulletDecorator.Bullet>
+                            <Label Content="工件类别"/>
+                        </BulletDecorator.Bullet>
+                        <Label Content="{Binding Category}"
                                VerticalContentAlignment="Center"/>
                     </BulletDecorator>
                 </Grid>
@@ -61,7 +69,8 @@
         <ListBox ItemsPanel="{DynamicResource TrayUIItemsPanelTemplate}"
                  ItemsSource="{Binding Parts}"
                  HorizontalContentAlignment="Stretch"
-                 VerticalContentAlignment="Stretch"
+                 VerticalContentAlignment="Stretch" 
+                 ItemContainerStyle="{DynamicResource PartsListBoxItemStyle}" Background="{x:Null}"
                  >
             <ListBox.ItemTemplateSelector>
                 <utl:PartsOfTrayDataTemplateSelector 

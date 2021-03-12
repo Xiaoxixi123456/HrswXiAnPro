@@ -86,6 +86,7 @@ namespace MainApp.ViewModels
                     Status = PartStatus.PS_Empty
                 };
             }
+            Tray.PartCount = Tray.Parts.Count(p => p.Status != PartStatus.PS_Empty);
         }
 
         private void LoadParts()
@@ -116,6 +117,11 @@ namespace MainApp.ViewModels
                 Tray.Parts[index - 1].Placed = true;
                 Parts.Remove(pt);
             }
+            if (indexs.Count > 0)
+            {
+                Tray.Status = TrayStatus.TS_Idle;
+            }
+            Tray.PartCount = Tray.Parts.Count(p => p.Status != PartStatus.PS_Empty);
         }
     }
 }

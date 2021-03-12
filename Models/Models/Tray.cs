@@ -30,6 +30,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int UseCmmNo { get; set; }
         [Bindable]
+        public int PartCount { get; set; }
+        [Bindable]
         public int SlotNb { get; set; }
         [Bindable]
         public bool Placed { get; set; }
@@ -49,7 +51,24 @@ namespace Hrsw.XiAnPro.Models
                     Status = PartStatus.PS_Empty,
                 });
             }
+            PartCount = 0;
+        }
 
+        public void MakePartPlaceholder()
+        {
+            Status = TrayStatus.TS_Idle;
+            Placed = false;
+            UseCmmNo = -1;
+            PartCount = 0;
+            Parts = new ObservableCollection<Part>();
+            for (int i = 0; i < ColumnCount * RowCount; i++)
+            {
+                Parts.Add(new Part()
+                {
+                    SlotNb = i + 1,
+                    Status = PartStatus.PS_Empty,
+                });
+            }
         }
     }
 }

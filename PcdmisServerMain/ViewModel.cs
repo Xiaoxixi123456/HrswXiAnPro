@@ -35,6 +35,7 @@ namespace PcdmisServerMain
             MeasProgsManager.SavFileName = "MeasProgs.xml";
             MeasProgsManager.LoadPrograms();
             ServerDirs = ServerDirManager.Inst;
+            ServerDirManager.Inst.LoadDirs();
 
             ProgsSetupCommand = new DelegateCommand(ProgsSetup);
             DirsSetupCommand = new DelegateCommand(DirsSetup);

@@ -17,8 +17,7 @@ namespace TestFormat
             Tray tray = new Tray();
             for (int i = 0; i < 3; i++)
             {
-
-            tray.Parts.Add(new Part());
+                tray.Parts.Add(new Part());
             }
   
             var config = new MapperConfiguration(cfg =>

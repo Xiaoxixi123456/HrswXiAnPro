@@ -21,6 +21,7 @@ namespace Hrsw.XiAnPro.PCDmisService
         private PCDmisControl _pcdmisControl;
         private AutoResetEvent _are;
         private bool _completed;
+        private IContextChannel _channelCache;
 
         //[Bindable]
         //public string MeasProgDir { get; set; } = @"E:\WorkDirs\PcdmisFiles";
@@ -102,9 +103,12 @@ namespace Hrsw.XiAnPro.PCDmisService
                 ServerLog.Logs.AddLog("回连失败");
             }
             Connected = response.Success;
+            StatusMessage = Connected ? "控制器已连接" : "控制器连接过程中发生错误";
+            ServerLog.Logs.AddLog(StatusMessage);
             OperationContext.Current.Channel.Closed += Channel_Closed;
             OperationContext.Current.Channel.Opened += Channel_Opened;
             OperationContext.Current.Channel.Faulted += Channel_Faulted;
+            _channelCache = OperationContext.Current.Channel;
             return response;
         }
 
@@ -117,19 +121,29 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         public PCDResponse Disconnect()
         {
-            try
-            {
-                OperationContext.Current.Channel.Closed -= Channel_Closed;
-                OperationContext.Current.Channel.Opened -= Channel_Opened;
-                OperationContext.Current.Channel.Faulted -= Channel_Faulted;
-            }
-            catch
-            {
-            }
-            _pcdmisCallback = null;
-            PCDResponse response = new PCDResponse() { Success = true, Message = "" };
             Connected = false;
+            _pcdmisCallback = null;
+            PCDResponse response = new PCDResponse()
+            { Success = true, Message = "" };
             return response;
+        }
+
+        public void CloseChannel()
+        {
+            if (_channelCache != null)
+            {
+                if (_channelCache.State == CommunicationState.Opened)
+                {
+                    _channelCache.Close();
+                }
+                else if (_channelCache.State == CommunicationState.Faulted)
+                {
+                    _channelCache.Abort();
+                }
+                _channelCache.Closed -= Channel_Closed;
+                _channelCache.Opened -= Channel_Opened;
+                _channelCache.Faulted -= Channel_Faulted;
+            }
         }
 
         private void Channel_Faulted(object sender, EventArgs e)
@@ -141,6 +155,12 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private void Channel_Closed(object sender, EventArgs e)
         {
+            if (_channelCache != null)
+            {
+                _channelCache.Closed -= Channel_Closed;
+                _channelCache.Opened -= Channel_Opened;
+                _channelCache.Faulted -= Channel_Faulted;
+            }
             StatusMessage = "控制端关闭";
             Connected = false;
             ServerLog.Logs.AddLog("控制端关闭");
@@ -153,6 +173,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         public PCDResponse MeasurePart(PCDRequest request)
         {
+            StatusMessage = "开始测量";
             PCDResponse resp = null;
             try
             {
@@ -177,6 +198,7 @@ namespace Hrsw.XiAnPro.PCDmisService
                 };
                 ServerLog.Logs.AddLog(pe.Message);
             }
+            StatusMessage = "结束测量";
             return resp;
         }
 
@@ -270,7 +292,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             {
                 _pcdmisControl.Close();
             }
-            Disconnect();
+            //CloseChannel();
         }
     }
 }

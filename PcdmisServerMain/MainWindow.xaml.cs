@@ -107,5 +107,10 @@ namespace PcdmisServerMain
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ViewModel.PcdmisService.CloseChannel();
+        }
     }
 }

@@ -35,12 +35,12 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="工件名" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="工件号" Binding="{Binding PartNb}"/>
                 <DataGridTextColumn Header="工件类别" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="图号" Binding="{Binding DrawingNo}"/>
                 <DataGridTextColumn Header="放置状态" Binding="{Binding Placed, Converter={StaticResource PlacedStatusConverter}}"/>
                 <DataGridTextColumn Header="料盘号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="料盘槽号" Binding="{Binding SlotNb}"/>
-                <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
                 <DataGridTextColumn Header="测量三坐标号" Binding="{Binding UseCmmNo}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,
                     Converter={StaticResource PartStatusConverter}}"/>
@@ -52,6 +52,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Margin="3" Orientation="Horizontal"

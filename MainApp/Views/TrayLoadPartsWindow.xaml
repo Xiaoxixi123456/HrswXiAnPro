@@ -113,7 +113,7 @@
                      ItemTemplate="{StaticResource DefaultPartDataTemplate}"
                      HorizontalContentAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
-                     SelectionMode="Multiple"
+                     SelectionMode="Extended"
                      SelectionChanged="partsListBox_SelectionChanged">
                 <!--<i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">

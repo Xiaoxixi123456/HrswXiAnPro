@@ -3,8 +3,10 @@ using MainApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +21,7 @@ namespace MainApp.ViewModels
         public DelegateCommand DeleteAllPartsCommand { get; set; }
         public DelegateCommand AddTrayCommand { get; set; }
         public DelegateCommand DeleteTrayCommand { get; set; }
+        public DelegateCommand ImportTraysCommand { get; set; }
         public DelegateCommand LoadPartsCommand { get; set; }
         public DelegateCommand LoadTraysCommand { get; set; }
         public DelegateCommand UnLoadTraysFromSlotCommand { get; set; }
@@ -33,11 +36,36 @@ namespace MainApp.ViewModels
             DeleteAllPartsCommand = new DelegateCommand(DeleteAllParts);
             AddTrayCommand = new DelegateCommand(AddTray);
             DeleteTrayCommand = new DelegateCommand(DeleteTray);
+            ImportTraysCommand = new DelegateCommand(ImportTrays);
             LoadPartsCommand = new DelegateCommand(LoadPartsToTray);
             LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
             UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot);
             ReadPartsCommand = new DelegateCommand(ReadParts);
             StartAutoflowCommand = new DelegateCommand(StartAutoflow);
+        }
+
+        private void ImportTrays()
+        {
+            foreach (var tray in Trays)
+            {
+                if (tray.Placed) return;
+                foreach (var part in tray.Parts)
+                {
+                    if (part.Status != PartStatus.PS_Empty
+                        && part.Placed)
+                    {
+                        part.Placed = false;
+                        part.SlotNb = -1;
+                        part.TrayNb = -1;
+                    }
+                }
+            }
+            Trays = TraysRepository.LoadTrays();
+        }
+
+        private void UpdateTrays()
+        {
+            TraysRepository.UpdateTrays(Trays);
         }
 
         private void StartAutoflow()
@@ -59,7 +87,7 @@ namespace MainApp.ViewModels
                 }
                 int index = SelectedTrayInRack.SlotNb - 1;
                 Tray tray = SelectedTrayInRack;
-                tray.Status = TrayStatus.TS_Idle;
+                //tray.Status = TrayStatus.TS_Idle;
                 tray.SlotNb = -1;
                 tray.Placed = false;
                 Tray emptyTray = new Tray() {
@@ -94,7 +122,7 @@ namespace MainApp.ViewModels
         {
             if (SelectedRack == null)
                 return;
-            // TODO 测量过程中无法不能调整料库
+            // 测量过程中无法不能调整料库
             if (SelectedRack.Status == RackStatus.RS_Busy)
             {
                 return;
@@ -117,7 +145,7 @@ namespace MainApp.ViewModels
         {
             if (SelectedTrayInRack == null)
                 return;
-            // TODO 测量过程中无法不能调整料库
+            // 测量过程中无法不能调整料库
             if (Racks[0].Status == RackStatus.RS_Busy)
             {
                 return;
@@ -127,7 +155,7 @@ namespace MainApp.ViewModels
             ltvm.Rack = Racks[0];
             ltvm.Trays.Clear();
             //var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
-            var trays = Trays.Where(t => !t.Placed).ToList();
+            var trays = Trays.Where(t => !t.Placed && t.PartCount != 0).ToList();
             foreach (var item in trays)
             {
                 ltvm.Trays.Add(item);
@@ -140,7 +168,7 @@ namespace MainApp.ViewModels
         {
             if (SelectedTray == null)
                 return;
-            if (SelectedTray.Status != TrayStatus.TS_Idle)
+            if (SelectedTray.Placed)
             {
                 // 警告：料盘装载中，无法删除
                 return;
@@ -196,6 +224,7 @@ namespace MainApp.ViewModels
                 item.TrayNb = -1;
             }
             Trays.Remove(SelectedTray);
+            TraysRepository.UpdateTrays(Trays);
         }
 
         private void AddTray()
@@ -203,6 +232,7 @@ namespace MainApp.ViewModels
             AddTrayWindow addTrayWindow = new AddTrayWindow();
             addTrayWindow.Trays = Trays;
             addTrayWindow.ShowDialog();
+            TraysRepository.UpdateTrays(Trays);
         }
 
         private void AddPart()
