@@ -201,6 +201,7 @@ namespace MainApp.ViewModels
             Parts.Remove(SelectedPart);
             SelectParts.Remove(SelectedPart);
             CategoriesRefresh();
+            PartsFileRepository.UpdateParts(Parts);
         }
 
         private void DeleteTray()
@@ -242,6 +243,7 @@ namespace MainApp.ViewModels
             addPartWindow.Parts = Parts;
             addPartWindow.ShowDialog();
             CategoriesRefresh();
+            PartsFileRepository.UpdateParts(Parts);
         }
 
         private void PartsUISelectCategory()

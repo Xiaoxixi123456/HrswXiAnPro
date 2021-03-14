@@ -67,6 +67,10 @@
       <Project>{280B648D-EF14-43E7-8E02-38EA80C6B66B}</Project>
       <Name>PCDmisService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServerCommon\ServerCommons.csproj">
+      <Project>{b92406d6-7738-4ad6-82cb-f3de1ba08c68}</Project>
+      <Name>ServerCommons</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

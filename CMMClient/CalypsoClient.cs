@@ -8,6 +8,10 @@ namespace Hrsw.XiAnPro.CMMClient
     public class CalypsoClient : ICMMControl
     {
         private static CalypsoClient _inst = new CalypsoClient();
+
+        public event EventHandler OfflineEvent;
+        public event EventHandler OnlineEvent;
+
         public static CalypsoClient Inst => _inst ?? (_inst = new CalypsoClient());
         private CalypsoClient() 
         {
@@ -58,6 +62,11 @@ namespace Hrsw.XiAnPro.CMMClient
         }
 
         public bool Online()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void TransferReport(Part obj)
         {
             throw new NotImplementedException();
         }

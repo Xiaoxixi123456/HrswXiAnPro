@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.CMMClients.PcdmisServiceReference;
+﻿using Hrsw.XiAnPro.CMMClients;
+using Hrsw.XiAnPro.CMMClients.PcdmisServiceReference;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.Models;
 using Hrsw.XiAnPro.Utilities;
@@ -24,8 +25,13 @@ namespace Hrsw.XiAnPro.CMMClient
         private PcdmisClient() { }
         private Timer _timer;
 
+        public event EventHandler OfflineEvent;
+        public event EventHandler OnlineEvent;
+
         [Bindable]
         public bool Connected { get; set; }
+
+        private ReportFileTransfer _reportFileTransfer;
 
         public bool Initial()
         {
@@ -34,8 +40,9 @@ namespace Hrsw.XiAnPro.CMMClient
             try
             {
                 OpenPcdmisService();
+                OpenTransferReportsService();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 result = false;
             }
@@ -53,27 +60,56 @@ namespace Hrsw.XiAnPro.CMMClient
             Connected = true;
         }
 
+        private void OpenTransferReportsService()
+        {
+            _reportFileTransfer = new ReportFileTransfer("pcdmis");
+            _reportFileTransfer.Initialize();
+            _reportFileTransfer.LaunchTransferProcess();
+        }
+
         private void InnerDuplexChannel_Closed(object sender, EventArgs e)
         {
             try
             {
-                if (_pcdmisService.State == CommunicationState.Opened)
-                {
-                    _pcdmisService.Close();
-                }
-                else if (_pcdmisService.State == CommunicationState.Faulted)
-                {
-                    _pcdmisService.Abort();
-                }
+                //if (_pcdmisService.State == CommunicationState.Opened)
+                //{
+                //    _pcdmisService.Close();
+                //}
+                //else if (_pcdmisService.State == CommunicationState.Faulted)
+                //{
+                //    _pcdmisService.Abort();
+                //}
                 _pcdmisService.InnerDuplexChannel.Faulted -= InnerDuplexChannel_Faulted;
                 _pcdmisService.InnerDuplexChannel.Opened -= InnerDuplexChannel_Opened;
                 _pcdmisService.InnerDuplexChannel.Closed -= InnerDuplexChannel_Closed;
                 _pcdmisService = null;
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            Connected = false;
+        }
+
+        public void CloseServics()
+        {
+            ClosePcdmisService();
+            CloseFileTransferService();
+        }
+
+        private void CloseFileTransferService()
+        {
+            try
+            {
+                if (_reportFileTransfer != null)
+                {
+                    _reportFileTransfer.StopStopTransferProcess();
+                    _reportFileTransfer.StopFileTransferService();
+                }
+            }
             catch (Exception)
             {
             }
-            Connected = false;
         }
 
         public void ClosePcdmisService()
@@ -116,6 +152,7 @@ namespace Hrsw.XiAnPro.CMMClient
         }
 
 
+
         public Task<bool> AnalyseReportAsync(out bool pass)
         {
             pass = false;
@@ -143,14 +180,18 @@ namespace Hrsw.XiAnPro.CMMClient
                 part.Flag = 0;
                 success = response.Success;
                 part.Pass = response.Pass;
+                part.ResultFile = response.ReportFile;
                 part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
-
             }
             catch (Exception) 
             {
                 //通讯失败中终止测量
                 success = false;
                 part.Pass = false;
+                OfflineEvent?.Invoke(this, null);
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
+                part.Flag = 0;
+                part.ResultFile = "";
                 part.Status = PartStatus.PS_Idle;
                 throw new InvalidOperationException("远程测量异常");
             }
@@ -174,6 +215,7 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception)
             {
+                OfflineEvent?.Invoke(this, null);
                 return false;
             }
         }
@@ -203,7 +245,7 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public bool Offline()
         {
-            ClosePcdmisService();
+            CloseServics();
             return Connected;
         }
 
@@ -217,6 +259,11 @@ namespace Hrsw.XiAnPro.CMMClient
             {
                 return true;
             }
+        }
+
+        public void TransferReport(Part obj)
+        {
+            _reportFileTransfer.Next(obj);
         }
     }
 }

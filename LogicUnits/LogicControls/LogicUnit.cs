@@ -39,7 +39,6 @@ namespace Hrsw.XiAnPro.LogicControls
             CmmNo = cmmNo;
             CmmName = cmmName;
             _cmmControl = cmmControl;
-            CmmOnline = true;
             Working = false;
             _actCtrl = new ActivityController() { Mark = true, IsOffline = false };
             _traySelector = new TraySelectActivity(cmmNo);

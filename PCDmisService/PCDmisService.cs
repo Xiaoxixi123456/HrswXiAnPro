@@ -236,6 +236,7 @@ namespace Hrsw.XiAnPro.PCDmisService
             {
                 resp.Success = false;
                 resp.Pass = false;
+                resp.ReportFile = "";
                 resp.Message = "测量未完成。";
             }
 

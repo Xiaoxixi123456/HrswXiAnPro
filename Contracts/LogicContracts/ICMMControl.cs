@@ -16,5 +16,9 @@ namespace Hrsw.XiAnPro.LogicContracts
         void Stop();
         bool Offline();
         bool Online();
+        event EventHandler OfflineEvent;
+        event EventHandler OnlineEvent;
+
+        void TransferReport(Part obj);
     }
 }

@@ -59,6 +59,7 @@ namespace MainApp.ViewModels
 
             Racks.Add(new Rack(3, 3));
             CurrentSelectCategory = "All";
+            Parts = PartsFileRepository.LoadParts();
             CategoriesRefresh();
             LogicUnits = new ObservableCollection<LogicUnitViewModel>();
             PcdmisClient = PcdmisClient.Inst;
@@ -105,7 +106,7 @@ namespace MainApp.ViewModels
             LogicUnitViewModel luVm = new LogicUnitViewModel(cmmNo, cmmName, cmmCtrl);
             luVm.CanOnline = !connected;
             luVm.CanOffline = connected;
-
+            luVm.LogicUnit.CmmOnline = connected;
             LogicUnits.Add(luVm);
         }
 

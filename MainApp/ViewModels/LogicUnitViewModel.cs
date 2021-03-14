@@ -31,6 +31,15 @@ namespace MainApp.ViewModels
             LogicUnit = new LogicUnit(cmmNo, cmmName, cmmClient);
             OfflineCommand = new DelegateCommand(CmmOffline).ObservesCanExecute(() => CanOffline);
             OnlineCommand = new DelegateCommand(CmmOnline).ObservesCanExecute(() => CanOnline);
+
+            cmmClient.OfflineEvent += CmmClient_OfflineEvent;
+        }
+
+        private void CmmClient_OfflineEvent(object sender, EventArgs e)
+        {
+            CanOnline = true;
+            CanOffline = false;
+            LogicUnit.CmmOnline = false;
         }
 
         private void CmmOnline()

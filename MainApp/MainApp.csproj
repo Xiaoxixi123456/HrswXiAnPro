@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MainViewModelCommands.cs" />
     <Compile Include="ViewModels\MainViewModelForPartsHandle.cs" />
+    <Compile Include="ViewModels\PartsFileRepository.cs" />
     <Compile Include="ViewModels\PartsOfTrayViewModel.cs" />
     <Compile Include="ViewModels\PartViewModel.cs" />
     <Compile Include="ViewModels\TraysOfRackViewModel.cs" />

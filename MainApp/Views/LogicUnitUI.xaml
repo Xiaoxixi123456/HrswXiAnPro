@@ -48,9 +48,9 @@
                        Content="{Binding LogicUnit.CmmName}" />
                 </BulletDecorator>
                 <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
-                          Content="{Binding LogicUnit.CmmOnline, 
+                          Content="{Binding CanOffline, 
                     Converter={StaticResource CmmOnOfflineConverter}}"
-                          IsChecked="{Binding LogicUnit.CmmOnline}"/>
+                          IsChecked="{Binding CanOffline}" IsEnabled="False"/>
             </StackPanel>
             <!--<BulletDecorator Margin="0,2" >
                 <BulletDecorator.Bullet>

@@ -39,6 +39,8 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public int Flag { get; set; }
         [Bindable]
+        public string ResultFile { get; set; }
+        [Bindable]
         public PartStatus Status { get; set; }
     }
 }

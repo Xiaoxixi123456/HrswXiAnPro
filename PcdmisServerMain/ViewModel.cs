@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.PCDmisService;
+﻿using FileServices;
+using Hrsw.XiAnPro.PCDmisService;
 using Hrsw.XiAnPro.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -14,6 +15,7 @@ namespace PcdmisServerMain
     public class ViewModel : BindableBase, IDisposable
     {
         private ServiceHost _host;
+        private ServiceHost _fileServiceHost;
 
         public PCDmisService PcdmisService { get; set; }
         //[Bindable]
@@ -72,10 +74,34 @@ namespace PcdmisServerMain
         public void Initialize()
         {
             PcdmisService.Initial();
+            StartPcdmisServiceHost();
+            StartFileServiceHost();
+        }
+
+        private void StartFileServiceHost()
+        {
+            _fileServiceHost = new ServiceHost(typeof(FileService));
+            _fileServiceHost.Opened += _fileServiceHost_Opened;
+            _fileServiceHost.Faulted += _fileServiceHost_Faulted;
+            _fileServiceHost.Open();
+        }
+
+        private void StartPcdmisServiceHost()
+        {
             _host = new ServiceHost(PcdmisService);
             _host.Opened += _host_Opened;
             _host.Faulted += _host_Faulted;
             _host.Open();
+        }
+
+        private void _fileServiceHost_Faulted(object sender, EventArgs e)
+        {
+            ServerLog.Logs.AddLog("文件传输服务开启失败");
+        }
+
+        private void _fileServiceHost_Opened(object sender, EventArgs e)
+        {
+            ServerLog.Logs.AddLog("文件传输服务已启动");
         }
 
         private void _host_Faulted(object sender, EventArgs e)
@@ -95,6 +121,12 @@ namespace PcdmisServerMain
             PcdmisService?.Dispose();
             MeasProgsManager.SavePrograms();
             ServerDirs.SaveDirs();
+            ClosePcdmisServiceHost();
+            CloseFileServiceHost();
+        }
+
+        private void ClosePcdmisServiceHost()
+        {
             if (_host == null)
                 return;
             if (_host.State == CommunicationState.Opened)
@@ -104,6 +136,19 @@ namespace PcdmisServerMain
             if (_host.State == CommunicationState.Faulted)
             {
                 _host.Abort();
+            }
+        }
+        private void CloseFileServiceHost()
+        {
+            if (_fileServiceHost == null)
+                return;
+            if (_fileServiceHost.State == CommunicationState.Opened)
+            {
+                _fileServiceHost.Close();
+            }
+            if (_fileServiceHost.State == CommunicationState.Faulted)
+            {
+                _fileServiceHost.Abort();
             }
         }
     }
