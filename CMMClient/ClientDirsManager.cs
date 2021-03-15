@@ -14,6 +14,6 @@ namespace Hrsw.XiAnPro.CMMClients
         public static string PcdmisReportsDirectory { get; set; }
         = @"E:\PcdmisFiles\DestReports";
         [Bindable]
-        public static string CalypsoReportsDirectory { get; set; }
+        public static string CalypsoReportsDirectory { get; set; } = @"E:\PcdmisFiles\DestReports";
     }
 }

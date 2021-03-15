@@ -64,6 +64,16 @@
     <Compile Include="PcdmisClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportFileTransfer.cs" />
+    <Compile Include="Service References\CalypsoFileServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CalypsoServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\FileServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -93,6 +103,38 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Service References\CalypsoFileServiceReference\CalypsoFileServiceMetaUrl.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoFileServiceReference\CalypsoFileServiceMetaUrl1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoFileServiceReference\CalypsoFileServiceMetaUrl2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoFileServiceReference\FileService.wsdl" />
+    <None Include="Service References\CalypsoFileServiceReference\Hrsw.XiAnPro.CMMClients.CalypsoFileServiceReference.DownFileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CalypsoFileServiceReference\Hrsw.XiAnPro.CMMClients.CalypsoFileServiceReference.UpFileResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CalypsoServiceReference\CalypsoService.wsdl" />
+    <None Include="Service References\CalypsoServiceReference\CalypsoService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoServiceReference\CalypsoService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoServiceReference\CalypsoService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoServiceReference\CalypsoService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CalypsoServiceReference\CalypsoService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\FileServiceReference\FileService.wsdl" />
     <None Include="Service References\FileServiceReference\Hrsw.XiAnPro.CMMClients.FileServiceReference.DownFileResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -117,6 +159,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CalypsoFileServiceReference\" />
+    <WCFMetadataStorage Include="Service References\CalypsoServiceReference\" />
     <WCFMetadataStorage Include="Service References\FileServiceReference\" />
     <WCFMetadataStorage Include="Service References\PcdmisServiceReference\" />
   </ItemGroup>
@@ -156,6 +200,30 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\FileServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoFileServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoFileServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CalypsoFileServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

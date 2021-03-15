@@ -1,4 +1,4 @@
-﻿using Hrsw.XiAnPro.PCDmisService;
+﻿using CalypsoServices;
 using Hrsw.XiAnPro.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -9,23 +9,21 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PcdmisServerMain
+namespace CalypsoServerMain
 {
-    public class DirsSetupViewModel : BindableBase
+    public class DirsViewModel : BindableBase
     {
         [Bindable]
         public ServerDirManager Dirs { get; set; }
 
-        public DelegateCommand SelectProgDirCommand { get; set; }
         public DelegateCommand SelectReportDirCommand { get; set; }
 
-        public DirsSetupViewModel()
+        public DirsViewModel()
         {
-            SelectProgDirCommand = new DelegateCommand(SelectProgDir);
-            SelectReportDirCommand = new DelegateCommand(SelectReportDir);
-
+            ServerDirManager.Inst.LoadDirs();
             Dirs = ServerDirManager.Inst;
-            Dirs.LoadDirs();
+
+            SelectReportDirCommand = new DelegateCommand(SelectReportDir);
         }
 
         private void SelectReportDir()
@@ -34,16 +32,6 @@ namespace PcdmisServerMain
             if (fbDlg.ShowDialog() == DialogResult.OK)
             {
                 Dirs.ResultDirectory = fbDlg.SelectedPath;
-                Dirs.SaveDirs();
-            }
-        }
-
-        private void SelectProgDir()
-        {
-            FolderBrowserDialog fbDlg = new FolderBrowserDialog();
-            if (fbDlg.ShowDialog() == DialogResult.OK)
-            {
-                Dirs.MeasureProgDirectory = fbDlg.SelectedPath;
                 Dirs.SaveDirs();
             }
         }

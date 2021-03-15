@@ -14,13 +14,13 @@ namespace Hrsw.XiAnPro.CMMClients
     public class ReportFileTransfer : Transfer<Part>
     {
         private FileServiceClient _fileServiceClient;
-        private string _cmm;
+        private string _root;
         // TODO 文件传输事件
 
-        public ReportFileTransfer(string cmm)
+        public ReportFileTransfer(string root)
         {
             _blockQuene = new BlockingCollection<Part>();
-            _cmm = cmm;
+            _root = root;
         }
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Hrsw.XiAnPro.CMMClients
                 long fileSize = _fileServiceClient.DownLoadFile(part.ResultFile, out success, out message, out filestream);
                 if (success)
                 {
-                    // TODO 目录处理
+                    //目录处理
                     try
                     {
-                        string root = _cmm == "pcdmis" ? ClientDirsManager.PcdmisReportsDirectory : ClientDirsManager.CalypsoReportsDirectory;
-                        string filePath = Path.Combine(root, Path.GetFileName(part.ResultFile));
+                        //string root = _cmm == "pcdmis" ? ClientDirsManager.PcdmisReportsDirectory : ClientDirsManager.CalypsoReportsDirectory;
+                        string filePath = Path.Combine(_root, Path.GetFileName(part.ResultFile));
                         byte[] buffer = new byte[fileSize];
                         using (var fsm = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                         {

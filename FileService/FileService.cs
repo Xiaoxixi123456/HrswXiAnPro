@@ -52,7 +52,7 @@ namespace FileServices
             DownFileResult result = new DownFileResult();
 
             //string path = System.AppDomain.CurrentDomain.BaseDirectory + @"\service\" + filedata.FileName;
-            string path = Path.Combine(ServerDirManager.Inst.ResultProgDirectory, filedata.FileName);
+            string path = Path.Combine(ServerDirManager.Inst.ResultDirectory, filedata.FileName);
 
             if (!File.Exists(path))
             {

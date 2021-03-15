@@ -7,6 +7,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -62,7 +63,8 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void OpenTransferReportsService()
         {
-            _reportFileTransfer = new ReportFileTransfer("pcdmis");
+            string root = ClientDirsManager.PcdmisReportsDirectory;
+            _reportFileTransfer = new ReportFileTransfer(root);
             _reportFileTransfer.Initialize();
             _reportFileTransfer.LaunchTransferProcess();
         }
@@ -240,7 +242,7 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public void Dispose()
         {
-            ClosePcdmisService();
+            CloseServics();
         }
 
         public bool Offline()
