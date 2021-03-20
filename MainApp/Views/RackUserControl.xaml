@@ -59,8 +59,9 @@
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="3">
+    <Grid Margin="3" Background="Transparent">
         <ListBox x:Name="TraysListBox" 
+                 Background="Transparent"
                  ItemsPanel="{DynamicResource RackItemsPanelTemplate}" 
                  ItemsSource="{Binding Rack.Trays}"
                  SelectedItem="{Binding SelectedTray}"

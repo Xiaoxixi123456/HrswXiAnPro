@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace FileServices
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall, UseSynchronizationContext = false)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerCall, UseSynchronizationContext = false, IncludeExceptionDetailInFaults = true)]
     public class FileService : IFileService
     {
         public UpFileResult UpLoadFile(UpFile filedata)

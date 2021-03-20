@@ -124,7 +124,8 @@
         <StackPanel Grid.Row="1" Orientation="Horizontal" 
                     FlowDirection="RightToLeft"
                     >
-            <Button x:Name="Close" Content="关闭" Margin="5" Padding="5" Click="Close_Click"
+            <Button x:Name="Close" Content="关闭" Margin="5" Padding="5" 
+                    Click="Close_Click"
                     FontSize="20"
                     Width="100"/>
             <Button x:Name="Add" Content="添加" Margin="5" Padding="5" Click="Add_Click"

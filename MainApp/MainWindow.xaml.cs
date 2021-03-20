@@ -52,5 +52,10 @@ namespace MainApp
         {
             MainViewModel.Dispose();
         }
+
+        private void RackUI_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

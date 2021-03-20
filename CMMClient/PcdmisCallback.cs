@@ -13,10 +13,18 @@ namespace Hrsw.XiAnPro.CMMClient
     public class PcdmisCallback : IPCDmisServiceCallback
     {
         public bool MeasErrorFlag { get; set; }
+        private PcdmisClient _pcdClient;
         public void SendMessage(PCDMessage response)
         {
             Debug.WriteLine(response.Message);
             MeasErrorFlag = response.Error;
+            _pcdClient.CmmError = response.Error;
+            _pcdClient.StatusMessage = response.Message;
+        }
+
+        public PcdmisCallback(PcdmisClient pcdClient)
+        {
+            _pcdClient = pcdClient;
         }
     }
 }

@@ -35,10 +35,13 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+            <GroupBox Header="三坐标信息" 
+                      Margin="2"
+                      Grid.Column="0"
+                      Grid.Row="0">
+                
             <StackPanel Orientation="Vertical" 
-                    Margin="3" 
-                    Grid.Column="0" 
-                    Grid.Row="1">
+                    Margin="2">
                 <BulletDecorator Margin="0,2" >
                     <BulletDecorator.Bullet>
                         <Label VerticalContentAlignment="Center" 
@@ -66,24 +69,31 @@
                           Content="{Binding CanOffline, 
                     Converter={StaticResource CmmOnOfflineConverter}}"
                           IsChecked="{Binding CanOffline}" IsEnabled="False"
-                          Margin="10"
+                          Margin="5,2"
                           FontSize="16"/>
                 <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
                           Content="{Binding LogicUnit.Working, 
                     Converter={StaticResource CmmWorkingConverter}}"
                           IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
-                          Margin="10"
+                          Margin="5,2"
                           FontSize="16"/>
-            </StackPanel>
+                    <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                          Content="{Binding LogicUnit.Working, 
+                    Converter={StaticResource CmmWorkingConverter}}"
+                          IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
+                          Margin="5,2"
+                          FontSize="16"/>
+                </StackPanel>
+            </GroupBox>
             <!--<BulletDecorator Margin="0,2" >
                 <BulletDecorator.Bullet>
                     <Label VerticalContentAlignment="Center" Content="当前料盘:"/>
                 </BulletDecorator.Bullet>
                 <Label VerticalContentAlignment="Center" Content="{Binding CurrentTray.TrayNb}" />
             </BulletDecorator>-->
-                <GroupBox Header="料盘信息" Margin="0,2"
+                <GroupBox Header="料盘信息" Margin="2"
                           Grid.Column="1">
-                    <StackPanel>
+                    <StackPanel Margin="2">
                         <BulletDecorator Margin="0,2" >
                             <BulletDecorator.Bullet>
                                 <Label VerticalContentAlignment="Center" 

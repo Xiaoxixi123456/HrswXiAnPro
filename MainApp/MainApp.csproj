@@ -103,7 +103,9 @@
     <Compile Include="Convertors\TrayStatusConverter.cs" />
     <Compile Include="Convertors\TreePartItemConverter.cs" />
     <Compile Include="Convertors\TreeTrayItemConverter.cs" />
+    <Compile Include="Utilities\MainAndLogicUnitEvent.cs" />
     <Compile Include="Utilities\MainConfigManager.cs" />
+    <Compile Include="Utilities\MyEventAggregator.cs" />
     <Compile Include="Utilities\PartsOfTrayDataTemplateSelector.cs" />
     <Compile Include="Utilities\TraysOfRackDataTemplateSelector.cs" />
     <Compile Include="Utilities\UseCmmConfigs.cs" />

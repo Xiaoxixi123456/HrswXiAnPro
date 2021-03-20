@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.Models;
+using MainApp.Utilities;
 using MainApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -8,7 +9,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -28,9 +31,12 @@ namespace MainApp.ViewModels
         public DelegateCommand UnLoadTraysFromSlotCommand { get; set; }
         public DelegateCommand ReadPartsCommand { get; set; }
         public DelegateCommand StartAutoflowCommand { get; set; }
+        public DelegateCommand StopAutoflowCommand { get; set; }
 
         // menu commands
         public DelegateCommand CmmsSetupCommand { get; set; }
+
+        
 
         public void CreateCommands()
         {
@@ -42,13 +48,24 @@ namespace MainApp.ViewModels
             DeleteTrayCommand = new DelegateCommand(DeleteTray);
             ImportTraysCommand = new DelegateCommand(ImportTrays);
             LoadPartsCommand = new DelegateCommand(LoadPartsToTray);
-            LoadTraysCommand = new DelegateCommand(LoadTraysToRack);
-            UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot);
+            LoadTraysCommand = new DelegateCommand(LoadTraysToRack).ObservesCanExecute(() => Stopped);
+            UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot).ObservesCanExecute(() => Stopped);
             ReadPartsCommand = new DelegateCommand(ReadParts);
-            StartAutoflowCommand = new DelegateCommand(StartAutoflow);
+            StartAutoflowCommand = new DelegateCommand(StartAutoflow).ObservesCanExecute(() => Stopped);
+            StopAutoflowCommand = new DelegateCommand(StopAutoflow).ObservesCanExecute(() => Started);
 
             // menu
             CmmsSetupCommand = new DelegateCommand(CmmsSetup);
+
+            // 
+            MyEventAggregator.Inst.GetEvent<MainAndLogicUnitEvent>().Subscribe(StartCmmWork);
+        }
+
+        private void StartCmmWork(int cmmNo)
+        {
+            if (LogicUnits[cmmNo].LogicUnit.Working || !Started)
+                return;
+           LogicUnits[cmmNo].LogicUnit.CycleProcess(Racks[0]);
         }
 
         private void CmmsSetup()
@@ -83,9 +100,74 @@ namespace MainApp.ViewModels
             TraysRepository.UpdateTrays(Trays);
         }
 
-        private void StartAutoflow()
+        private async void StartAutoflow()
         {
-            Start();
+            //Start();
+            if (LogicUnits.Count == 0)
+            {
+                Started = false;
+                Stopped = true;
+                return;
+            }
+            Started = true;
+            Stopped = false;
+            Racks[0].Status = RackStatus.RS_Busy;
+            //await Task.Factory.StartNew( async () =>
+            //{
+            foreach (var item in LogicUnits)
+            { 
+               item.LogicUnit.CycleProcess(Racks[0]);
+            }
+
+            await Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    bool stopped = true;
+                    
+                    foreach (var item in LogicUnits)
+                    {
+                        if (item.LogicUnit.Working)
+                        {
+                            stopped = false;
+                        }
+                    }
+                    if (stopped) break;
+                }
+            }, TaskCreationOptions.LongRunning);
+            // TODO 结束问题未解决
+            Racks[0].Status = RackStatus.RS_Idle;
+            Started = false;
+            Stopped = true;
+        }
+        
+        private async void StopAutoflow()
+        {
+            foreach (var item in LogicUnits)
+            {
+                item.LogicUnit.Stop();
+            }
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(30));
+
+            await Task.Run(() =>
+            {
+                while (true)
+                {
+                    bool stopped = true;
+                    if (cts.IsCancellationRequested) break;
+                    foreach (var item in LogicUnits)
+                    {
+                        if (item.LogicUnit.Working)
+                        {
+                            stopped = false;
+                        }
+                    }
+                    if (stopped) break;
+                }
+            }, cts.Token);
+            Racks[0].Status = RackStatus.RS_Idle;
+            Started = false;
+            Stopped = true;
         }
 
         private void UnloadTraysFromSlot()

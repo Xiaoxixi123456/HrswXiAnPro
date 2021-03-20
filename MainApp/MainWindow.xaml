@@ -13,7 +13,8 @@
                       Background="White" 
                       WindowState="Maximized">
 
-    <Grid Margin="5" Background="Transparent">
+    <Grid Margin="5" 
+          Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition/>
@@ -51,10 +52,10 @@
                     Grid.Column="0" 
                     Grid.ColumnSpan="2"
                     Margin="10" 
-                    Background="{x:Null}" 
+                    Background="Transparent" 
                     Style="{DynamicResource MainTabControlStyle}">
             <TabItem Header="料库">
-                <localViews:RackUI/>
+                <localViews:RackUI Loaded="RackUI_Loaded"/>
             </TabItem>
             <TabItem Header="料盘">
                 <localViews:TraysUI/>

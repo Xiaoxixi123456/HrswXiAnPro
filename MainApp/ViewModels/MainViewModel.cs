@@ -50,6 +50,10 @@ namespace MainApp.ViewModels
         public Rack SelectedRack { get; set; }
         [Bindable]
         public string OpInfo { get; set; }
+        [Bindable]
+        public bool Started { get; set; }
+        [Bindable]
+        public bool Stopped { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -76,7 +80,8 @@ namespace MainApp.ViewModels
             PcdmisClient = PcdmisClient.Inst;
             CalypsoClient = CalypsoClient.Inst;
             Trays = TraysRepository.LoadTrays();
-            //OpInfo = OpInfomations.info;
+            Started = false;
+            Stopped = true;
         }
 
         private void CategoriesRefresh()

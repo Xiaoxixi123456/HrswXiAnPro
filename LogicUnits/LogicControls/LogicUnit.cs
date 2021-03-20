@@ -20,6 +20,9 @@ namespace Hrsw.XiAnPro.LogicControls
         private ActivityController _actCtrl;
         private AutoResetEvent _offlineWaitFlag;
 
+        public event EventHandler StartedEvent;
+        public event EventHandler StoppedEvent;
+
         [Bindable]
         public Tray CurrentTray { get; set; }
         [Bindable]
@@ -52,6 +55,7 @@ namespace Hrsw.XiAnPro.LogicControls
             if (!CmmOnline) return;
 
             Working = true;
+            StartedEvent?.Invoke(this, null);
             _cts = new CancellationTokenSource();
             Tray tray = null;
             bool success;
@@ -88,6 +92,7 @@ namespace Hrsw.XiAnPro.LogicControls
             //    _cmmControl.Offline();
             //}
             Working = false;
+            StoppedEvent?.Invoke(this, null);
             _offlineWaitFlag.Set();
         }
 

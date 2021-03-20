@@ -23,7 +23,7 @@ namespace Hrsw.XiAnPro.CMMClient
         private PCDmisServiceClient _pcdmisService;
         private PcdmisCallback _pcdmisCallback;
 
-        private PcdmisClient() { }
+        private PcdmisClient() { CmmError = false; }
         private Timer _timer;
 
         public event EventHandler OfflineEvent;
@@ -31,6 +31,10 @@ namespace Hrsw.XiAnPro.CMMClient
 
         [Bindable]
         public bool Connected { get; set; }
+        [Bindable]
+        public bool CmmError { get; set; }
+        [Bindable]
+        public string StatusMessage { get; set; }
 
         private ReportFileTransfer _reportFileTransfer;
 
@@ -53,7 +57,7 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void OpenPcdmisService()
         {
-            _pcdmisCallback = new PcdmisCallback();
+            _pcdmisCallback = new PcdmisCallback(this);
             _pcdmisService = new PCDmisServiceClient(new InstanceContext(_pcdmisCallback));
             _pcdmisService.InnerDuplexChannel.Faulted += InnerDuplexChannel_Faulted;
             _pcdmisService.InnerDuplexChannel.Opened += InnerDuplexChannel_Opened;

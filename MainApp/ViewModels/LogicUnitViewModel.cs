@@ -11,6 +11,8 @@ using Hrsw.XiAnPro.Utilities;
 using System.Windows.Controls;
 using Prism.Commands;
 using System.Windows;
+using Prism.Events;
+using MainApp.Utilities;
 
 namespace MainApp.ViewModels
 {
@@ -22,17 +24,39 @@ namespace MainApp.ViewModels
         public bool CanOffline { get; set; }
         [Bindable]
         public bool CanOnline { get; set; }
+        [Bindable]
+        public bool Started { get; set; }
 
         public DelegateCommand OfflineCommand { get; set; }
         public DelegateCommand OnlineCommand { get; set; }
+        public DelegateCommand StartWorkflowCommand { get; set; }
 
         public LogicUnitViewModel(int cmmNo, string cmmName, ICMMControl cmmClient)
         {
             LogicUnit = new LogicUnit(cmmNo, cmmName, cmmClient);
+
             OfflineCommand = new DelegateCommand(CmmOffline).ObservesCanExecute(() => CanOffline);
             OnlineCommand = new DelegateCommand(CmmOnline).ObservesCanExecute(() => CanOnline);
+            StartWorkflowCommand = new DelegateCommand(StartWorkflow).ObservesCanExecute(() => Started);
 
             cmmClient.OfflineEvent += CmmClient_OfflineEvent;
+            LogicUnit.StartedEvent += LogicUnit_StartedEvent;
+            LogicUnit.StoppedEvent += LogicUnit_StoppedEvent;
+        }
+
+        private void LogicUnit_StoppedEvent(object sender, EventArgs e)
+        {
+            Started = true;
+        }
+
+        private void LogicUnit_StartedEvent(object sender, EventArgs e)
+        {
+            Started = false;
+        }
+
+        private void StartWorkflow()
+        {
+            MyEventAggregator.Inst.GetEvent<MainAndLogicUnitEvent>().Publish(LogicUnit.CmmNo);
         }
 
         private void CmmClient_OfflineEvent(object sender, EventArgs e)

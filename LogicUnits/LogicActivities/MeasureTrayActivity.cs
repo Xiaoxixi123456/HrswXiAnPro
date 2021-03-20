@@ -28,6 +28,8 @@ namespace Hrsw.XiAnPro.LogicActivities
             tray.Status = TrayStatus.TS_Measuring;
             while (true)
             {
+                if (cts.IsCancellationRequested) break;
+
                 if (_ac.IsOffline) break;
 
                 if (_ac.Mark.Value)
@@ -36,7 +38,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                     if (part == null) break;
                 }
 
-                if (_ac.IsOffline)
+                if (_ac.IsOffline || cts.IsCancellationRequested)
                 {
                     part.Status = PartStatus.PS_Idle;
                     break;

@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="600">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -21,11 +21,11 @@
                   SelectedItemChanged="RackTree_SelectedItemChanged" 
                   Grid.RowSpan="1" 
                   Grid.ColumnSpan="1"
-                  Width="450"
-                  Background="Transparent" 
+                  Width="450" 
                   BorderThickness="3"
                   BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                  FontSize="16">
+                  FontSize="16" ItemContainerStyle="{DynamicResource TreeViewItemStyle}" 
+                  Background="Transparent">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Trays}">
                     <TextBlock>
@@ -53,6 +53,11 @@
                                         <Binding Path="TrayNb"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
+                                <TextBlock.ToolTip>
+                                    <Border>
+                                        <Label Content="测试123"/>
+                                    </Border>
+                                </TextBlock.ToolTip>
                             </TextBlock>
                             <!--工件-->
                             <HierarchicalDataTemplate.ItemTemplate>
@@ -94,6 +99,7 @@
                     Margin="10,5"
                     Padding="10,5"
                     FontSize="20"
+                    Width="100"
                     Command="{Binding LoadTraysCommand}" 
                     MouseMove="loadTrayButton_MouseMove" MouseLeave="loadTrayButton_MouseLeave"/>
             <Button x:Name="unloadTrayButton"
@@ -101,19 +107,23 @@
                     Margin="10,5"
                     Padding="10,5"
                     FontSize="20"
+                    Width="100"
                     Command="{Binding UnLoadTraysFromSlotCommand}" MouseLeave="unloadTrayButton_MouseLeave" MouseMove="unloadTrayButton_MouseMove"/>
             <Button x:Name="startAutoflowButton"
                     Content="启动测量"
                     Margin="10,5"
                     Padding="10,5"
                     FontSize="20"
+                    Width="100"
                     Command="{Binding StartAutoflowCommand}" MouseMove="startAutoflowButton_MouseMove" MouseLeave="startAutoflowButton_MouseLeave"
                     />
             <Button x:Name="stopButton"
                     Content="停止"
                     Margin="10,5"
                     FontSize="20"
-                    Padding="10,5" MouseLeave="stopButton_MouseLeave" MouseMove="stopButton_MouseMove"/>
+                    Width="100"
+                    Padding="10,5" MouseLeave="stopButton_MouseLeave" MouseMove="stopButton_MouseMove"
+                    Command="{Binding StopAutoflowCommand}"/>
         </StackPanel>
     </Grid>
 </UserControl>
