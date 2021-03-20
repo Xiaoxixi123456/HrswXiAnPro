@@ -46,6 +46,7 @@ namespace Hrsw.XiAnPro.CMMClient
             catch (Exception ex)
             {
                 result = false;
+                Connected = false;
             }
             return result;
         }
@@ -63,9 +64,9 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void OpenTransferReportsService()
         {
-            string root = ClientDirsManager.PcdmisReportsDirectory;
+            string root = ClientDirsManager.Inst.PcdmisReportsDirectory;
             _reportFileTransfer = new ReportFileTransfer(root);
-            _reportFileTransfer.Initialize();
+            _reportFileTransfer.Initialize("PcdmisFileServiceEp");
             _reportFileTransfer.LaunchTransferProcess();
         }
 

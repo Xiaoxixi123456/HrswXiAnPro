@@ -28,6 +28,7 @@ namespace Hrsw.XiAnPro.CMMClient
         public static CalypsoClient Inst => _inst ?? (_inst = new CalypsoClient());
         private CalypsoClient()
         {
+            Connected = false;
         }
 
         public bool Initial()
@@ -41,6 +42,7 @@ namespace Hrsw.XiAnPro.CMMClient
             catch (Exception)
             {
                 result = false;
+                Connected = false;
             }
             return result;
         }
@@ -51,11 +53,13 @@ namespace Hrsw.XiAnPro.CMMClient
             _calypsoServiceClient.InnerChannel.Opened += InnerChannel_Opened;
             _calypsoServiceClient.InnerChannel.Closed += InnerChannel_Closed;
             _calypsoServiceClient.InnerChannel.Faulted += InnerChannel_Faulted;
+            _calypsoServiceClient.Open();
+            Connected = true;
         }
 
         private void InnerChannel_Faulted(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _calypsoServiceClient.InnerChannel.Abort();
         }
 
         private void InnerChannel_Closed(object sender, EventArgs e)
@@ -73,9 +77,9 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void OpenTransferReportsService()
         {
-            string root = ClientDirsManager.CalypsoReportsDirectory;
+            string root = ClientDirsManager.Inst.CalypsoReportsDirectory;
             _reportFileTransfer = new ReportFileTransfer(root);
-            _reportFileTransfer.Initialize();
+            _reportFileTransfer.Initialize("CalypsoFileServiceEp");
             _reportFileTransfer.LaunchTransferProcess();
         }
 

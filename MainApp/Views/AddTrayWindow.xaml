@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="添加料盘" Height="300" Width="300"
-        Background="#FFC1E5E8">
+        Title="添加料盘" Height="340.541" Width="600"
+        Background="#FFC1E5E8" 
+        FontSize="20">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -20,15 +21,19 @@
                 </Grid.ColumnDefinitions>
                 <BulletDecorator  >
                     <BulletDecorator.Bullet>
-                        <Label Content="料盘类别: " Width="80"/>
+                        <Label Content="类别: " Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding Category}"/>
+                    <TextBox Text="{Binding Category}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator Grid.Column="1">
                     <BulletDecorator.Bullet>
-                        <Label Content="料盘编号:" Width="80"/>
+                        <Label Content="料盘编号:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding TrayNb}"/>
+                    <TextBox Text="{Binding TrayNb}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
             </Grid>
             <Grid Margin="0,5">
@@ -38,15 +43,19 @@
                 </Grid.ColumnDefinitions>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>
-                        <Label Content="行数:" Width="80"/>
+                        <Label Content="行数:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding ColumnCount}"/>
+                    <TextBox Text="{Binding ColumnCount}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator Grid.Column="1">
                     <BulletDecorator.Bullet>
-                        <Label Content="列数:" Width="80"/>
+                        <Label Content="列数:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding RowCount}"/>
+                    <TextBox Text="{Binding RowCount}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
             </Grid>
             <Grid Margin="0,5">
@@ -56,15 +65,19 @@
                 </Grid.ColumnDefinitions>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>
-                        <Label Content="行偏置:" Width="80"/>
+                        <Label Content="行偏置:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding ColumnOffset}"/>
+                    <TextBox Text="{Binding ColumnOffset}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator Grid.Column="1">
                     <BulletDecorator.Bullet>
-                        <Label Content="列偏置:" Width="80"/>
+                        <Label Content="列偏置:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding RowOffset}"/>
+                    <TextBox Text="{Binding RowOffset}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
             </Grid>
             <Grid Margin="0,5">
@@ -74,33 +87,49 @@
                 </Grid.ColumnDefinitions>
                 <BulletDecorator >
                     <BulletDecorator.Bullet>
-                        <Label Content="基准行偏置:" Width="80"/>
+                        <Label Content="基准行偏置:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding BaseColumnOffset}"/>
+                    <TextBox Text="{Binding BaseColumnOffset}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
                 <BulletDecorator Grid.Column="1">
                     <BulletDecorator.Bullet>
-                        <Label Content="基准列偏置:" Width="80"/>
+                        <Label Content="基准列偏置:" Width="150"/>
                     </BulletDecorator.Bullet>
-                    <TextBox Text="{Binding BaseRowOffset}"/>
+                    <TextBox Text="{Binding BaseRowOffset}" 
+                             FontSize="20"
+                             VerticalContentAlignment="Center"/>
                 </BulletDecorator>
             </Grid>
             <BulletDecorator Margin="0, 5">
                 <BulletDecorator.Bullet>
-                    <Label Content="三坐标编号: " Width="80"/>
+                    <Label Content="三坐标编号: " Width="150"/>
                 </BulletDecorator.Bullet>
-                <ComboBox SelectedIndex="{Binding CmmNo}">
+                <ComboBox SelectedIndex="{Binding CmmNo}"
+                             FontSize="20"
+                             VerticalContentAlignment="Center">
                     <ComboBoxItem>0</ComboBoxItem>
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>2</ComboBoxItem>
                 </ComboBox>
             </BulletDecorator>
+            <!--<BulletDecorator Margin="0, 5">
+                <BulletDecorator.Bullet>
+                    <Label Content="夹具类别: " Width="80"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding FixCategory}"/>
+            </BulletDecorator>-->
         </StackPanel>
         <StackPanel Grid.Row="1" Orientation="Horizontal" 
                     FlowDirection="RightToLeft"
                     >
-            <Button x:Name="Close" Content="关闭" Margin="5" Padding="5" Click="Close_Click"/>
-            <Button x:Name="Add" Content="添加" Margin="5" Padding="5" Click="Add_Click"/>
+            <Button x:Name="Close" Content="关闭" Margin="5" Padding="5" Click="Close_Click"
+                    FontSize="20"
+                    Width="100"/>
+            <Button x:Name="Add" Content="添加" Margin="5" Padding="5" Click="Add_Click"
+                    FontSize="20"
+                    Width="100"/>
         </StackPanel>
     </Grid>
 </Window>

@@ -13,5 +13,7 @@ namespace CalypsoServiceInterfaces
     {
         [OperationContract]
         bool MakeOffsetFile(CalypsoRequest request);
+        [OperationContract]
+        string GetReportFilename();
     }
 }

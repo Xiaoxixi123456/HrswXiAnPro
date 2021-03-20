@@ -27,11 +27,17 @@
             </ComboBox>
 
         </BulletDecorator>
-        <DataGrid ItemsSource="{Binding SelectParts}"
+        <DataGrid x:Name="PartsGrid"
+                  ItemsSource="{Binding SelectParts}"
                   Grid.Row="1"
                   Margin="3"
                   AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedPart}">
+                  SelectedItem="{Binding SelectedPart}" 
+                  BorderThickness="3"
+                  AlternationCount="1" 
+                  RowStyle="{DynamicResource PartsDataGridRowStyle}"
+                  FontSize="14"
+                  >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="工件名" Binding="{Binding Name}"/>
@@ -54,16 +60,40 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
             </DataGrid.Columns>
+            <!--<DataGrid.Triggers>
+                <MultiDataTrigger>
+                    <MultiDataTrigger.Conditions>
+                        <Condition Binding="{Binding Status}" Value="5"/>
+                        <Condition Binding="{Binding Pass}" Value="True"/>
+                    </MultiDataTrigger.Conditions>
+                    <MultiDataTrigger.Setters>
+                        <Setter Property="RowBackground" Value="Green"/>
+                    </MultiDataTrigger.Setters>
+                </MultiDataTrigger>
+            </DataGrid.Triggers>-->
+            <!--<DataGrid.ItemContainerStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                            <Setter Property="Background" Value="LightBlue"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.ItemContainerStyle>-->
         </DataGrid>
         <StackPanel Margin="3" Orientation="Horizontal"
                     Grid.Row="2">
             <Button Content="添加工件" Margin="2,5" Padding="5"
+                    FontSize="20"
                     Command="{Binding AddPartCommand}"/>
             <Button Content="删除工件" Margin="2,5" Padding="5"
+                    FontSize="20"
                     Command="{Binding DeletePartCommand}"/>
             <Button Content="删除所有" Margin="2,5" Padding="5"
+                    FontSize="20"
                     Command="{Binding DeleteAllPartsCommand}"/>
             <Button Content="导入工件" Margin="2,5" Padding="5"
+                    FontSize="20"
                     Command="{Binding ReadPartsCommand}"/>
         </StackPanel>
     </Grid>

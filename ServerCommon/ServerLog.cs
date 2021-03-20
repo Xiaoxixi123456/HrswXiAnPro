@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Threading;
 
-namespace Hrsw.XiAnPro.PCDmisService
+namespace Hrsw.XiAnPro.ServerCommonMod
 {
     public class ServerLog : BindableBase
     {

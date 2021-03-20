@@ -26,7 +26,7 @@ namespace Hrsw.XiAnPro.LogicActivities
             bool success = await _cmm.MeasurePartAsync(obj);
             if (success)
             {
-                // TODO 测量完成启动文件传输
+                // 测量完成启动文件传输
                 // 往等待队列中发送Part
                 _cmm.TransferReport(obj);
             }

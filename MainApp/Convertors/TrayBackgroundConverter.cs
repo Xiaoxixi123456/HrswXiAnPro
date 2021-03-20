@@ -22,7 +22,7 @@ namespace MainApp.Convertors
                     result = new SolidColorBrush(Colors.Gray);
                     break;
                 case TrayStatus.TS_Idle:
-                    result = new SolidColorBrush(Colors.White);
+                    result = new SolidColorBrush(Colors.LightYellow);
                     break;
                 case TrayStatus.TS_Wait:
                     result = new SolidColorBrush(Colors.Blue);

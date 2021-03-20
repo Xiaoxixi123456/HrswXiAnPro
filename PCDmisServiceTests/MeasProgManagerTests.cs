@@ -1,12 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hrsw.XiAnPro.PCDmisService;
+using Hrsw.XiAnPro.ServerCommonMod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Hrsw.XiAnPro.PCDmisService.Tests
+namespace Hrsw.XiAnPro.ServerCommonMod.Tests
 {
     [TestClass()]
     public class MeasProgManagerTests

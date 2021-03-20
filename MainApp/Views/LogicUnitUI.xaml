@@ -32,7 +32,7 @@
                 />
         <Grid Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Vertical" 
@@ -42,15 +42,38 @@
                 <BulletDecorator Margin="0,2" >
                     <BulletDecorator.Bullet>
                         <Label VerticalContentAlignment="Center" 
-                               Content="CMM:"/>
+                               Content="三坐标名:" 
+                               FontSize="16"
+                               Width="100"/>
                     </BulletDecorator.Bullet>
                     <Label VerticalContentAlignment="Center" 
-                       Content="{Binding LogicUnit.CmmName}" />
+                       Content="{Binding LogicUnit.CmmName}" 
+                           FontSize="16"
+                           />
+                </BulletDecorator>
+                <BulletDecorator Margin="0,2" >
+                    <BulletDecorator.Bullet>
+                        <Label VerticalContentAlignment="Center" 
+                               Content="三坐标号:"
+                               FontSize="16"
+                               Width="100"/>
+                    </BulletDecorator.Bullet>
+                    <Label VerticalContentAlignment="Center" 
+                       Content="{Binding LogicUnit.CmmNo}" 
+                           FontSize="16"/>
                 </BulletDecorator>
                 <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
                           Content="{Binding CanOffline, 
                     Converter={StaticResource CmmOnOfflineConverter}}"
-                          IsChecked="{Binding CanOffline}" IsEnabled="False"/>
+                          IsChecked="{Binding CanOffline}" IsEnabled="False"
+                          Margin="10"
+                          FontSize="16"/>
+                <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                          Content="{Binding LogicUnit.Working, 
+                    Converter={StaticResource CmmWorkingConverter}}"
+                          IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
+                          Margin="10"
+                          FontSize="16"/>
             </StackPanel>
             <!--<BulletDecorator Margin="0,2" >
                 <BulletDecorator.Bullet>
@@ -58,45 +81,58 @@
                 </BulletDecorator.Bullet>
                 <Label VerticalContentAlignment="Center" Content="{Binding CurrentTray.TrayNb}" />
             </BulletDecorator>-->
-                <GroupBox Header="料盘" Margin="0,2"
+                <GroupBox Header="料盘信息" Margin="0,2"
                           Grid.Column="1">
                     <StackPanel>
                         <BulletDecorator Margin="0,2" >
                             <BulletDecorator.Bullet>
                                 <Label VerticalContentAlignment="Center" 
-                                   Content="料盘编号:"/>
+                                   Content="料盘编号:" 
+                                       FontSize="16"/>
                             </BulletDecorator.Bullet>
                             <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.TrayNb}" />
+                               Content="{Binding LogicUnit.CurrentTray.TrayNb}" 
+                                   HorizontalAlignment="Right" Width="179" 
+                                   FontSize="16"/>
                         </BulletDecorator>
                         <BulletDecorator Margin="0,2" >
                             <BulletDecorator.Bullet>
                                 <Label VerticalContentAlignment="Center" 
-                                   Content="料盘类别:"/>
+                                   Content="料盘类别:"
+                                       FontSize="16"/>
                             </BulletDecorator.Bullet>
                             <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.Category}" />
+                               Content="{Binding LogicUnit.CurrentTray.Category}" 
+                                   FontSize="16"/>
                         </BulletDecorator>
                         <BulletDecorator Margin="0,2" >
                             <BulletDecorator.Bullet>
                                 <Label VerticalContentAlignment="Center" 
-                                   Content="料盘槽位:"/>
+                                   Content="料盘槽位:"
+                                       FontSize="16"/>
                             </BulletDecorator.Bullet>
                             <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.SlotNb}" />
+                               Content="{Binding LogicUnit.CurrentTray.SlotNb}" 
+                                   FontSize="16"/>
                         </BulletDecorator>
                     </StackPanel>
                 </GroupBox>
         </Grid>
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2"
-                    Margin="3">
-                <Button Content="联机" Margin="5,3"
-                    Command="{Binding OnlineCommand}"/>
-                <Button Content="离线" Margin="5,3"
-                    Command="{Binding OfflineCommand}"/>
-                <Button Content="启动" Margin="5,3"/>
-            </StackPanel>
+                    Margin="3" >
+            <Button Content="联机" Margin="5,3" FontSize="20"
+                    Command="{Binding OnlineCommand}" 
+                    MouseLeave="Button_MouseLeave"
+                    MouseMove="Button_MouseMove"/>
+            <Button Content="离线" Margin="5,3" FontSize="20"
+                    Command="{Binding OfflineCommand}"
+                    MouseLeave="Button_MouseLeave_1"
+                    MouseMove="Button_MouseMove_1"/>
+            <Button Content="启动" Margin="5,3" FontSize="20"
+                    MouseLeave="Button_MouseLeave_2"
+                    MouseMove="Button_MouseMove_2"/>
+        </StackPanel>
         
     </Grid>
 </UserControl>

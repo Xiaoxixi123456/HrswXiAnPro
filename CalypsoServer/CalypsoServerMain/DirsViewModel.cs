@@ -1,4 +1,5 @@
 ﻿using CalypsoServices;
+using Hrsw.XiAnPro.ServerCommonMod;
 using Hrsw.XiAnPro.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,6 +18,7 @@ namespace CalypsoServerMain
         public ServerDirManager Dirs { get; set; }
 
         public DelegateCommand SelectReportDirCommand { get; set; }
+        public DelegateCommand SelectMeasureProgDirCommand { get; set; }
 
         public DirsViewModel()
         {
@@ -24,6 +26,17 @@ namespace CalypsoServerMain
             Dirs = ServerDirManager.Inst;
 
             SelectReportDirCommand = new DelegateCommand(SelectReportDir);
+            SelectMeasureProgDirCommand = new DelegateCommand(SelectMeasureProgDir);
+        }
+
+        private void SelectMeasureProgDir()
+        {
+            FolderBrowserDialog fbDlg = new FolderBrowserDialog();
+            if (fbDlg.ShowDialog() == DialogResult.OK)
+            {
+                Dirs.MeasureProgDirectory = fbDlg.SelectedPath;
+                Dirs.SaveDirs();
+            }
         }
 
         private void SelectReportDir()

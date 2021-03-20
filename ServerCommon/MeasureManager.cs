@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Hrsw.XiAnPro.PCDmisService
+namespace Hrsw.XiAnPro.ServerCommonMod
 {
     public class MeasProgManager : BindableBase
     {

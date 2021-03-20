@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Threading;
 
-namespace CalypsoServices
+namespace Hrsw.XiAnPro.ServiceCommons
 {
     public class ServerLog : BindableBase
     {

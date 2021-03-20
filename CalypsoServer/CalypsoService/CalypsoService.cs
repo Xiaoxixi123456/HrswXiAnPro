@@ -1,5 +1,6 @@
 ﻿using CalypsoServiceInterfaces;
 using Hrsw.XiAnPro.Models;
+using Hrsw.XiAnPro.ServerCommonMod;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +40,15 @@ namespace CalypsoServices
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Base, {part.XOffset}, {part.YOffset}");
             File.WriteAllText(fileName, sb.ToString());
+        }
+
+        public string GetReportFilename()
+        {
+            string fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "report.rpt");
+            string[] fileNames = File.ReadAllLines(fileName);
+            if (fileNames.Length == 0)
+                return "";
+            return fileNames[0];
         }
     }
 }

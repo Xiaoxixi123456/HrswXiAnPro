@@ -67,6 +67,12 @@ namespace Hrsw.XiAnPro.CMMClients.CalypsoServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICalypsoService/MakeOffsetFile", ReplyAction="http://tempuri.org/ICalypsoService/MakeOffsetFileResponse")]
         System.Threading.Tasks.Task<bool> MakeOffsetFileAsync(Hrsw.XiAnPro.CMMClients.CalypsoServiceReference.CalypsoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICalypsoService/GetReportFilename", ReplyAction="http://tempuri.org/ICalypsoService/GetReportFilenameResponse")]
+        string GetReportFilename();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICalypsoService/GetReportFilename", ReplyAction="http://tempuri.org/ICalypsoService/GetReportFilenameResponse")]
+        System.Threading.Tasks.Task<string> GetReportFilenameAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -102,6 +108,14 @@ namespace Hrsw.XiAnPro.CMMClients.CalypsoServiceReference {
         
         public System.Threading.Tasks.Task<bool> MakeOffsetFileAsync(Hrsw.XiAnPro.CMMClients.CalypsoServiceReference.CalypsoRequest request) {
             return base.Channel.MakeOffsetFileAsync(request);
+        }
+        
+        public string GetReportFilename() {
+            return base.Channel.GetReportFilename();
+        }
+        
+        public System.Threading.Tasks.Task<string> GetReportFilenameAsync() {
+            return base.Channel.GetReportFilenameAsync();
         }
     }
 }

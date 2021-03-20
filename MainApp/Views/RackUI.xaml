@@ -21,14 +21,16 @@
                   SelectedItemChanged="RackTree_SelectedItemChanged" 
                   Grid.RowSpan="1" 
                   Grid.ColumnSpan="1"
-                  Width="300"
-                  Background="Transparent"
-                  >
+                  Width="450"
+                  Background="Transparent" 
+                  BorderThickness="3"
+                  BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
+                  FontSize="16">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Trays}">
                     <TextBlock>
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="Racks - {0}X{1}">
+                            <MultiBinding StringFormat="料库1 -- {0}行 X {1}列">
                                 <Binding Path="ColumnCount"/>
                                 <Binding Path="RowCount"/>
                             </MultiBinding>
@@ -72,13 +74,15 @@
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
-        <Border Grid.Column="1" Margin="4.6,5" 
-                BorderBrush="Black" 
-                BorderThickness="1" 
+        <Border Grid.Column="1" Margin="5" 
+                BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}" 
+                BorderThickness="3" 
                 Grid.RowSpan="1">
             <ContentControl x:Name="ShowContent" 
                             HorizontalContentAlignment="Stretch" 
-                            VerticalContentAlignment="Stretch">
+                            VerticalContentAlignment="Stretch"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
             </ContentControl>
         </Border>
         <StackPanel Grid.Row="1" 
@@ -89,22 +93,27 @@
                     Content="装载料盘"
                     Margin="10,5"
                     Padding="10,5"
-                    Command="{Binding LoadTraysCommand}"/>
+                    FontSize="20"
+                    Command="{Binding LoadTraysCommand}" 
+                    MouseMove="loadTrayButton_MouseMove" MouseLeave="loadTrayButton_MouseLeave"/>
             <Button x:Name="unloadTrayButton"
                     Content="卸载料盘"
                     Margin="10,5"
                     Padding="10,5"
-                    Command="{Binding UnLoadTraysFromSlotCommand}"/>
+                    FontSize="20"
+                    Command="{Binding UnLoadTraysFromSlotCommand}" MouseLeave="unloadTrayButton_MouseLeave" MouseMove="unloadTrayButton_MouseMove"/>
             <Button x:Name="startAutoflowButton"
                     Content="启动测量"
                     Margin="10,5"
                     Padding="10,5"
-                    Command="{Binding StartAutoflowCommand}"
+                    FontSize="20"
+                    Command="{Binding StartAutoflowCommand}" MouseMove="startAutoflowButton_MouseMove" MouseLeave="startAutoflowButton_MouseLeave"
                     />
             <Button x:Name="stopButton"
                     Content="停止"
                     Margin="10,5"
-                    Padding="10,5"/>
+                    FontSize="20"
+                    Padding="10,5" MouseLeave="stopButton_MouseLeave" MouseMove="stopButton_MouseMove"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -15,7 +15,7 @@ namespace Hrsw.XiAnPro.CMMClients
     {
         private FileServiceClient _fileServiceClient;
         private string _root;
-        // TODO 文件传输事件
+        // 文件传输事件
 
         public ReportFileTransfer(string root)
         {
@@ -29,6 +29,18 @@ namespace Hrsw.XiAnPro.CMMClients
         public void Initialize()
         {
             _fileServiceClient = new FileServiceClient();
+            _fileServiceClient.InnerChannel.Opened += InnerChannel_Opened;
+            _fileServiceClient.InnerChannel.Closed += InnerChannel_Closed;
+            _fileServiceClient.InnerChannel.Faulted += InnerChannel_Faulted;
+            _fileServiceClient.Open();
+        }
+
+        /// <summary>
+        /// 连接失败会抛出异常
+        /// </summary>
+        public void Initialize(string endpointConfigNam)
+        {
+            _fileServiceClient = new FileServiceClient(endpointConfigNam);
             _fileServiceClient.InnerChannel.Opened += InnerChannel_Opened;
             _fileServiceClient.InnerChannel.Closed += InnerChannel_Closed;
             _fileServiceClient.InnerChannel.Faulted += InnerChannel_Faulted;
@@ -59,7 +71,14 @@ namespace Hrsw.XiAnPro.CMMClients
             {
                 foreach (var part in _blockQuene.GetConsumingEnumerable())
                 {
-                    TransferFileFromCmmServer(part);
+                    try
+                    {
+                        TransferFileFromCmmServer(part);
+                    }
+                    catch (Exception)
+                    {
+                        // TODO 当前传输失败
+                    }
                 }
             }, TaskCreationOptions.LongRunning);
         }
@@ -78,7 +97,6 @@ namespace Hrsw.XiAnPro.CMMClients
                     //目录处理
                     try
                     {
-                        //string root = _cmm == "pcdmis" ? ClientDirsManager.PcdmisReportsDirectory : ClientDirsManager.CalypsoReportsDirectory;
                         string filePath = Path.Combine(_root, Path.GetFileName(part.ResultFile));
                         byte[] buffer = new byte[fileSize];
                         using (var fsm = new FileStream(filePath, FileMode.Create, FileAccess.Write))

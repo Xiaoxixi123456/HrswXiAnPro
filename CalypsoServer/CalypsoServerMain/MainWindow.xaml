@@ -19,12 +19,14 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FontSize="16">
             <MenuItem Header="设置">
-                <MenuItem Header="目录设置"/>
+                <MenuItem Header="目录设置" 
+                          Command="{Binding DirsSetupCommand}"/>
                 <MenuItem Header="退出" 
                           Click="MenuItem_Click"/>
             </MenuItem>
             <MenuItem Header="日志">
-                <MenuItem Header="日志记录"/>
+                <MenuItem Header="日志记录" 
+                          Command="{Binding LogsCommand}"/>
             </MenuItem>
         </Menu>
         <StackPanel Grid.Row="1">

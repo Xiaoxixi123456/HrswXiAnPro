@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,41 @@ namespace MainApp.Views
         public LogicUnitUI()
         {
             InitializeComponent();
+        }
+
+        private void StackPanel_DragLeave(object sender, DragEventArgs e)
+        {
+
+        }
+
+        private void Button_MouseLeave(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseLeave_1(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseMove_1(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseLeave_2(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Button_MouseMove_2(object sender, MouseEventArgs e)
+        {
+            
         }
     }
 }

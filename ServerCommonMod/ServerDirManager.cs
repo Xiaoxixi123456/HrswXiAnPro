@@ -7,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CalypsoServices
+namespace Hrsw.XiAnPro.ServiceCommons
 {
     public class ServerDirManager : BindableBase
     {
         private static ServerDirManager _inst;
         public static ServerDirManager Inst => _inst ?? (_inst = new ServerDirManager());
         private ServerDirManager() { }
-
+        
         [Bindable]
         public string MeasureProgDirectory { get; set; }
         [Bindable]
@@ -40,7 +40,7 @@ namespace CalypsoServices
                 return;
             }
 
-            var files = File.ReadAllLines(fileName);
+           var files = File.ReadAllLines(fileName);
             MeasureProgDirectory = files[0];
             ResultDirectory = files[1];
         }

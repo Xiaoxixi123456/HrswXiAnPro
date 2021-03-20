@@ -20,7 +20,12 @@
                   Margin="8"
                   ItemsSource="{Binding Trays}" 
                   AutoGenerateColumns="False"
-                  SelectedItem="{Binding SelectedTray}">
+                  SelectedItem="{Binding SelectedTray}" 
+                  BorderThickness="3"
+                  BorderBrush="#CC0078D7" 
+                  AreRowDetailsFrozen="True"
+                  RowDetailsVisibilityMode="VisibleWhenSelected"
+                  FontSize="14">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="料盘编号" Binding="{Binding TrayNb}"/>
@@ -30,12 +35,12 @@
                 <DataGridTextColumn Header="料库槽号" Binding="{Binding SlotNb}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,Converter={StaticResource TrayStatusConverter}}"/>
                 <DataGridTextColumn Header="CMM编号" Binding="{Binding CmmNo}"/>
-                <DataGridTextColumn Header="料盘行数" Binding="{Binding ColumnCount}"/>
+                <!--<DataGridTextColumn Header="料盘行数" Binding="{Binding ColumnCount}"/>
                 <DataGridTextColumn Header="料盘列数" Binding="{Binding RowCount}"/>
                 <DataGridTextColumn Header="行偏置" Binding="{Binding ColumnOffset}"/>
                 <DataGridTextColumn Header="列偏置" Binding="{Binding RowOffset}"/>
                 <DataGridTextColumn Header="基准行偏置" Binding="{Binding BaseColumnOffset}"/>
-                <DataGridTextColumn Header="基准列偏置" Binding="{Binding BaseRowOffset}"/>
+                <DataGridTextColumn Header="基准列偏置" Binding="{Binding BaseRowOffset}"/>-->
                 <!--<DataGridTemplateColumn Header="状态">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -48,6 +53,50 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>-->
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <GroupBox Header="料盘参数" Margin="5">
+                        <StackPanel Margin="3" Background="White">
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="行数:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding ColumnCount}"/>
+                            </BulletDecorator>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="列数:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding RowCount}"/>
+                            </BulletDecorator>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="行偏置:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding ColumnOffset}"/>
+                            </BulletDecorator>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="列偏置:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding RowOffset}"/>
+                            </BulletDecorator>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="基准行偏置:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding BaseColumnOffset}"/>
+                            </BulletDecorator>
+                            <BulletDecorator>
+                                <BulletDecorator.Bullet>
+                                    <Label Content="基准列偏置:" Width="100"/>
+                                </BulletDecorator.Bullet>
+                                <Label Content="{Binding BaseRowOffset}"/>
+                            </BulletDecorator>
+                        </StackPanel>
+                    </GroupBox>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <local:TrayUIWithLight Grid.Column="1" 
                                Grid.Row="0"
@@ -57,12 +106,16 @@
                     Grid.Row="1"
                     Grid.Column="0">
             <Button Content="添加料盘" Margin="5" Padding="5" 
+                    FontSize="20"
                     Command="{Binding AddTrayCommand}"/>
             <Button Content="删除料盘" Margin="5" Padding="5" 
+                    FontSize="20"
                     Command="{Binding DeleteTrayCommand}"/>
             <Button Content="加载工件" Margin="5" Padding="5"
+                    FontSize="20"
                     Command="{Binding LoadPartsCommand}"/>
             <Button Content="导入料盘" Margin="5" Padding="5"
+                    FontSize="20"
                     Command="{Binding ImportTraysCommand}"/>
         </StackPanel>
     </Grid>

@@ -1,5 +1,6 @@
 ﻿using CalypsoServices;
 using FileServices;
+using Hrsw.XiAnPro.ServerCommonMod;
 using Hrsw.XiAnPro.Utilities;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -37,7 +38,11 @@ namespace CalypsoServerMain
 
         private void ShowLogs()
         {
-            throw new NotImplementedException();
+            LogsWindow lgWnd = new LogsWindow();
+            LogsViewModel lgVm = new LogsViewModel();
+            lgWnd.DataContext = lgVm;
+            lgWnd.Topmost = true;
+            lgWnd.ShowDialog();
         }
 
         private void DirsSetup()

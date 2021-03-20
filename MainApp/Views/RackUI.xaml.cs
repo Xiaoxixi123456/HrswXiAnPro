@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.Models;
+using MainApp.Utilities;
 using MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -50,13 +51,57 @@ namespace MainApp.Views
             {
                 //loadTrayButton.IsEnabled = true;
                 Rack rack = (Rack)e.NewValue;
-                RackUserControl rc = new RackUserControl();
-                rc.DataContext = rack;
-                ShowContent.Content = rc;
                 var dataContext = DataContext as MainViewModel;
                 dataContext.SelectedRack = rack;
                 dataContext.SelectedTypeId = 1;
+                RackUserControl rc = new RackUserControl();
+                RackViewModel rcVm = new RackViewModel();
+                rcVm.Rack = rack;
+                rcVm.Trays = dataContext.Trays;
+                rc.DataContext = rcVm;
+                ShowContent.Content = rc;
             }
+        }
+
+        private void loadTrayButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            //OpInfomations.info = "往料库槽中装夹料盘";
+            ((MainViewModel)DataContext).OpInfo = "往料库槽中装夹料盘";
+        }
+
+        private void loadTrayButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "";
+        }
+
+        private void unloadTrayButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "";
+        }
+
+        private void unloadTrayButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "往料库槽中卸载料盘";
+        }
+
+        private void startAutoflowButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "启动检测流程";
+        }
+
+        private void startAutoflowButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "";
+        }
+
+        private void stopButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "";
+        }
+
+        private void stopButton_MouseMove(object sender, MouseEventArgs e)
+        {
+            ((MainViewModel)DataContext).OpInfo = "停止检测流程";
         }
     }
 }

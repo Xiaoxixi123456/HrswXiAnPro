@@ -3,6 +3,7 @@ using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.LogicControls;
 using Hrsw.XiAnPro.Models;
 using Hrsw.XiAnPro.Utilities;
+using MainApp.Utilities;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,9 @@ namespace MainApp.ViewModels
         [Bindable]
         public ObservableCollection<LogicUnitViewModel> LogicUnits;
         private Dispatcher dispatcher;
+
+        [Bindable]
+        public MainConfigManager ConfigManager { get; set; }
 
         [Bindable]
         //public Rack Rack { get; set; }
@@ -44,6 +48,8 @@ namespace MainApp.ViewModels
         public Part SelectedPart { get; set; }
         [Bindable]
         public Rack SelectedRack { get; set; }
+        [Bindable]
+        public string OpInfo { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -51,6 +57,9 @@ namespace MainApp.ViewModels
         public MainViewModel()
         {
             CreateCommands();
+
+            ConfigManager = new MainConfigManager();
+            ConfigManager.LoadConfigs();
 
             Racks = new ObservableCollection<Rack>();
             Trays = new ObservableCollection<Tray>();
@@ -61,10 +70,13 @@ namespace MainApp.ViewModels
             CurrentSelectCategory = "All";
             Parts = PartsFileRepository.LoadParts();
             CategoriesRefresh();
+            SelectCategoryCommand.Execute();
+
             LogicUnits = new ObservableCollection<LogicUnitViewModel>();
             PcdmisClient = PcdmisClient.Inst;
             CalypsoClient = CalypsoClient.Inst;
             Trays = TraysRepository.LoadTrays();
+            //OpInfo = OpInfomations.info;
         }
 
         private void CategoriesRefresh()
@@ -81,11 +93,14 @@ namespace MainApp.ViewModels
 
         public void Initial()
         {
-            //PcdmisClient.Initial();
-            //CalypsoClient.Initial();
-            //LogicUnits.Add(new LogicUnitViewModel(0, "Pcdmis", PcdmisClient) { CanOffline = true, CanOnline = false });
-            //LogicUnits.Add(new LogicUnitViewModel(1, "Calypso", CalypsoClient));
-            AddCmm(0, "Pcdmis");
+            if (ConfigManager.cmmConfigs.UsePcdmis)
+            {
+                AddCmm(0, "Pcdmis");
+            }
+            if (ConfigManager.cmmConfigs.UseCalypso)
+            {
+                AddCmm(1, "Calypso");
+            }
         }
 
         public void AddCmm(int cmmNo, string cmmName)
@@ -142,6 +157,8 @@ namespace MainApp.ViewModels
         public void Dispose()
         {
             PcdmisClient.Dispose();
+            CalypsoClient.Dispose();
+            ConfigManager.SaveConfigs();
         }
     }
 }

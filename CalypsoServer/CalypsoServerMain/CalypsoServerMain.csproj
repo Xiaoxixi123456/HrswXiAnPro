@@ -77,8 +77,16 @@
       <DependentUpon>CalDirsSetupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="DirsViewModel.cs" />
+    <Compile Include="LogsViewModel.cs" />
+    <Compile Include="LogsWindow.xaml.cs">
+      <DependentUpon>LogsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel.cs" />
     <Page Include="CalDirsSetupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LogsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,6 +135,10 @@
     <ProjectReference Include="..\..\FileService\FileService.csproj">
       <Project>{6A5E9B72-6CD4-4C85-ADAA-99A77C8362FD}</Project>
       <Name>FileService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ServerCommon\ServerCommons.csproj">
+      <Project>{B92406D6-7738-4AD6-82CB-F3DE1BA08C68}</Project>
+      <Name>ServerCommons</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
       <Project>{2F3106C7-9975-488D-844E-39A00FE7714E}</Project>

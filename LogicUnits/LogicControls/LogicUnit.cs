@@ -81,7 +81,7 @@ namespace Hrsw.XiAnPro.LogicControls
                 }
                 tray.Status = TrayStatus.TS_Measured;
             }
-            // TODO 如果运行到这里，设置离线可能会断不开连接
+            // 如果运行到这里，设置离线可能会断不开连接
             // 在cmmControl中增加标志位，是否还在连接
             //if (!CmmOnline)
             //{

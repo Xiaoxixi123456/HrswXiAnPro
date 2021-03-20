@@ -41,8 +41,8 @@ namespace CalypsoServerMain
         public void desIcon()
         {
             this.notifyIcon = new NotifyIcon();
-            this.notifyIcon.BalloonTipText = "Pcdmis控制服务器"; //设置程序启动时显示的文本
-            this.notifyIcon.Text = "Pcdmis服务器";//最小化到托盘时，鼠标点击时显示的文本
+            this.notifyIcon.BalloonTipText = "Calypso控制服务器"; //设置程序启动时显示的文本
+            this.notifyIcon.Text = "Calypso服务器";//最小化到托盘时，鼠标点击时显示的文本
             this.notifyIcon.Icon = new System.Drawing.Icon("ControlServer.ico");//程序图标
             this.notifyIcon.Visible = true;
             //打开菜单项

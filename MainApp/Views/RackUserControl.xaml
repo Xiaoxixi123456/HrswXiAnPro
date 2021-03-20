@@ -13,19 +13,21 @@
                 Converter={StaticResource TrayBackgroundConverter}}"
                 BorderBrush="Black" 
                 BorderThickness="1"
-                CornerRadius="2">
+                CornerRadius="5"
+                Margin="8">
                 <StackPanel>
+                    <BulletDecorator >
+                        <BulletDecorator.Bullet>
+                            <Label Content="料盘类别" Width="100"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="{Binding Category}" 
+                        VerticalAlignment="Center"/>
+                    </BulletDecorator>
                     <BulletDecorator >
                         <BulletDecorator.Bullet>
                             <Label Content="料盘编号" Width="100"/>
                         </BulletDecorator.Bullet>
                         <TextBlock Text="{Binding TrayNb}" VerticalAlignment="Center" />
-                    </BulletDecorator>
-                    <BulletDecorator >
-                        <BulletDecorator.Bullet>
-                            <Label Content="料盘类别" Width="100"/>
-                        </BulletDecorator.Bullet>
-                        <TextBlock Text="{Binding Category}" VerticalAlignment="Center"/>
                     </BulletDecorator>
                     <BulletDecorator >
                         <BulletDecorator.Bullet>
@@ -46,19 +48,33 @@
             <Border Background="LightGray"
                     BorderBrush="Black"
                     BorderThickness="1"
-                    CornerRadius="2">
+                    CornerRadius="2"
+                    Margin="8">
                 <Grid >
-                    <Label Content="空槽"/>
+                    <Label Content="空槽" 
+                           HorizontalContentAlignment="Center" 
+                           VerticalContentAlignment="Center" 
+                           FontSize="20"/>
                 </Grid>
             </Border>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="3">
         <ListBox x:Name="TraysListBox" 
                  ItemsPanel="{DynamicResource RackItemsPanelTemplate}" 
-                 ItemsSource="{Binding Trays}"
+                 ItemsSource="{Binding Rack.Trays}"
+                 SelectedItem="{Binding SelectedTray}"
                  HorizontalContentAlignment="Stretch"
-                 VerticalContentAlignment="Stretch">
+                 VerticalContentAlignment="Stretch" 
+                 Grid.IsSharedSizeScope="True">
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="加载料盘" 
+                              Command="{Binding LoadTrayToRackCommand}"/>
+                    <MenuItem Header="卸载料盘" 
+                              Command="{Binding UnloadTrayFromRackCommand}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
             <ListBox.ItemTemplateSelector>
                 <utl:TraysOfRackDataTemplateSelector 
                     DefaultDataTemplate="{StaticResource DefaultRackTemplate}"

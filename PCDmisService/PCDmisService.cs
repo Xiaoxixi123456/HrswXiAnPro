@@ -12,7 +12,7 @@ using System.IO;
 using Prism.Mvvm;
 using Hrsw.XiAnPro.Utilities;
 
-namespace Hrsw.XiAnPro.PCDmisService
+namespace Hrsw.XiAnPro.ServerCommonMod
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.Single, UseSynchronizationContext = false)]
     public class PCDmisService : BindableBase, IPCDmisService, IDisposable
@@ -53,7 +53,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private void ExecuteError(object sender, PcdmisEventArgs e)
         {
-            // TODO 取消测量需人工干预是否进行下一个测量
+            // 取消测量需人工干预是否进行下一个测量
             _completed = false;
             RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
@@ -209,7 +209,7 @@ namespace Hrsw.XiAnPro.PCDmisService
 
         private void GenerateMeasureParameterFile(Part part)
         {
-            // TODO 固定文件名
+            // 固定文件名
             string fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "MeasParams.Par");
             if (File.Exists(fileName))
             {

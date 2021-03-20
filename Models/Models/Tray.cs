@@ -35,6 +35,8 @@ namespace Hrsw.XiAnPro.Models
         public int SlotNb { get; set; }
         [Bindable]
         public bool Placed { get; set; }
+        //[Bindable]
+        //public int FixCategory { get; set; }
         [Bindable]
         public TrayStatus Status { get; set; }
         [Bindable]

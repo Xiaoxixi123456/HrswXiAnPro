@@ -38,6 +38,8 @@ namespace Hrsw.XiAnPro.Models
         public bool Placed { get; set; }
         [Bindable]
         public int Flag { get; set; }
+        //[Bindable]
+        //public int FixCategory { get; set; }
         [Bindable]
         public string ResultFile { get; set; }
         [Bindable]

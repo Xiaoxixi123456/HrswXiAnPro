@@ -23,10 +23,20 @@
   <wsdl:message name="ICalypsoService_MakeOffsetFile_OutputMessage">
     <wsdl:part name="parameters" element="tns:MakeOffsetFileResponse" />
   </wsdl:message>
+  <wsdl:message name="ICalypsoService_GetReportFilename_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportFilename" />
+  </wsdl:message>
+  <wsdl:message name="ICalypsoService_GetReportFilename_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportFilenameResponse" />
+  </wsdl:message>
   <wsdl:portType name="ICalypsoService">
     <wsdl:operation name="MakeOffsetFile">
       <wsdl:input wsaw:Action="http://tempuri.org/ICalypsoService/MakeOffsetFile" message="tns:ICalypsoService_MakeOffsetFile_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICalypsoService/MakeOffsetFileResponse" message="tns:ICalypsoService_MakeOffsetFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReportFilename">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICalypsoService/GetReportFilename" message="tns:ICalypsoService_GetReportFilename_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICalypsoService/GetReportFilenameResponse" message="tns:ICalypsoService_GetReportFilename_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PcdmisServiceEp" type="tns:ICalypsoService">
@@ -34,6 +44,15 @@
     <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
     <wsdl:operation name="MakeOffsetFile">
       <soap12:operation soapAction="http://tempuri.org/ICalypsoService/MakeOffsetFile" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportFilename">
+      <soap12:operation soapAction="http://tempuri.org/ICalypsoService/GetReportFilename" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

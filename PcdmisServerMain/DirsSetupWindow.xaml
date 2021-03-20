@@ -35,7 +35,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Dirs.ResultProgDirectory}"
+                <TextBlock Text="{Binding Dirs.ResultDirectory}"
                            VerticalAlignment="Center"/>
                 <Button Grid.Column="1" Content="..." Width="30"
                         Command="{Binding SelectReportDirCommand}"/>

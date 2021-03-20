@@ -8,7 +8,22 @@
         Title="目录设置" Height="107.56" Width="396.586"
         ResizeMode="NoResize">
     <StackPanel Margin="5">
-        <BulletDecorator>
+        <BulletDecorator Margin="0,2">
+            <BulletDecorator.Bullet>
+                <Label Content="程序目录"/>
+            </BulletDecorator.Bullet>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Dirs.MeasureProgDirectory}"
+                           VerticalAlignment="Center"/>
+                <Button Content="..." Grid.Column="1" Padding="5,0"
+                        Command="{Binding SelectMeasureProgDirCommand}"/>
+            </Grid>
+        </BulletDecorator>
+        <BulletDecorator Margin="0,2">
             <BulletDecorator.Bullet>
                 <Label Content="报告目录"/>
             </BulletDecorator.Bullet>

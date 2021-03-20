@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace MainApp.ViewModels
 {
@@ -28,6 +29,9 @@ namespace MainApp.ViewModels
         public DelegateCommand ReadPartsCommand { get; set; }
         public DelegateCommand StartAutoflowCommand { get; set; }
 
+        // menu commands
+        public DelegateCommand CmmsSetupCommand { get; set; }
+
         public void CreateCommands()
         {
             SelectCategoryCommand = new DelegateCommand(PartsUISelectCategory);
@@ -42,6 +46,17 @@ namespace MainApp.ViewModels
             UnLoadTraysFromSlotCommand = new DelegateCommand(UnloadTraysFromSlot);
             ReadPartsCommand = new DelegateCommand(ReadParts);
             StartAutoflowCommand = new DelegateCommand(StartAutoflow);
+
+            // menu
+            CmmsSetupCommand = new DelegateCommand(CmmsSetup);
+        }
+
+        private void CmmsSetup()
+        {
+            CmmConfigsWindow ccWnd = new CmmConfigsWindow();
+            ccWnd.DataContext = this;
+            ccWnd.Topmost = true;
+            ccWnd.ShowDialog();
         }
 
         private void ImportTrays()
@@ -80,7 +95,7 @@ namespace MainApp.ViewModels
                 if (SelectedTrayInRack == null ||
                     SelectedTrayInRack.Status == TrayStatus.TS_Empty)
                     return;
-                // TODO 测量过程中无法不能调整料库
+                // 测量过程中不能调整料库
                 if (Racks[0].Status == RackStatus.RS_Busy)
                 {
                     return;
@@ -99,7 +114,15 @@ namespace MainApp.ViewModels
 
         private void DeleteAllParts()
         {
-            // TODO 必须判断是否放置在料盘中
+            //须判断是否放置在料盘中
+            foreach (var part in Parts)
+            {
+                if (part.Placed)
+                {
+                    MessageBox.Show("有未卸载零件,无法清除", "警告", MessageBoxButton.OK, MessageBoxImage.Exclamation, MessageBoxResult.OK, MessageBoxOptions.DefaultDesktopOnly);
+                    return;
+                }
+            }
             Parts.Clear();
             if (SelectParts != null)
                 SelectParts.Clear();

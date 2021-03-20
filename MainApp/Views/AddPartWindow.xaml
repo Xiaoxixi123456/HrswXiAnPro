@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="添加工件" Height="308.78" Width="481.463" Background="#FFC1E5E8">
+        Title="添加工件" Height="308.78" Width="481.463" Background="#FFC1E5E8"
+        FontSize="18">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="235*"/>
@@ -24,6 +25,12 @@
                 </BulletDecorator.Bullet>
                 <TextBox Text="{Binding Category}"/>
             </BulletDecorator>
+            <BulletDecorator Margin="5">
+                <BulletDecorator.Bullet>
+                    <Label Content="夹具类别: "/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding FixCategory}"/>
+            </BulletDecorator>
             <GroupBox Header="工件号" Margin="5">
                 <Grid Margin="3">
                     <Grid.RowDefinitions>
@@ -37,7 +44,9 @@
                     </Grid.ColumnDefinitions>
                     <RadioButton x:Name="radioButton" Grid.Column="0" 
                                  Grid.Row="0" 
-                                 Content="自定义" VerticalContentAlignment="Center"/>
+                                 Content="自定义" VerticalContentAlignment="Center"
+                                 FontSize="18"
+                                 />
                     <BulletDecorator Grid.Column="1" Grid.Row="0">
                         <BulletDecorator.Bullet>
                             <Label Content="工件编号："/>
@@ -45,7 +54,11 @@
                         <TextBox IsEnabled="{Binding IsChecked, ElementName=radioButton}" 
                                  Text="{Binding DefId}"/>
                     </BulletDecorator>
-                    <RadioButton x:Name="radioButton1" Content="递增" Grid.Column="0" Grid.Row="1" VerticalContentAlignment="Center"/>
+                    <RadioButton x:Name="radioButton1" Content="递增" 
+                                 Grid.Column="0" 
+                                 Grid.Row="1" 
+                                 VerticalContentAlignment="Center"
+                                 FontSize="18"/>
                     <BulletDecorator Grid.Column="1" Grid.Row="1">
                         <BulletDecorator.Bullet>
                             <Label Content="起始编号："/>
@@ -80,10 +93,14 @@
                     VerticalContentAlignment="Center" 
                     HorizontalContentAlignment="Center" 
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Click="CloseHandler" />
+                    VerticalAlignment="Center" Click="CloseHandler" 
+                    FontSize="18"
+                    Width="80"/>
             <Button Content="添加" Margin="5" Padding="5"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Click="AddPartHandler"/>
+                    VerticalAlignment="Center" Click="AddPartHandler"
+                    FontSize="18"
+                    Width="80"/>
         </StackPanel>
     </Grid>
 </Window>
