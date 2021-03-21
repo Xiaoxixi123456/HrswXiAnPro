@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Hrsw.XiAnPro.CMMClients.PcdmisServiceReference;
 using System.Diagnostics;
+using Prism.Events;
+using ClientCommonMods;
 
 namespace Hrsw.XiAnPro.CMMClient
 {
@@ -20,6 +22,7 @@ namespace Hrsw.XiAnPro.CMMClient
             MeasErrorFlag = response.Error;
             _pcdClient.CmmError = response.Error;
             _pcdClient.StatusMessage = response.Message;
+            MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(_pcdClient.CmmError);
         }
 
         public PcdmisCallback(PcdmisClient pcdClient)

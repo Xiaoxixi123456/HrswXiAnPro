@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="添加工件" Height="308.78" Width="481.463" Background="#FFC1E5E8"
+        Title="添加工件" Height="350" Width="481.463" Background="#FFC1E5E8"
         FontSize="18">
     <Grid>
         <Grid.RowDefinitions>
@@ -17,20 +17,24 @@
                 <BulletDecorator.Bullet>
                     <Label Content="工件名称: "/>
                 </BulletDecorator.Bullet>
-                <TextBox Text="{Binding PartName}"/>
+                <TextBox Text="{Binding PartName}" 
+                         VerticalContentAlignment="Center"
+                         FontSize="18"/>
             </BulletDecorator>
             <BulletDecorator Margin="5">
                 <BulletDecorator.Bullet>
                     <Label Content="工件类别: "/>
                 </BulletDecorator.Bullet>
-                <TextBox Text="{Binding Category}"/>
+                <TextBox Text="{Binding Category}"
+                         VerticalContentAlignment="Center"
+                         FontSize="18"/>
             </BulletDecorator>
-            <BulletDecorator Margin="5">
+            <!--<BulletDecorator Margin="5">
                 <BulletDecorator.Bullet>
                     <Label Content="夹具类别: "/>
                 </BulletDecorator.Bullet>
                 <TextBox Text="{Binding FixCategory}"/>
-            </BulletDecorator>
+            </BulletDecorator>-->
             <GroupBox Header="工件号" Margin="5">
                 <Grid Margin="3">
                     <Grid.RowDefinitions>
@@ -52,7 +56,9 @@
                             <Label Content="工件编号："/>
                         </BulletDecorator.Bullet>
                         <TextBox IsEnabled="{Binding IsChecked, ElementName=radioButton}" 
-                                 Text="{Binding DefId}"/>
+                                 Text="{Binding DefId}"
+                         VerticalContentAlignment="Center"
+                         FontSize="18"/>
                     </BulletDecorator>
                     <RadioButton x:Name="radioButton1" Content="递增" 
                                  Grid.Column="0" 
@@ -64,14 +70,18 @@
                             <Label Content="起始编号："/>
                         </BulletDecorator.Bullet>
                         <TextBox IsEnabled="{Binding IsChecked, ElementName=radioButton1}"
-                                 Text="{Binding StartId}"/>
+                                 Text="{Binding StartId}"
+                         VerticalContentAlignment="Center"
+                         FontSize="18"/>
                     </BulletDecorator>
                     <BulletDecorator Grid.Column="2" Grid.Row="1">
                         <BulletDecorator.Bullet>
                             <Label Content="工件个数："/>
                         </BulletDecorator.Bullet>
                         <TextBox IsEnabled="{Binding IsChecked, ElementName=radioButton1}" 
-                                 Text="{Binding Count}"/>
+                                 Text="{Binding Count}"
+                         VerticalContentAlignment="Center"
+                         FontSize="18"/>
                     </BulletDecorator>
                 </Grid>
             </GroupBox>
@@ -79,7 +89,8 @@
                 <BulletDecorator.Bullet>
                     <Label Content="三坐标编号: "/>
                 </BulletDecorator.Bullet>
-                <ComboBox SelectedIndex="{Binding CmmNo}">
+                <ComboBox SelectedIndex="{Binding CmmNo}" FontSize="18"
+                          VerticalContentAlignment="Center">
                     <ComboBoxItem>0</ComboBoxItem>
                     <ComboBoxItem>1</ComboBoxItem>
                     <ComboBoxItem>2</ComboBoxItem>

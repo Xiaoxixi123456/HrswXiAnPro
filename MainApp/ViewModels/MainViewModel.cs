@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.CMMClient;
+using Hrsw.XiAnPro.CMMClients;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.LogicControls;
 using Hrsw.XiAnPro.Models;
@@ -54,6 +55,8 @@ namespace MainApp.ViewModels
         public bool Started { get; set; }
         [Bindable]
         public bool Stopped { get; set; }
+        [Bindable]
+        public int RunLedIndex { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -64,6 +67,7 @@ namespace MainApp.ViewModels
 
             ConfigManager = new MainConfigManager();
             ConfigManager.LoadConfigs();
+            ClientDirsManager.Inst.LoadDirs();
 
             Racks = new ObservableCollection<Rack>();
             Trays = new ObservableCollection<Tray>();
@@ -82,6 +86,7 @@ namespace MainApp.ViewModels
             Trays = TraysRepository.LoadTrays();
             Started = false;
             Stopped = true;
+            RunLedIndex = -1;
         }
 
         private void CategoriesRefresh()

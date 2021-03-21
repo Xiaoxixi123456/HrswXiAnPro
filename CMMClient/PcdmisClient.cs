@@ -69,7 +69,7 @@ namespace Hrsw.XiAnPro.CMMClient
         private void OpenTransferReportsService()
         {
             string root = ClientDirsManager.Inst.PcdmisReportsDirectory;
-            _reportFileTransfer = new ReportFileTransfer(root);
+            _reportFileTransfer = new ReportFileTransfer("Pcdmis");
             _reportFileTransfer.Initialize("PcdmisFileServiceEp");
             _reportFileTransfer.LaunchTransferProcess();
         }

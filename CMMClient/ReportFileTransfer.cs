@@ -14,13 +14,13 @@ namespace Hrsw.XiAnPro.CMMClients
     public class ReportFileTransfer : Transfer<Part>
     {
         private FileServiceClient _fileServiceClient;
-        private string _root;
+        private string _cmmName;
         // 文件传输事件
 
-        public ReportFileTransfer(string root)
+        public ReportFileTransfer(string cmmName)
         {
             _blockQuene = new BlockingCollection<Part>();
-            _root = root;
+            _cmmName = cmmName;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Hrsw.XiAnPro.CMMClients
 
         private void InnerChannel_Faulted(object sender, EventArgs e)
         {
-            
+
         }
 
         private void InnerChannel_Closed(object sender, EventArgs e)
@@ -62,7 +62,7 @@ namespace Hrsw.XiAnPro.CMMClients
 
         private void InnerChannel_Opened(object sender, EventArgs e)
         {
-            
+
         }
 
         public override void LaunchTransferProcess()
@@ -71,14 +71,7 @@ namespace Hrsw.XiAnPro.CMMClients
             {
                 foreach (var part in _blockQuene.GetConsumingEnumerable())
                 {
-                    try
-                    {
-                        TransferFileFromCmmServer(part);
-                    }
-                    catch (Exception)
-                    {
-                        // TODO 当前传输失败
-                    }
+                    TransferFileFromCmmServer(part);
                 }
             }, TaskCreationOptions.LongRunning);
         }
@@ -86,18 +79,19 @@ namespace Hrsw.XiAnPro.CMMClients
         private /*async */void TransferFileFromCmmServer(Part part)
         {
             //var result = await _fileServiceClient.DownLoadFileAsync(part.ResultFile);
+            string root = ClientDirsManager.Inst.GetReportDirectory(_cmmName);
             Task.Run(() =>
             {
-                bool success;
-                string message;
-                Stream filestream = new MemoryStream();
-                long fileSize = _fileServiceClient.DownLoadFile(part.ResultFile, out success, out message, out filestream);
-                if (success)
+                try
                 {
-                    //目录处理
-                    try
+                    bool success;
+                    string message;
+                    Stream filestream = new MemoryStream();
+                    long fileSize = _fileServiceClient.DownLoadFile(part.ResultFile, out success, out message, out filestream);
+                    if (success)
                     {
-                        string filePath = Path.Combine(_root, Path.GetFileName(part.ResultFile));
+                        //目录处理
+                        string filePath = Path.Combine(root, Path.GetFileName(part.ResultFile));
                         byte[] buffer = new byte[fileSize];
                         using (var fsm = new FileStream(filePath, FileMode.Create, FileAccess.Write))
                         {
@@ -111,13 +105,13 @@ namespace Hrsw.XiAnPro.CMMClients
                             fsm.Flush();
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        // TODO 下载文件出错
-                        //throw;
-                    }
+                    filestream.Close();
                 }
-                filestream.Close();
+                catch (Exception ex)
+                {
+                    // TODO 下载文件出错
+                    //throw;
+                }
             });
 
         }

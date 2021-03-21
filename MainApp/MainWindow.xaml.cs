@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace MainApp
 {
@@ -23,11 +24,26 @@ namespace MainApp
     public partial class MainWindow : MetroWindow
     {
         public MainViewModel MainViewModel { get; set; }
+        private DispatcherTimer _runLedtimer;
         public MainWindow()
         {
             InitializeComponent();
             MainViewModel = new MainViewModel();
             DataContext = MainViewModel;
+            _runLedtimer = new DispatcherTimer(DispatcherPriority.DataBind);
+            _runLedtimer.Tick += _runLedtimer_Tick;
+        }
+
+        private void _runLedtimer_Tick(object sender, EventArgs e)
+        {
+            if (MainViewModel.Started)
+            {
+                MainViewModel.RunLedIndex = (++MainViewModel.RunLedIndex) % 3;
+            }
+            else
+            {
+                MainViewModel.RunLedIndex = -1;
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -36,6 +52,8 @@ namespace MainApp
             try
             {
                 MainViewModel.Initial();
+                _runLedtimer.Interval = TimeSpan.FromSeconds(1);
+                _runLedtimer.Start();
             }
             catch (Exception)
             {

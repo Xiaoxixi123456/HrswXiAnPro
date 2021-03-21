@@ -4,17 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp"
+        xmlns:cvter="clr-namespace:MainApp.Convertors"
         xmlns:localViews="clr-namespace:MainApp.Views"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="自动控制检测系统" Height="600" Width="900"
                       Loaded="Window_Loaded" 
                       Closed="MetroWindow_Closed"
-                      Background="White" 
+                      Background="#FFADC5C8" 
                       WindowState="Maximized">
+    <Window.Resources>
+        <cvter:RunLedIndexConverter1 x:Key="RunLedIndexConverter1"/>
+        <cvter:RunLedIndexConverter2 x:Key="RunLedIndexConverter2"/>
+        <cvter:RunLedIndexConverter3 x:Key="RunLedIndexConverter3"/>
+    </Window.Resources>
 
     <Grid Margin="5" 
-          Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" >
+          Background="#FFADC5C8" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition/>
@@ -28,7 +34,9 @@
         <Menu Grid.ColumnSpan="3" 
               Grid.Column="0" 
               Grid.Row="0"
-              Margin="0,5" Background="{x:Null}">
+              Margin="0,5"
+              FontSize="18"
+              Background="AliceBlue">
             <Menu.ItemsPanel >
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Left"
@@ -36,13 +44,14 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="文件" Background="{x:Null}">
-                <MenuItem Header="导入测量任务"/>
+                <MenuItem Header="导入测量任务" IsEnabled="False"/>
                 <MenuItem Header="退出"/>
             </MenuItem>
             <MenuItem Header="设置" Background="{x:Null}">
                 <MenuItem Header="三坐标设置" 
                           Command="{Binding CmmsSetupCommand}"/>
-                <MenuItem Header="目录设置"/>
+                <MenuItem Header="目录设置"
+                          Command="{Binding DirsSetupCommand}"/>
             </MenuItem>
             <MenuItem Header="日志" Background="{x:Null}">
                 <MenuItem Header="日志记录"/>
@@ -81,6 +90,51 @@
                        Height="30" 
                        VerticalAlignment="Center"
                        />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Border BorderBrush="#FFD3E7EA" 
+                        BorderThickness="1" >
+                    <UniformGrid
+                            Columns="3"
+                            Rows="1"
+                            Width="120">
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{Binding RunLedIndex,
+                        Converter={StaticResource RunLedIndexConverter1}}"/>
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{Binding RunLedIndex, 
+                        Converter={StaticResource RunLedIndexConverter2}}"/>
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{Binding RunLedIndex, 
+                        Converter={StaticResource RunLedIndexConverter3}}"/>
+                    </UniformGrid>
+                </Border>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Border BorderBrush="#FFD3E7EA" 
+                        BorderThickness="1" >
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="5,2" 
+                             Stroke="Black"
+                             />
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="5,2" 
+                             Stroke="Black"
+                             />
+                    </StackPanel>
+                </Border>
             </StatusBarItem>
         </StatusBar>
     </Grid>

@@ -77,10 +77,10 @@
                           IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
                           Margin="5,2"
                           FontSize="16"/>
-                    <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
-                          Content="{Binding LogicUnit.Working, 
-                    Converter={StaticResource CmmWorkingConverter}}"
-                          IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
+                    <CheckBox Style="{DynamicResource CmmErrorLedCheckBoxStyle}"
+                          Content="{Binding CmmError, 
+                    Converter={StaticResource CmmErrorConverter}}"
+                          IsChecked="{Binding CmmError}" IsEnabled="False"
                           Margin="5,2"
                           FontSize="16"/>
                 </StackPanel>
@@ -133,13 +133,17 @@
                     Margin="3" >
             <Button Content="联机" Margin="5,3" FontSize="20"
                     Command="{Binding OnlineCommand}" 
+                    Width="80"
                     MouseLeave="Button_MouseLeave"
                     MouseMove="Button_MouseMove"/>
             <Button Content="离线" Margin="5,3" FontSize="20"
                     Command="{Binding OfflineCommand}"
+                    Width="80"
                     MouseLeave="Button_MouseLeave_1"
                     MouseMove="Button_MouseMove_1"/>
             <Button Content="启动" Margin="5,3" FontSize="20"
+                    Width="80"
+                    Command="{Binding StartWorkflowCommand}"
                     MouseLeave="Button_MouseLeave_2"
                     MouseMove="Button_MouseMove_2"/>
         </StackPanel>

@@ -13,6 +13,7 @@ using Prism.Commands;
 using System.Windows;
 using Prism.Events;
 using MainApp.Utilities;
+using ClientCommonMods;
 
 namespace MainApp.ViewModels
 {
@@ -26,6 +27,8 @@ namespace MainApp.ViewModels
         public bool CanOnline { get; set; }
         [Bindable]
         public bool Started { get; set; }
+        [Bindable]
+        public bool CmmError { get; set; }
 
         public DelegateCommand OfflineCommand { get; set; }
         public DelegateCommand OnlineCommand { get; set; }
@@ -42,6 +45,14 @@ namespace MainApp.ViewModels
             cmmClient.OfflineEvent += CmmClient_OfflineEvent;
             LogicUnit.StartedEvent += LogicUnit_StartedEvent;
             LogicUnit.StoppedEvent += LogicUnit_StoppedEvent;
+            MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Subscribe(OnCmmEvent);
+
+            CmmError = false;
+        }
+
+        private void OnCmmEvent(bool err)
+        {
+            CmmError = err;
         }
 
         private void LogicUnit_StoppedEvent(object sender, EventArgs e)
@@ -63,12 +74,14 @@ namespace MainApp.ViewModels
         {
             CanOnline = true;
             CanOffline = false;
+            CmmError = false;
             LogicUnit.CmmOnline = false;
         }
 
         private void CmmOnline()
         {
             CanOnline = false;
+            CmmError = false;
             LogicUnit.Online();
             if (LogicUnit.CmmOnline)
             {
@@ -83,6 +96,7 @@ namespace MainApp.ViewModels
         private async void CmmOffline()
         {
             CanOffline = false;
+            CmmError = false;
             try
             {
                 await LogicUnit.Offline();

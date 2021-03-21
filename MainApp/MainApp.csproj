@@ -73,6 +73,7 @@
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -92,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Convertors\CmmErrorConverter.cs" />
     <Compile Include="Convertors\CmmOnOfflineConverter.cs" />
     <Compile Include="Convertors\CmmWorkingConverter.cs" />
     <Compile Include="Convertors\PartBackgroundConverter.cs" />
@@ -99,16 +101,16 @@
     <Compile Include="Convertors\PartPlacedStatusConverter.cs" />
     <Compile Include="Convertors\PartResultMultiConverter.cs" />
     <Compile Include="Convertors\PartStatusConverter.cs" />
+    <Compile Include="Convertors\RunLedIndexConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
     <Compile Include="Convertors\TrayStatusConverter.cs" />
     <Compile Include="Convertors\TreePartItemConverter.cs" />
     <Compile Include="Convertors\TreeTrayItemConverter.cs" />
-    <Compile Include="Utilities\MainAndLogicUnitEvent.cs" />
     <Compile Include="Utilities\MainConfigManager.cs" />
-    <Compile Include="Utilities\MyEventAggregator.cs" />
     <Compile Include="Utilities\PartsOfTrayDataTemplateSelector.cs" />
     <Compile Include="Utilities\TraysOfRackDataTemplateSelector.cs" />
     <Compile Include="Utilities\UseCmmConfigs.cs" />
+    <Compile Include="ViewModels\DirsSetupViewModel.cs" />
     <Compile Include="ViewModels\LoadTraysViewModel.cs" />
     <Compile Include="ViewModels\LogicUnitViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -132,6 +134,9 @@
     </Compile>
     <Compile Include="Views\CmmsUI.xaml.cs">
       <DependentUpon>CmmsUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DirsSetupWindow.xaml.cs">
+      <DependentUpon>DirsSetupWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoadTrayToRackWindow.xaml.cs">
       <DependentUpon>LoadTrayToRackWindow.xaml</DependentUpon>
@@ -195,6 +200,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CmmsUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DirsSetupWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -273,6 +282,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\ClientCommonMods\ClientCommonMods.csproj">
+      <Project>{E0524AAA-1F46-464C-8C49-66AEEFB14CC0}</Project>
+      <Name>ClientCommonMods</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CMMClient\CMMClients.csproj">
       <Project>{7CD681E8-7414-4A7B-B865-67EE4200B289}</Project>
       <Name>CMMClients</Name>

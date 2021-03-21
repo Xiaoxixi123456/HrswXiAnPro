@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MainApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,18 +16,16 @@ using System.Windows.Shapes;
 namespace MainApp.Views
 {
     /// <summary>
-    /// CmmConfigsWindow.xaml 的交互逻辑
+    /// DirsSetupWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class CmmConfigsWindow : Window
+    public partial class DirsSetupWindow : Window
     {
-        public CmmConfigsWindow()
+        public DirsSetupViewModel viewModel { get; set; }
+        public DirsSetupWindow()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
+            viewModel = new DirsSetupViewModel();
+            DataContext = viewModel;
         }
     }
 }

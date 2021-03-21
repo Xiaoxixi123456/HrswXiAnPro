@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="三坐标配置" Height="158.049" Width="300.732"
+        Title="三坐标配置" Height="164.602" Width="196.265"
         FontSize="16">
     <StackPanel>
         <CheckBox Content="使用Pcdmis" 
@@ -17,9 +17,12 @@
                   Margin="10"
                   FontSize="16"
                   IsChecked="{Binding ConfigManager.cmmConfigs.UseCalypso}"/>
-        <TextBlock Text="设置更改后，重启程序生效"
-                   TextWrapping="Wrap"
-                   Margin="15"
-                   />
+        <StackPanel Orientation="Horizontal"
+                    FlowDirection="RightToLeft"
+                    Margin="0,10">
+            <Button Content="关闭" Width="50" Margin="3" Click="Button_Click"/>
+            <Button Content="应用" Width="50" Margin="3"
+                    Command="{Binding SelectedCmmsCommand}"/>
+        </StackPanel>
     </StackPanel>
 </Window>

@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClientLogs.cs" />
+    <Compile Include="CmmErrorEvent.cs" />
+    <Compile Include="MainAndLogicUnitEvent.cs" />
+    <Compile Include="MyEventAggregator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

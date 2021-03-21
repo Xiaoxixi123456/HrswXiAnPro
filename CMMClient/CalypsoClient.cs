@@ -78,7 +78,7 @@ namespace Hrsw.XiAnPro.CMMClient
         private void OpenTransferReportsService()
         {
             string root = ClientDirsManager.Inst.CalypsoReportsDirectory;
-            _reportFileTransfer = new ReportFileTransfer(root);
+            _reportFileTransfer = new ReportFileTransfer("Calypso");
             _reportFileTransfer.Initialize("CalypsoFileServiceEp");
             _reportFileTransfer.LaunchTransferProcess();
         }

@@ -13,7 +13,8 @@
     <Convertors:PlacedStatusConverter x:Key="PlacedStatusConverter"/>
     <Convertors:CmmOnOfflineConverter x:Key="CmmOnOfflineConverter"/>
     <Convertors:CmmWorkingConverter x:Key="CmmWorkingConverter"/>
-    
+    <Convertors:CmmErrorConverter x:Key="CmmErrorConverter"/>
+
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 
                      Columns="{Binding CurrentTray.ColumnCount}"
@@ -310,6 +311,44 @@
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="rcgle" Property="Fill" Value="Black"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CmmErrorLedCheckBoxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Background" Value="{DynamicResource MahApps.Brushes.CheckBox.BackgroundUnchecked}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource MahApps.Brushes.CheckBox.BorderBrushUnchecked}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FontFamily" Value="{DynamicResource MahApps.Fonts.Family.Control}"/>
+        <Setter Property="FontSize" Value="{DynamicResource MahApps.Font.Size.Content}"/>
+        <Setter Property="Foreground" Value="{DynamicResource MahApps.Brushes.CheckBox.ForegroundUnchecked}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Padding" Value="6,0,0,0"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid x:Name="markGrid">
+                                <Rectangle x:Name="rcgle" RadiusX="2" RadiusY="2" Width="{Binding FontSize, RelativeSource={RelativeSource TemplatedParent}}" Height="{TemplateBinding FontSize}" />
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="rcgle" Property="Fill" Value="Red"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="rcgle" Property="Fill" Value="Gray"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

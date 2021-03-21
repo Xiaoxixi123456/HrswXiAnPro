@@ -204,6 +204,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
 
         public void ReleaseMeasure()
         {
+            _pcdmisControl.CancelProgram();
             _are.Set();
         }
 
@@ -283,7 +284,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
         /// <param name="message"></param>
         private void RespondMessage(bool err, string message)
         {
-            PCDMessage mage = new PCDMessage() { Error = true, Result = true, Message = message };
+            PCDMessage mage = new PCDMessage() { Error = err, Result = true, Message = message };
             _pcdmisCallback?.SendMessage(mage);
         }
 

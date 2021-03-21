@@ -1,5 +1,7 @@
-﻿using Hrsw.XiAnPro.Models;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.Models;
 using MainApp.Utilities;
+using MainApp.ViewModels;
 using MainApp.Views;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -35,8 +37,9 @@ namespace MainApp.ViewModels
 
         // menu commands
         public DelegateCommand CmmsSetupCommand { get; set; }
+        public DelegateCommand DirsSetupCommand { get; set; }
+        public DelegateCommand SelectedCmmsCommand { get; set; }
 
-        
 
         public void CreateCommands()
         {
@@ -55,17 +58,111 @@ namespace MainApp.ViewModels
             StopAutoflowCommand = new DelegateCommand(StopAutoflow).ObservesCanExecute(() => Started);
 
             // menu
-            CmmsSetupCommand = new DelegateCommand(CmmsSetup);
-
+            CmmsSetupCommand = new DelegateCommand(CmmsSetup).ObservesCanExecute(() => Stopped);
+            DirsSetupCommand = new DelegateCommand(DirsSetup).ObservesCanExecute(() => Stopped);
+            SelectedCmmsCommand = new DelegateCommand(SelectedCmms).ObservesCanExecute(() => Stopped);
             // 
             MyEventAggregator.Inst.GetEvent<MainAndLogicUnitEvent>().Subscribe(StartCmmWork);
         }
 
+        private void SelectedCmms()
+        {
+            if (ConfigManager.cmmConfigs.UsePcdmis)
+            {
+                AddPcdmisCmm();
+            }
+            else if (!ConfigManager.cmmConfigs.UsePcdmis)
+            {
+                DeletePcdmisCmm();
+            }
+
+            if (ConfigManager.cmmConfigs.UseCalypso)
+            {
+                //if (!LogicUnits.Any(p => p.LogicUnit.CmmName == "Calypso"))
+                //{
+                //    AddCmm(1, "Calypso");
+                //}
+                AddCalypsoCmm();
+            }
+            else if (!ConfigManager.cmmConfigs.UseCalypso)
+            {
+                DeleteCalypsoCmm();
+            }
+        }
+
+        private async void DeleteCalypsoCmm()
+        {
+            try
+            {
+                var cmm = LogicUnits.First(p => p.LogicUnit.CmmName == "Calypso");
+                if (cmm == null)
+                    return;
+                await cmm.LogicUnit.Offline();
+                LogicUnits.Remove(cmm);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        private void AddCalypsoCmm()
+        {
+            if (!LogicUnits.Any(p => p.LogicUnit.CmmName == "Calypso"))
+            {
+                AddCmm(1, "Calypso");
+            }
+        }
+
+        private async void DeletePcdmisCmm()
+        {
+            try
+            {
+                var cmm = LogicUnits.First(p => p.LogicUnit.CmmName == "Pcdmis");
+                if (cmm == null)
+                    return;
+                await cmm.LogicUnit.Offline();
+                LogicUnits.Remove(cmm);
+            }
+            catch (Exception)
+            {
+                return;
+            }
+        }
+
+        private void AddPcdmisCmm()
+        {
+            if (!LogicUnits.Any(p => p.LogicUnit.CmmName == "Pcdmis"))
+            {
+                AddCmm(0, "Pcdmis");
+            }
+        }
+
+        private void DirsSetup()
+        {
+            DirsSetupWindow dsWnd = new DirsSetupWindow();
+            dsWnd.Topmost = true;
+            dsWnd.ShowDialog();
+        }
+
         private void StartCmmWork(int cmmNo)
         {
-            if (LogicUnits[cmmNo].LogicUnit.Working || !Started)
+            // if (LogicUnits[cmmNo].LogicUnit.Working || !Started)
+            //     return;
+            //LogicUnits[cmmNo].LogicUnit.CycleProcess(Racks[0]);
+            LogicUnitViewModel cmmVm;
+            try
+            {
+                cmmVm = LogicUnits.Where(p => p.LogicUnit.CmmNo == cmmNo).Single();
+            }
+            catch (Exception)
+            {
                 return;
-           LogicUnits[cmmNo].LogicUnit.CycleProcess(Racks[0]);
+            }
+            
+            if (cmmVm.LogicUnit.Working || !Started)
+                return;
+            cmmVm.LogicUnit.CycleProcess(Racks[0]);
         }
 
         private void CmmsSetup()
@@ -209,6 +306,7 @@ namespace MainApp.ViewModels
             if (SelectParts != null)
                 SelectParts.Clear();
             CategoriesRefresh();
+            PartsFileRepository.UpdateParts(Parts);
         }
 
         private void LoadTraysToRack()

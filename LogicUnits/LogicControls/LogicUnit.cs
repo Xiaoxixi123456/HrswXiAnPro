@@ -33,6 +33,8 @@ namespace Hrsw.XiAnPro.LogicControls
         public bool CmmOnline { get; set; }
         [Bindable]
         public bool Working { get; set; }
+        //[Bindable]
+        //public bool CmmError { get; set; }
 
 
         private ICMMControl _cmmControl;

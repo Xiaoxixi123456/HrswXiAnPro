@@ -107,16 +107,24 @@
                     Grid.Column="0">
             <Button Content="添加料盘" Margin="5" Padding="5" 
                     FontSize="20"
-                    Command="{Binding AddTrayCommand}"/>
+                    Command="{Binding AddTrayCommand}"
+                    MouseMove="Button_MouseMove"
+                    MouseLeave="Button_MouseLeave"/>
             <Button Content="删除料盘" Margin="5" Padding="5" 
                     FontSize="20"
-                    Command="{Binding DeleteTrayCommand}"/>
+                    Command="{Binding DeleteTrayCommand}"
+                    MouseMove="Button_MouseMove_1"
+                    MouseLeave="Button_MouseLeave_1"/>
             <Button Content="加载工件" Margin="5" Padding="5"
                     FontSize="20"
-                    Command="{Binding LoadPartsCommand}"/>
+                    Command="{Binding LoadPartsCommand}"
+                    MouseMove="Button_MouseMove_2"
+                    MouseLeave="Button_MouseLeave_2"/>
             <Button Content="导入料盘" Margin="5" Padding="5"
                     FontSize="20"
-                    Command="{Binding ImportTraysCommand}"/>
+                    Command="{Binding ImportTraysCommand}"
+                    MouseMove="Button_MouseMove_3"
+                    MouseLeave="Button_MouseLeave_3"/>
         </StackPanel>
     </Grid>
 </UserControl>

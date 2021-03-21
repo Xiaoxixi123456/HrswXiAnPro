@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainApp.Utilities
+namespace ClientCommonMods
 {
     public class MyEventAggregator : IEventAggregator
     {
@@ -20,6 +20,7 @@ namespace MainApp.Utilities
         private MyEventAggregator()
         {
             events.Add(typeof(MainAndLogicUnitEvent), new MainAndLogicUnitEvent());
+            events.Add(typeof(CmmErrorEvent), new CmmErrorEvent());
         }
     }
 }

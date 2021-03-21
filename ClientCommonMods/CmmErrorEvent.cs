@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MainApp.Utilities
+namespace ClientCommonMods
 {
-    public class MainAndLogicUnitEvent : PubSubEvent<int>
+    public class CmmErrorEvent : PubSubEvent<bool>
     {
     }
 }

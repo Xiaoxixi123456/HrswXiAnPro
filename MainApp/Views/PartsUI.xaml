@@ -85,16 +85,24 @@
                     Grid.Row="2">
             <Button Content="添加工件" Margin="2,5" Padding="5"
                     FontSize="20"
-                    Command="{Binding AddPartCommand}"/>
+                    Command="{Binding AddPartCommand}"
+                    MouseMove="Button_MouseMove"
+                    MouseLeave="Button_MouseLeave"/>
             <Button Content="删除工件" Margin="2,5" Padding="5"
                     FontSize="20"
-                    Command="{Binding DeletePartCommand}"/>
+                    Command="{Binding DeletePartCommand}"
+                    MouseMove="Button_MouseMove_1"
+                    MouseLeave="Button_MouseLeave_1"/>
             <Button Content="删除所有" Margin="2,5" Padding="5"
                     FontSize="20"
-                    Command="{Binding DeleteAllPartsCommand}"/>
+                    Command="{Binding DeleteAllPartsCommand}"
+                    MouseMove="Button_MouseMove_2"
+                    MouseLeave="Button_MouseLeave_2"/>
             <Button Content="导入工件" Margin="2,5" Padding="5"
                     FontSize="20"
-                    Command="{Binding ReadPartsCommand}"/>
+                    Command="{Binding ReadPartsCommand}"
+                    MouseMove="Button_MouseMove_3"
+                    MouseLeave="Button_MouseLeave_3"/>
         </StackPanel>
     </Grid>
 </UserControl>
