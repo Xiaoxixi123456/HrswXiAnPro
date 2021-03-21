@@ -50,9 +50,12 @@ namespace MainApp.ViewModels
             CmmError = false;
         }
 
-        private void OnCmmEvent(bool err)
+        private void OnCmmEvent(CmmErrorStatus ceStatus)
         {
-            CmmError = err;
+            if (ceStatus.CmmNo == LogicUnit.CmmNo)
+            {
+                CmmError = ceStatus.Error;
+            }
         }
 
         private void LogicUnit_StoppedEvent(object sender, EventArgs e)

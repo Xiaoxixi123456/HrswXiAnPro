@@ -94,7 +94,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Convertors\CmmErrorConverter.cs" />
+    <Compile Include="Convertors\CmmErrorLedConverter.cs" />
     <Compile Include="Convertors\CmmOnOfflineConverter.cs" />
+    <Compile Include="Convertors\CmmUseLedConverter.cs" />
     <Compile Include="Convertors\CmmWorkingConverter.cs" />
     <Compile Include="Convertors\PartBackgroundConverter.cs" />
     <Compile Include="Convertors\PartLedMultiConverter.cs" />

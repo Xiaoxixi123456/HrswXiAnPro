@@ -17,6 +17,7 @@
         <cvter:RunLedIndexConverter1 x:Key="RunLedIndexConverter1"/>
         <cvter:RunLedIndexConverter2 x:Key="RunLedIndexConverter2"/>
         <cvter:RunLedIndexConverter3 x:Key="RunLedIndexConverter3"/>
+        <cvter:CmmUseLedConverter x:Key="CmmUseLedConverter"/>
     </Window.Resources>
 
     <Grid Margin="5" 
@@ -92,9 +93,7 @@
                        />
             </StatusBarItem>
             <StatusBarItem>
-                <Border BorderBrush="#FFD3E7EA" 
-                        BorderThickness="1" >
-                    <UniformGrid
+                      <UniformGrid
                             Columns="3"
                             Rows="1"
                             Width="120">
@@ -117,24 +116,34 @@
                              Fill="{Binding RunLedIndex, 
                         Converter={StaticResource RunLedIndexConverter3}}"/>
                     </UniformGrid>
-                </Border>
+               </StatusBarItem>
+            <StatusBarItem>
+                <Rectangle Width="2"
+                           Height="30"
+                           Fill="DarkGray"
+                           />
             </StatusBarItem>
             <StatusBarItem>
-                <Border BorderBrush="#FFD3E7EA" 
-                        BorderThickness="1" >
-                    <StackPanel Orientation="Horizontal">
+                <ListBox Width="120" Height="35" 
+                         Background="Transparent"
+                         IsEnabled="True"
+                         ItemsPanel="{DynamicResource StatusLedListBoxItemsPanelTemplate}"
+                         ItemsSource="{Binding LogicUnits}" 
+                         ItemTemplate="{DynamicResource CmmLedDataTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"/>
+                <!--<StackPanel Orientation="Horizontal">
                         <Ellipse Width="30" 
                              Height="30"
                              Margin="5,2" 
                              Stroke="Black"
-                             />
+                             Visibility="{Binding ConfigManager.cmmConfigs.UsePcdmis, 
+                            Converter={StaticResource CmmUseLedConverter}}"/>
                         <Ellipse Width="30" 
                              Height="30"
                              Margin="5,2" 
                              Stroke="Black"
-                             />
-                    </StackPanel>
-                </Border>
+                             Visibility="{Binding ConfigManager.cmmConfigs.UseCalypso, 
+                            Converter={StaticResource CmmUseLedConverter}}"/>
+                    </StackPanel>-->
             </StatusBarItem>
         </StatusBar>
     </Grid>

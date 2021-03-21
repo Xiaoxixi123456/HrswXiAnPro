@@ -230,6 +230,7 @@ namespace MainApp.ViewModels
                         }
                     }
                     if (stopped) break;
+                    Thread.Sleep(1000);
                 }
             }, TaskCreationOptions.LongRunning);
             // TODO 结束问题未解决
@@ -260,6 +261,7 @@ namespace MainApp.ViewModels
                         }
                     }
                     if (stopped) break;
+                    Thread.Sleep(1000);
                 }
             }, cts.Token);
             Racks[0].Status = RackStatus.RS_Idle;

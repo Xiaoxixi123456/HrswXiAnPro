@@ -7,7 +7,13 @@ using System.Threading.Tasks;
 
 namespace ClientCommonMods
 {
-    public class CmmErrorEvent : PubSubEvent<bool>
+    public class CmmErrorStatus
+    {
+        public int CmmNo { get; set; }
+        public bool Error { get; set; }
+    }
+
+    public class CmmErrorEvent : PubSubEvent<CmmErrorStatus>
     {
     }
 }

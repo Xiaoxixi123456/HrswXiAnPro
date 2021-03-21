@@ -22,7 +22,7 @@ namespace Hrsw.XiAnPro.CMMClient
             MeasErrorFlag = response.Error;
             _pcdClient.CmmError = response.Error;
             _pcdClient.StatusMessage = response.Message;
-            MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(_pcdClient.CmmError);
+            MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(new CmmErrorStatus() { CmmNo = 0, Error = _pcdClient.CmmError});
         }
 
         public PcdmisCallback(PcdmisClient pcdClient)
