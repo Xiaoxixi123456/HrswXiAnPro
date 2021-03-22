@@ -124,7 +124,7 @@
                            />
             </StatusBarItem>
             <StatusBarItem>
-                <ListBox Width="120" Height="35" 
+                <ListBox Width="auto" Height="35" 
                          Background="Transparent"
                          IsEnabled="True"
                          ItemsPanel="{DynamicResource StatusLedListBoxItemsPanelTemplate}"

@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:local="clr-namespace:MainApp.Resources" 
+                    xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
                     xmlns:Convertors="clr-namespace:MainApp.Convertors" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls">
     <Convertors:PartBackgroundConverter x:Key="PartBackgroundConverter"/>
     <Convertors:PartLedMultiConverter x:Key="PartLedMultiConverter"/>
@@ -629,11 +630,17 @@
                      Background="Transparent"/>
     </ItemsPanelTemplate>
     <DataTemplate x:Key="CmmLedDataTemplate">
-        <Grid Margin="5,0" Background="Transparent">
-            <Ellipse Fill="{Binding CmmError, 
-                Converter={StaticResource CmmErrorLedConverter}}"
+        <Border BorderBrush="LightBlue"
+                BorderThickness="0,0,1,1">
+        <UniformGrid Columns="3" Rows="1" 
+                     Margin="5,0" 
+                     Background="Transparent">
+            <!--<Ellipse Fill="{Binding CmmError, 
+                Converter={StaticResource CmmErrorLedConverter}}"-->
+            <Ellipse Fill="{c:Binding !CmmError ? \'Black\' : \'Red\' }"
                      Width="30"
-                     Height="30">
+                     Height="30"
+                     Margin="5,0">
                 <Ellipse.ToolTip>
                     <Border BorderBrush="AliceBlue"
                             BorderThickness="1"
@@ -643,7 +650,34 @@
                     </Border>
                 </Ellipse.ToolTip>
             </Ellipse>
-        </Grid>
+                <Ellipse Fill="{c:Binding !LogicUnit.CmmOnline ? \'Black\' : \'LightGreen\'}"
+                     Width="30"
+                     Height="30"
+                     Margin="5,0">
+                <Ellipse.ToolTip>
+                    <Border BorderBrush="AliceBlue"
+                            BorderThickness="1"
+                            CornerRadius="2">
+                        <Label Content="{Binding LogicUnit.CmmName}"
+                               ContentStringFormat="{}{0}联机状态"/>
+                    </Border>
+                </Ellipse.ToolTip>
+            </Ellipse>
+                <Ellipse Fill="{c:Binding !LogicUnit.Working ? \'Black\' : \'LightGreen\'}"
+                     Width="30"
+                     Height="30"
+                     Margin="5,0">
+                <Ellipse.ToolTip>
+                    <Border BorderBrush="AliceBlue"
+                            BorderThickness="1"
+                            CornerRadius="2">
+                        <Label Content="{Binding LogicUnit.CmmName}"
+                               ContentStringFormat="{}{0}工作状态"/>
+                    </Border>
+                </Ellipse.ToolTip>
+            </Ellipse>
+            </UniformGrid>
+        </Border>
     </DataTemplate>
     <Style x:Key="ListBoxItemStyle1" TargetType="{x:Type ListBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>

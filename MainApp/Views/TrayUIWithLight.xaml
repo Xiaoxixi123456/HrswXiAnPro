@@ -9,9 +9,9 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <DataTemplate x:Key="DefaultPartDataTemplate">
-            <Border BorderThickness="1" 
+            <Border BorderThickness="3" 
                     BorderBrush="Black"
-                    CornerRadius="2"
+                    CornerRadius="5"
                     Margin="5">
                 <Grid Margin="3">
                     <Grid.Background>
@@ -43,9 +43,9 @@
                     </BulletDecorator>
                     <BulletDecorator Grid.Row="2">
                         <BulletDecorator.Bullet>
-                            <Label Content="工件类别"/>
+                            <Label Content="工件批次"/>
                         </BulletDecorator.Bullet>
-                        <Label Content="{Binding Category}"
+                        <Label Content="{Binding BatchNb}"
                                VerticalContentAlignment="Center"/>
                     </BulletDecorator>
                 </Grid>
@@ -70,7 +70,7 @@
                  ItemsSource="{Binding Parts}"
                  HorizontalContentAlignment="Stretch"
                  VerticalContentAlignment="Stretch" 
-                 ItemContainerStyle="{DynamicResource PartsListBoxItemStyle}" Background="{x:Null}"
+                 ItemContainerStyle="{DynamicResource PartsListBoxItemStyle}" Background="{x:Null}" Grid.IsSharedSizeScope="True"
                  >
             <ListBox.ItemTemplateSelector>
                 <utl:PartsOfTrayDataTemplateSelector 
