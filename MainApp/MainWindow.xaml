@@ -83,7 +83,7 @@
                    HorizontalContentAlignment="Stretch"
                    >
             <StatusBarItem>
-                <Label Content="{Binding OpInfo}" 
+                <Label Content="{Binding Logs.StatusMessage}" 
                        FontSize="14" 
                        Width="600" 
                        HorizontalContentAlignment="Stretch" 

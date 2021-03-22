@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.CMMClient;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.CMMClient;
 using Hrsw.XiAnPro.CMMClients;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.LogicControls;
@@ -50,13 +51,13 @@ namespace MainApp.ViewModels
         [Bindable]
         public Rack SelectedRack { get; set; }
         [Bindable]
-        public string OpInfo { get; set; }
-        [Bindable]
         public bool Started { get; set; }
         [Bindable]
         public bool Stopped { get; set; }
         [Bindable]
         public int RunLedIndex { get; set; }
+        [Bindable]
+        public ClientLogs Logs { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -87,6 +88,7 @@ namespace MainApp.ViewModels
             Started = false;
             Stopped = true;
             RunLedIndex = -1;
+            Logs = ClientLogs.Inst;
         }
 
         private void CategoriesRefresh()

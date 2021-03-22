@@ -664,6 +664,37 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <DataTemplate x:Key="LoadPartsDataTemplate">
+        <Border BorderThickness="1" 
+            BorderBrush="DarkBlue"
+            CornerRadius="2"
+            Margin="5">
+            <Grid Margin="3">
+                <!--<Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <BulletDecorator Grid.Column="0">
+                    <BulletDecorator.Bullet>
+                        <Label Content="工件名:"/>
+                    </BulletDecorator.Bullet>
+                    <Label Content="{Binding Name}" 
+                        VerticalContentAlignment="Center"/>
+                </BulletDecorator>
+                <BulletDecorator Grid.Column="1">
+                    <BulletDecorator.Bullet>
+                        <Label Content="工件号:"/>
+                    </BulletDecorator.Bullet>
+                    <Label Content="{Binding PartNb}"
+                        VerticalContentAlignment="Center"/>
+                </BulletDecorator>
+            </Grid>
+        </Border>
+    </DataTemplate>
     <!--<Style x:Key="PartsDataGridRowStyle" TargetType="{x:Type DataGridRow}">
         <Style.Triggers>
             <MultiDataTrigger>

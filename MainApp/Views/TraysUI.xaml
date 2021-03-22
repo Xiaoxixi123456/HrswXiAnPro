@@ -56,7 +56,9 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <GroupBox Header="料盘参数" Margin="5">
-                        <StackPanel Margin="3" Background="White">
+                        <UniformGrid Columns="2"
+                                     Rows="3"
+                                    Margin="3" Background="White">
                             <BulletDecorator>
                                 <BulletDecorator.Bullet>
                                     <Label Content="行数:" Width="100"/>
@@ -93,7 +95,7 @@
                                 </BulletDecorator.Bullet>
                                 <Label Content="{Binding BaseRowOffset}"/>
                             </BulletDecorator>
-                        </StackPanel>
+                        </UniformGrid>
                     </GroupBox>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>

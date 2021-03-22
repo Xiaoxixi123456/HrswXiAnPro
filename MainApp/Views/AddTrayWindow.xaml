@@ -104,14 +104,14 @@
             </Grid>
             <BulletDecorator Margin="0, 5">
                 <BulletDecorator.Bullet>
-                    <Label Content="三坐标编号: " Width="150"/>
+                    <Label Content="CMM选择: " Width="150"/>
                 </BulletDecorator.Bullet>
                 <ComboBox SelectedIndex="{Binding CmmNo}"
                              FontSize="20"
                              VerticalContentAlignment="Center">
-                    <ComboBoxItem>0</ComboBoxItem>
-                    <ComboBoxItem>1</ComboBoxItem>
-                    <ComboBoxItem>2</ComboBoxItem>
+                    <ComboBoxItem>Pcdmis</ComboBoxItem>
+                    <ComboBoxItem>Calypso</ComboBoxItem>
+                    <ComboBoxItem>All</ComboBoxItem>
                 </ComboBox>
             </BulletDecorator>
             <!--<BulletDecorator Margin="0, 5">

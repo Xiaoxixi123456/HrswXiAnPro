@@ -81,5 +81,19 @@ namespace MainApp.Views
         {
             Close();
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            PartsOfTrayViewModel ptvm = (DataContext as PartsOfTrayViewModel);
+            if (ptvm.SelectedNumOfPartsInTray > ptvm.Parts.Count)
+            {
+                return;
+            }
+
+            for (int i = 0; i < ptvm.SelectedNumOfPartsInTray; i++)
+            {
+                partsListBox.SelectedItems.Add(ptvm.Parts[i]);
+            }
+        }
     }
 }

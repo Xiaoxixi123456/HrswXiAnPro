@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.Models;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.Models;
 using MainApp.Utilities;
 using MainApp.ViewModels;
 using System;
@@ -66,42 +67,42 @@ namespace MainApp.Views
         private void loadTrayButton_MouseMove(object sender, MouseEventArgs e)
         {
             //OpInfomations.info = "往料库槽中装夹料盘";
-            ((MainViewModel)DataContext).OpInfo = "往料库槽中装夹料盘";
+            ClientLogs.Inst.StatusMessage = "往料库槽中装夹料盘";
         }
 
         private void loadTrayButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "";
+            ClientLogs.Inst.StatusMessage = "";
         }
 
         private void unloadTrayButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "";
+            ClientLogs.Inst.StatusMessage = "";
         }
 
         private void unloadTrayButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "往料库槽中卸载料盘";
+            ClientLogs.Inst.StatusMessage = "往料库槽中卸载料盘";
         }
 
         private void startAutoflowButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "启动检测流程";
+            ClientLogs.Inst.StatusMessage = "启动检测流程";
         }
 
         private void startAutoflowButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "";
+            ClientLogs.Inst.StatusMessage = "";
         }
 
         private void stopButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "";
+            ClientLogs.Inst.StatusMessage = "";
         }
 
         private void stopButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ((MainViewModel)DataContext).OpInfo = "停止检测流程";
+            ClientLogs.Inst.StatusMessage = "停止检测流程";
         }
     }
 }

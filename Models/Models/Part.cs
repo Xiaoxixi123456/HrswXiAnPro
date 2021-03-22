@@ -21,6 +21,10 @@ namespace Hrsw.XiAnPro.Models
         [Bindable]
         public string DrawingNo { get; set; }
         [Bindable]
+        public string Oper { get; set; }
+        [Bindable]
+        public int BatchNb { get; set; }
+        [Bindable]
         public int CmmNo { get; set; }
         [Bindable]
         public int UseCmmNo { get; set; }

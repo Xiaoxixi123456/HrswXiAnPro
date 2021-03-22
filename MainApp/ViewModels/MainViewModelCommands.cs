@@ -200,6 +200,10 @@ namespace MainApp.ViewModels
         private async void StartAutoflow()
         {
             //Start();
+            bool ok = ShowWainingWindow();
+            if (!ok)
+                return;
+
             if (LogicUnits.Count == 0)
             {
                 Started = false;
@@ -238,7 +242,16 @@ namespace MainApp.ViewModels
             Started = false;
             Stopped = true;
         }
-        
+
+        private bool ShowWainingWindow()
+        {
+            bool? result;
+            StartupWainingWindow swWnd = new StartupWainingWindow();
+            swWnd.Topmost = true;
+            result = swWnd.ShowDialog();
+            return result == true ? true : false;
+        }
+
         private async void StopAutoflow()
         {
             foreach (var item in LogicUnits)

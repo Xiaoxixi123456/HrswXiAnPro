@@ -17,6 +17,8 @@ namespace Hrsw.XiAnPro.Models
         public int PartNb { get; set; }
         public int Category { get; set; }
         public string DrawingNo { get; set; }
+        public string Oper { get; set; }
+        public int BatchNb { get; set; }
         public int CmmNo { get; set; }
         public bool Pass { get; set; }
         public int UseCmmNb { get; set; }

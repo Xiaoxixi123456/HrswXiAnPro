@@ -30,6 +30,7 @@ namespace MainApp.ViewModels
 
         public DelegateCommand LoadCommand { get; set; }
         public DelegateCommand UnloadCommand { get; set; }
+        public DelegateCommand AutoMatchSelectedCommand { get; set; }
         //public DelegateCommand<object> SelectionChangedCommand { get; set; }
         //public DelegateCommand<object> PartsSelectionChangedCommand { get; set; }
 
@@ -37,8 +38,7 @@ namespace MainApp.ViewModels
         {
             LoadCommand = new DelegateCommand(LoadParts);
             UnloadCommand = new DelegateCommand(UnloadParts);
-            //SelectionChangedCommand = new DelegateCommand<object>(SelectionChanged);
-            //PartsSelectionChangedCommand = new DelegateCommand<object>(PartsSelectionChanged);
+            AutoMatchSelectedCommand = new DelegateCommand(AutoMatchSelected);
 
             Parts = new ObservableCollection<Part>();
             SelectedParts = new ObservableCollection<Part>();
@@ -46,25 +46,14 @@ namespace MainApp.ViewModels
             SelectedPartsOfTray = new ObservableCollection<Part>();
         }
 
-        //private void PartsSelectionChanged(object obj)
-        //{
-        //    SelectedParts.Clear();
-        //    var parts = (obj as ObservableCollection<object>).Cast<Part>();
-        //    foreach (var item in parts)
-        //    {
-        //        SelectedParts.Add(item);
-        //    }
-        //}
-
-        //private void SelectionChanged(object items)
-        //{
-        //    SelectedPartsOfTray.Clear();
-        //    var parts = (items as ObservableCollection<object>).Cast<Part>();
-        //    foreach (var item in parts)
-        //    {
-        //        SelectedPartsOfTray.Add(item);
-        //    }
-        //}
+        private void AutoMatchSelected()
+        {
+            SelectedParts.Clear();
+            for (int i = 0; i < SelectedNumOfPartsInTray; i++)
+            {
+                SelectedParts.Add(Parts[i]);
+            }
+        }
 
         private void UnloadParts()
         {

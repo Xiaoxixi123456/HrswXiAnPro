@@ -72,7 +72,7 @@
                      VerticalContentAlignment="Stretch" 
                      VerticalAlignment="Stretch" 
                      HorizontalAlignment="Stretch" 
-                     SelectionMode="Multiple"
+                     SelectionMode="Extended"
                      SelectionChanged="TrayPartListbox_SelectionChanged">
                 <ListBox.ItemTemplateSelector>
                     <sel:PartsOfTrayDataTemplateSelector 
@@ -103,14 +103,22 @@
         <Grid Grid.Column="2" Margin="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition />
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="可选择工件列表"/>
-            <ListBox x:Name="partsListBox" Grid.Row="1" Margin="3" 
+            <!--<BulletDecorator Grid.Row="0">
+                <BulletDecorator.Bullet>
+                    <Label Content="批次:"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding SelectedNumOfParts}"
+                           VerticalAlignment="Center"/>
+            </BulletDecorator>-->
+            <Label Grid.Row="1" Content="可选择工件列表"/>
+            <ListBox x:Name="partsListBox" Grid.Row="2" Margin="3" 
                      ItemsSource="{Binding Parts}"
-                     ItemTemplate="{StaticResource DefaultPartDataTemplate}"
+                     ItemTemplate="{DynamicResource LoadPartsDataTemplate}"
                      HorizontalContentAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
                      SelectionMode="Extended"
@@ -122,13 +130,21 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>-->
             </ListBox>
-            <BulletDecorator Grid.Row="2">
+            <BulletDecorator Grid.Row="3">
                 <BulletDecorator.Bullet>
                     <Label Content="选中数:"/>
                 </BulletDecorator.Bullet>
-                <TextBlock Text="{Binding SelectedNumOfParts}"/>
+                <TextBlock Text="{Binding SelectedNumOfParts}"
+                           VerticalAlignment="Center"/>
             </BulletDecorator>
-            <StackPanel Grid.Row="3" HorizontalAlignment="Left">
+            <StackPanel Grid.Row="4" HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <Button Content="自动匹配" 
+                        Margin="5,8" 
+                        Padding="5" 
+                        Width="80"
+                        Click="Button_Click_3"/>
+                <!--Command="{Binding AutoMatchSelectedCommand}"/>-->
                 <Button Content="重置" Margin="5,8" Padding="5" Width="80" 
                         Click="Button_Click_2"/>
             </StackPanel>

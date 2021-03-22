@@ -4,149 +4,158 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
+             xmlns:calbd="clr-namespace:CalcBinding;assembly=CalcBinding"
              mc:Ignorable="d" 
              d:DesignHeight="506.4" d:DesignWidth="500">
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <!--ItemTemplate="{DynamicResource CmmPartDataTemplate}"--> 
-        <!--<ListBox x:Name="listBox" 
-                 Margin="3" 
-                 Grid.Row="0"
-                 Grid.Column="0" 
-                 ItemsPanel="{DynamicResource ItemsPanelTemplate1}" 
-                 ItemsSource="{Binding CurrentTray.Parts}"
-                 />-->
-        <local:TrayUIWithLight x:Name="curentTray"
-                      Margin="3"
-                      Grid.Row="0"
-                      Grid.Column="0"
-                      DataContext="{Binding LogicUnit.CurrentTray}"/>
-        <Border Grid.Row="0" BorderBrush="DarkSlateBlue"
-                Grid.Column="0"
-                BorderThickness="1"
-                CornerRadius="1"
-                />
-        <Grid Grid.Column="0" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <GroupBox Header="三坐标信息" 
-                      Margin="2"
-                      Grid.Column="0"
-                      Grid.Row="0">
-                
-            <StackPanel Orientation="Vertical" 
-                    Margin="2">
-                <BulletDecorator Margin="0,2" >
-                    <BulletDecorator.Bullet>
-                        <Label VerticalContentAlignment="Center" 
-                               Content="三坐标名:" 
-                               FontSize="16"
-                               Width="100"/>
-                    </BulletDecorator.Bullet>
-                    <Label VerticalContentAlignment="Center" 
-                       Content="{Binding LogicUnit.CmmName}" 
-                           FontSize="16"
+    <Grid>
+        <GroupBox Header="{Binding}">
+            <GroupBox.HeaderTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding LogicUnit.CmmName}"
+                           FontSize="18"
+                           Background="Transparent"
+                           Foreground="LightBlue"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="30,0"
                            />
-                </BulletDecorator>
-                <BulletDecorator Margin="0,2" >
-                    <BulletDecorator.Bullet>
-                        <Label VerticalContentAlignment="Center" 
-                               Content="三坐标号:"
-                               FontSize="16"
-                               Width="100"/>
-                    </BulletDecorator.Bullet>
-                    <Label VerticalContentAlignment="Center" 
-                       Content="{Binding LogicUnit.CmmNo}" 
-                           FontSize="16"/>
-                </BulletDecorator>
-                <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                </DataTemplate>
+            </GroupBox.HeaderTemplate>
+            <Grid Margin="3">
+                <Grid.RowDefinitions>
+                    <!--workarea-->
+                    <RowDefinition/>
+                    <!--buttons-->
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Margin="2">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <!--tray-->
+                            <RowDefinition/>
+                            <!--cmmstatus-->
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0"
+                                BorderBrush="LightBlue"
+                                BorderThickness="1"
+                                CornerRadius="1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <!--料盘视图区-->
+                                    <RowDefinition/>
+                                    <!--料盘信息区-->
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <local:TrayUIWithLight x:Name="curentTray"
+                              Margin="3"
+                              Grid.Row="0"
+                              DataContext="{Binding LogicUnit.CurrentTray}"/>
+                                <StackPanel Grid.Row="1" 
+                                            Margin="2">
+                                    <BulletDecorator Margin="0,2" >
+                                        <BulletDecorator.Bullet>
+                                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘编号:" 
+                                       FontSize="16"/>
+                                        </BulletDecorator.Bullet>
+                                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding LogicUnit.CurrentTray.TrayNb}" 
+                                   HorizontalAlignment="Right" Width="179" 
+                                   FontSize="16"/>
+                                    </BulletDecorator>
+                                    <BulletDecorator Margin="0,2" >
+                                        <BulletDecorator.Bullet>
+                                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘类别:"
+                                       FontSize="16"/>
+                                        </BulletDecorator.Bullet>
+                                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding LogicUnit.CurrentTray.Category}" 
+                                   FontSize="16"/>
+                                    </BulletDecorator>
+                                    <BulletDecorator Margin="0,2" >
+                                        <BulletDecorator.Bullet>
+                                            <Label VerticalContentAlignment="Center" 
+                                   Content="料盘槽位:"
+                                       FontSize="16"/>
+                                        </BulletDecorator.Bullet>
+                                        <Label VerticalContentAlignment="Center" 
+                               Content="{Binding LogicUnit.CurrentTray.SlotNb}" 
+                                   FontSize="16"/>
+                                    </BulletDecorator>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <Border Grid.Row="1"
+                        BorderBrush="DarkGray"
+                        BorderThickness="2"
+                        Margin="2">
+                            <UniformGrid Columns="3" Rows="1">
+                                <!--<CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
                           Content="{Binding CanOffline, 
                     Converter={StaticResource CmmOnOfflineConverter}}"
                           IsChecked="{Binding CanOffline}" IsEnabled="False"
                           Margin="5,2"
-                          FontSize="16"/>
-                <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                          FontSize="16"
+                          />-->
+                                <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                          Content="{calbd:Binding CanOffline ? \'联机\' : \'离线\'}"
+                          IsChecked="{Binding CanOffline}" IsEnabled="False"
+                          Margin="5,2"
+                          FontSize="16"
+                          />
+                                <!--<CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
                           Content="{Binding LogicUnit.Working, 
                     Converter={StaticResource CmmWorkingConverter}}"
                           IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
                           Margin="5,2"
+                          FontSize="16"/>-->
+                                <CheckBox Style="{DynamicResource CmmLedCheckBoxStyle}"
+                          Content="{calbd:Binding LogicUnit.Working ? \'工作状态\' : \'空闲状态\'}" 
+                          IsChecked="{Binding LogicUnit.Working}" IsEnabled="False"
+                          Margin="5,2"
                           FontSize="16"/>
-                    <CheckBox Style="{DynamicResource CmmErrorLedCheckBoxStyle}"
+                                <!--<CheckBox Style="{DynamicResource CmmErrorLedCheckBoxStyle}"
                           Content="{Binding CmmError, 
                     Converter={StaticResource CmmErrorConverter}}"
                           IsChecked="{Binding CmmError}" IsEnabled="False"
                           Margin="5,2"
+                          FontSize="16"/>-->
+                                <CheckBox Style="{DynamicResource CmmErrorLedCheckBoxStyle}"
+                          Content="{calbd:Binding CmmError ? \'CMM错误\' : \'CMM状态正常\'}"
+                          IsChecked="{Binding CmmError}" IsEnabled="False"
+                          Margin="5,2"
                           FontSize="16"/>
-                </StackPanel>
-            </GroupBox>
-            <!--<BulletDecorator Margin="0,2" >
-                <BulletDecorator.Bullet>
-                    <Label VerticalContentAlignment="Center" Content="当前料盘:"/>
-                </BulletDecorator.Bullet>
-                <Label VerticalContentAlignment="Center" Content="{Binding CurrentTray.TrayNb}" />
-            </BulletDecorator>-->
-                <GroupBox Header="料盘信息" Margin="2"
-                          Grid.Column="1">
-                    <StackPanel Margin="2">
-                        <BulletDecorator Margin="0,2" >
-                            <BulletDecorator.Bullet>
-                                <Label VerticalContentAlignment="Center" 
-                                   Content="料盘编号:" 
-                                       FontSize="16"/>
-                            </BulletDecorator.Bullet>
-                            <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.TrayNb}" 
-                                   HorizontalAlignment="Right" Width="179" 
-                                   FontSize="16"/>
-                        </BulletDecorator>
-                        <BulletDecorator Margin="0,2" >
-                            <BulletDecorator.Bullet>
-                                <Label VerticalContentAlignment="Center" 
-                                   Content="料盘类别:"
-                                       FontSize="16"/>
-                            </BulletDecorator.Bullet>
-                            <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.Category}" 
-                                   FontSize="16"/>
-                        </BulletDecorator>
-                        <BulletDecorator Margin="0,2" >
-                            <BulletDecorator.Bullet>
-                                <Label VerticalContentAlignment="Center" 
-                                   Content="料盘槽位:"
-                                       FontSize="16"/>
-                            </BulletDecorator.Bullet>
-                            <Label VerticalContentAlignment="Center" 
-                               Content="{Binding LogicUnit.CurrentTray.SlotNb}" 
-                                   FontSize="16"/>
-                        </BulletDecorator>
-                    </StackPanel>
-                </GroupBox>
-        </Grid>
-        <StackPanel Orientation="Horizontal"
-                    Grid.Row="2"
+                            </UniformGrid>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
                     Margin="3" >
-            <Button Content="联机" Margin="5,3" FontSize="20"
+                    <Button Content="联机" Margin="5,3" FontSize="20"
                     Command="{Binding OnlineCommand}" 
                     Width="80"
                     MouseLeave="Button_MouseLeave"
                     MouseMove="Button_MouseMove"/>
-            <Button Content="离线" Margin="5,3" FontSize="20"
+                    <Button Content="离线" Margin="5,3" FontSize="20"
                     Command="{Binding OfflineCommand}"
                     Width="80"
                     MouseLeave="Button_MouseLeave_1"
                     MouseMove="Button_MouseMove_1"/>
-            <Button Content="启动" Margin="5,3" FontSize="20"
+                    <Button Content="启动" Margin="5,3" FontSize="20"
                     Width="80"
                     Command="{Binding StartWorkflowCommand}"
                     MouseLeave="Button_MouseLeave_2"
                     MouseMove="Button_MouseMove_2"/>
-        </StackPanel>
-        
+                </StackPanel>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
