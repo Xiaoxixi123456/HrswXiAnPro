@@ -20,7 +20,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="Error" type="xs:boolean" />
       <xs:element minOccurs="0" name="Message" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Result" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OperType" type="xs:boolean" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PCDMessage" nillable="true" type="tns:PCDMessage" />

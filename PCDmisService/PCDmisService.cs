@@ -33,6 +33,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
         public bool Connected { get; set; }
         [Bindable]
         public string StatusMessage { get; set; }
+        private bool _measureOperation;
 
         public PCDmisService()
         {
@@ -45,7 +46,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
 
         private void MessageBoxEventHandler(object sender, PcdmisEventArgs e)
         {
-            // TODO 取消测量需人工干预是否进行下一个测量
+            //取消测量需人工干预是否进行下一个测量
             _completed = false;
             RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
@@ -53,7 +54,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
 
         private void ExecuteError(object sender, PcdmisEventArgs e)
         {
-            // 取消测量需人工干预是否进行下一个测量
+            //取消测量需人工干预是否进行下一个测量
             _completed = false;
             RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
@@ -63,15 +64,17 @@ namespace Hrsw.XiAnPro.ServerCommonMod
         {
             if (e.IsCancelled)
             {
-                // TODO 取消测量需人工干预是否进行下一个测量
+                //取消测量需人工干预是否进行下一个测量
                 _completed = false;
-                RespondMessage(true, "测量取消");
-                ServerLog.Logs.AddLog("测量取消");
+                string message = _measureOperation ? "测量取消" : "回零取消";
+                RespondMessage(true, message);
+                ServerLog.Logs.AddLog(message);
             }
             else
             {
                 _completed = true;
-                RespondMessage(false, "测量完成");
+                string message = _measureOperation ? "测量完成" : "回零完成";
+                RespondMessage(false, "message");
                 _are.Set();
             }
         }
@@ -81,8 +84,6 @@ namespace Hrsw.XiAnPro.ServerCommonMod
             try
             {
                 _pcdmisControl.InitPcdmis();
-                //MeasProgManager.Inst.SavFileName = Path.Combine(MeasProgDir, MeasProgsFileName);
-                //MeasProgManager.Inst.LoadPrograms();
             }
             catch (PcdmisServiceException e)
             {
@@ -168,11 +169,38 @@ namespace Hrsw.XiAnPro.ServerCommonMod
 
         public PCDResponse GotoSafePostion()
         {
-            throw new NotImplementedException();
+            _measureOperation = false;
+            PCDResponse resp = new PCDResponse();
+            try
+            {
+                string progName = ServerDirManager.Inst.SafeLocateProgram;
+                if (!File.Exists(progName))
+                {
+                    resp.Success = false;
+                    resp.Message = "安全定位程序不存在";
+                    ServerLog.Logs.AddLog(resp.Message);
+                    return resp;
+                }
+
+                _are.Reset();
+                bool success = _pcdmisControl.OpenProgram(progName);
+                success = _pcdmisControl.ExecuteProgramAsync();
+                _are.WaitOne();
+                resp.Success = success;
+                return resp;
+            }
+            catch (Exception ex)
+            {
+                resp.Success = false;
+                resp.Message = ex.Message;
+                ServerLog.Logs.AddLog(resp.Message);
+                return resp;
+            }
         }
 
         public PCDResponse MeasurePart(PCDRequest request)
         {
+            _measureOperation = true;
             StatusMessage = "开始测量";
             PCDResponse resp = null;
             try
@@ -284,7 +312,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
         /// <param name="message"></param>
         private void RespondMessage(bool err, string message)
         {
-            PCDMessage mage = new PCDMessage() { Error = err, Result = true, Message = message };
+            PCDMessage mage = new PCDMessage() { Error = err, OperType = _measureOperation, Message = message };
             _pcdmisCallback?.SendMessage(mage);
         }
 

@@ -22,7 +22,7 @@ namespace MainApp.ViewModels
     {
         [Bindable]
         public ObservableCollection<LogicUnitViewModel> LogicUnits;
-        private Dispatcher dispatcher;
+        public Dispatcher Dispatcher;
 
         [Bindable]
         public MainConfigManager ConfigManager { get; set; }
@@ -57,7 +57,7 @@ namespace MainApp.ViewModels
         [Bindable]
         public int RunLedIndex { get; set; }
         [Bindable]
-        public ClientLogs Logs { get; set; }
+        public ClientLogs LogsManager { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -88,7 +88,7 @@ namespace MainApp.ViewModels
             Started = false;
             Stopped = true;
             RunLedIndex = -1;
-            Logs = ClientLogs.Inst;
+            LogsManager = ClientLogs.Inst;
         }
 
         private void CategoriesRefresh()
@@ -105,6 +105,8 @@ namespace MainApp.ViewModels
 
         public void Initial()
         {
+            ClientLogs.Inst.Dispatcher = Dispatcher;
+            ClientLogs.Inst.Init();
             if (ConfigManager.cmmConfigs.UsePcdmis)
             {
                 AddCmm(0, "Pcdmis");

@@ -39,6 +39,8 @@ namespace MainApp.ViewModels
         public DelegateCommand CmmsSetupCommand { get; set; }
         public DelegateCommand DirsSetupCommand { get; set; }
         public DelegateCommand SelectedCmmsCommand { get; set; }
+        public DelegateCommand ShowLogsCommand { get; set; }
+        public DelegateCommand ClearLogsCommand { get; set; }
 
 
         public void CreateCommands()
@@ -61,8 +63,22 @@ namespace MainApp.ViewModels
             CmmsSetupCommand = new DelegateCommand(CmmsSetup).ObservesCanExecute(() => Stopped);
             DirsSetupCommand = new DelegateCommand(DirsSetup).ObservesCanExecute(() => Stopped);
             SelectedCmmsCommand = new DelegateCommand(SelectedCmms).ObservesCanExecute(() => Stopped);
+            ShowLogsCommand = new DelegateCommand(ShowLogs);
+            ClearLogsCommand = new DelegateCommand(ClearLogs);
             // 
             MyEventAggregator.Inst.GetEvent<MainAndLogicUnitEvent>().Subscribe(StartCmmWork);
+        }
+
+        private void ClearLogs()
+        {
+            LogsManager.Logs.Clear();
+        }
+
+        private void ShowLogs()
+        {
+            ClientLogsWindow clWnd = new ClientLogsWindow();
+            clWnd.DataContext = this;
+            clWnd.ShowDialog();
         }
 
         private void SelectedCmms()
@@ -200,9 +216,6 @@ namespace MainApp.ViewModels
         private async void StartAutoflow()
         {
             //Start();
-            bool ok = ShowWainingWindow();
-            if (!ok)
-                return;
 
             if (LogicUnits.Count == 0)
             {
@@ -210,6 +223,11 @@ namespace MainApp.ViewModels
                 Stopped = true;
                 return;
             }
+
+            bool ok = ShowWainingWindow();
+            if (!ok)
+                return;
+
             Started = true;
             Stopped = false;
             Racks[0].Status = RackStatus.RS_Busy;

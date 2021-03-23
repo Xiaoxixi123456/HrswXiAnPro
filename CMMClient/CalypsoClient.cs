@@ -8,6 +8,7 @@ using System.ServiceModel;
 using Prism.Mvvm;
 using Hrsw.XiAnPro.Utilities;
 using System.Threading;
+using ClientCommonMods;
 
 namespace Hrsw.XiAnPro.CMMClient
 {
@@ -122,7 +123,8 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception)
             {
-                // TODO 关闭通讯失败
+                // 关闭通讯失败
+                ClientLogs.Inst.AddLog(new ClientLog("关闭calypso通讯失败"));
                 _calypsoServiceClient.Abort();
             }
             Connected = false;

@@ -10,6 +10,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <BulletDecorator Grid.Row="0" VerticalAlignment="Center">
             <BulletDecorator.Bullet>
@@ -39,6 +40,21 @@
                            VerticalAlignment="Center"/>
                 <Button Grid.Column="1" Content="..." Width="30"
                         Command="{Binding SelectReportDirCommand}"/>
+            </Grid>
+        </BulletDecorator>
+        <BulletDecorator Grid.Row="2" VerticalAlignment="Center">
+            <BulletDecorator.Bullet>
+                <Label Content="安全定位:" Width="80" VerticalContentAlignment="Center"/>
+            </BulletDecorator.Bullet>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Dirs.SafeLocateProgram}"
+                           VerticalAlignment="Center"/>
+                <Button Grid.Column="1" Content="..." Width="30"
+                        Command="{Binding SelectSafeLocateCommand}"/>
             </Grid>
         </BulletDecorator>
     </Grid>

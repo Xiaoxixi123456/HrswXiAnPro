@@ -11,7 +11,7 @@
         Title="自动控制检测系统" Height="600" Width="900"
                       Loaded="Window_Loaded" 
                       Closed="MetroWindow_Closed"
-                      Background="#FFADC5C8" 
+                      Background="#FFDFCFE0" 
                       WindowState="Maximized">
     <Window.Resources>
         <cvter:RunLedIndexConverter1 x:Key="RunLedIndexConverter1"/>
@@ -55,7 +55,8 @@
                           Command="{Binding DirsSetupCommand}"/>
             </MenuItem>
             <MenuItem Header="日志" Background="{x:Null}">
-                <MenuItem Header="日志记录"/>
+                <MenuItem Header="日志记录"
+                          Command="{Binding ShowLogsCommand}"/>
             </MenuItem>
         </Menu>
         <TabControl Grid.Row="1" 

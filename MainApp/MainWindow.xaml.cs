@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using MainApp.ViewModels;
+using MainApp.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace MainApp
         {
             InitializeComponent();
             MainViewModel = new MainViewModel();
+            MainViewModel.Dispatcher = Dispatcher;
             DataContext = MainViewModel;
             _runLedtimer = new DispatcherTimer(DispatcherPriority.DataBind);
             _runLedtimer.Tick += _runLedtimer_Tick;
@@ -48,12 +50,15 @@ namespace MainApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            // TODO Window_Loaded 错误处理
+            // Window_Loaded 错误处理
             try
             {
+                SplashWindow.Start();
                 MainViewModel.Initial();
                 _runLedtimer.Interval = TimeSpan.FromSeconds(1);
                 _runLedtimer.Start();
+                SplashWindow.Stop();
+                Activate();
             }
             catch (Exception)
             {

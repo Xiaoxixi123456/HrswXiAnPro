@@ -16,6 +16,8 @@ namespace Hrsw.XiAnPro.CMMClient
     {
         public bool MeasErrorFlag { get; set; }
         private PcdmisClient _pcdClient;
+
+        // TODO 需要判断安全定位和测量工件出错后的处理方式
         public void SendMessage(PCDMessage response)
         {
             Debug.WriteLine(response.Message);

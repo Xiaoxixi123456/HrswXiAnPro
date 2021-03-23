@@ -5,8 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MainApp.Views"
         mc:Ignorable="d"
-        Title="系统日志" Height="300" Width="300">
-    <Grid>
-        
+        Title="系统日志" Height="326.341" Width="675.366"
+        FontSize="18" Background="#FFADC5C8">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Visibility="Hidden"
+              x:Name="frGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" x:Name="lvWd1"/>
+            <Grid Grid.Column="1" x:Name="lvWd2"/>
+        </Grid>
+        <ListView Grid.Row="0" 
+                  SelectionMode="Single" 
+                  Background="#FFF1EDED" 
+                  BorderThickness="1"
+                  ItemsSource="{Binding LogsManager.Logs}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="时间" DisplayMemberBinding="{Binding LogTime}"
+                                    Width="{Binding ActualWidth, ElementName=lvWd1, Mode=OneWay}" />
+                    <GridViewColumn Header="信息" DisplayMemberBinding="{Binding Message}"
+                                    Width="{Binding ActualWidth, ElementName=lvWd2, Mode=OneWay}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal">
+            <Button Margin="30,5" Content="清除" 
+                    Width="80"
+                    FontSize="18"
+                    Command="{Binding ClearLogsCommand}"/>
+        </StackPanel>
     </Grid>
 </Window>

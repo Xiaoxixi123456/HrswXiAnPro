@@ -18,14 +18,27 @@ namespace PcdmisServerMain
 
         public DelegateCommand SelectProgDirCommand { get; set; }
         public DelegateCommand SelectReportDirCommand { get; set; }
+        public DelegateCommand SelectSafeLocateCommand { get; set; }
 
         public DirsSetupViewModel()
         {
             SelectProgDirCommand = new DelegateCommand(SelectProgDir);
             SelectReportDirCommand = new DelegateCommand(SelectReportDir);
+            SelectSafeLocateCommand = new DelegateCommand(SelectSafeLocateProgram);
 
             Dirs = ServerDirManager.Inst;
             Dirs.LoadDirs();
+        }
+
+        private void SelectSafeLocateProgram()
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "程序文件(*.Prg)|*.prg";
+            dlg.Multiselect = false;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Dirs.SafeLocateProgram = dlg.FileName;
+            }
         }
 
         private void SelectReportDir()

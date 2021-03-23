@@ -16,21 +16,38 @@ namespace ClientCommonMods
         public Dispatcher Dispatcher { get; set; }
         private object syncObj = new object();
         [Bindable]
-        public ObservableCollection<string> Messages { get; set; }
+        public ObservableCollection<ClientLog> Logs { get; set; }
         [Bindable]
         public string StatusMessage { get; set; }
+        [Bindable]
+        public TimeSpan RetainTimeSpan { get; set; }
+
 
         private static ClientLogs _inst = new ClientLogs();
         public static ClientLogs Inst => _inst ?? (_inst = new ClientLogs());
         private ClientLogs()
         {
-            Messages = new ObservableCollection<string>();
-            BindingOperations.EnableCollectionSynchronization(Messages, syncObj);
+            Logs = new ObservableCollection<ClientLog>();
         }
 
-        public void AddLog(string message)
+        public void Init()
         {
-            Messages.Add(message);
+            Dispatcher.BeginInvoke((Action)(() => BindingOperations.EnableCollectionSynchronization(Logs, syncObj)));
+        }
+
+        public void AddLog(ClientLog log)
+        {
+            Logs.Add(log);
+        }
+
+        public void LoadLogs()
+        {
+
+        }
+
+        public void SaveLogs()
+        {
+
         }
     }
 }

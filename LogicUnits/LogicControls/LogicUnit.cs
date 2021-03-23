@@ -124,7 +124,8 @@ namespace Hrsw.XiAnPro.LogicControls
 
         public void Stop()
         {
-            _cts.Cancel();
+            if (!Working) return;
+            _cts?.Cancel();
         }
 
         public async Task Offline()

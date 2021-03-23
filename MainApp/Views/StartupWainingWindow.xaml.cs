@@ -27,6 +27,7 @@ namespace MainApp.Views
             InitializeComponent();
             ContinueBtn.IsEnabled = false;
             _waitSecs = 3;
+            ContinueBtn.Content = $"确定";
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,7 +48,7 @@ namespace MainApp.Views
                 ContinueBtn.Focus();
                 return;
             }
-            string btnContent = $"确认 {_waitSecs--}s";
+            string btnContent = $"确定 {_waitSecs--}s";
             ContinueBtn.Content = btnContent;
         }
 

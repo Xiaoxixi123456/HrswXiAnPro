@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.CMMClients;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.CMMClients;
 using Hrsw.XiAnPro.CMMClients.PcdmisServiceReference;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.Models;
@@ -154,7 +155,8 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private void InnerDuplexChannel_Faulted(object sender, EventArgs e)
         {
-            // TODO 服务器断开提醒
+            // 服务器断开提醒
+            ClientLogs.Inst.AddLog(new ClientLog("Pcdmis通讯失败"));
             _pcdmisService.Abort();
         }
 
@@ -166,9 +168,23 @@ namespace Hrsw.XiAnPro.CMMClient
             return Task.FromResult(true);
         }
 
-        public Task<bool> GotoSafePositionAsync()
+        public async Task<bool> GotoSafePositionAsync()
         {
-            return Task.FromResult(true);
+            try
+            {
+                var response = await Task.Run(() => SafeLocate());
+                return response.Success;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("远程测量异常");
+            }
+        }
+
+        private PCDResponse SafeLocate()
+        {
+            PCDResponse response = _pcdmisService.GotoSafePostion();
+            return response;
         }
 
         public async Task<bool> MeasurePartAsync(Part part)
@@ -187,7 +203,7 @@ namespace Hrsw.XiAnPro.CMMClient
                 part.Flag = 0;
                 success = response.Success;
                 part.Pass = response.Pass;
-                part.ResultFile = response.ReportFile;
+                part.ResultFile = Path.GetFileName(response.ReportFile);
                 part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
             }
             catch (Exception) 

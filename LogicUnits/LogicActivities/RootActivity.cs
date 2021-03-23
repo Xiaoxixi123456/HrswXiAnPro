@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using ClientCommonMods;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
@@ -45,6 +46,7 @@ namespace Hrsw.XiAnPro.LogicActivities
                 {
                     obj.Status = TrayStatus.TS_Error;
                     // TODO 测量错误后料盘是否可以继续下料
+                    ClientLogs.Inst.AddLog(new ClientLog("料盘测量错误."));
                     success = false;
                 }
             }

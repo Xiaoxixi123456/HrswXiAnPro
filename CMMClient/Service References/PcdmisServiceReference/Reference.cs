@@ -167,7 +167,7 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         private string MessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool ResultField;
+        private bool OperTypeField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -206,14 +206,14 @@ namespace Hrsw.XiAnPro.CMMClients.PcdmisServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool Result {
+        public bool OperType {
             get {
-                return this.ResultField;
+                return this.OperTypeField;
             }
             set {
-                if ((this.ResultField.Equals(value) != true)) {
-                    this.ResultField = value;
-                    this.RaisePropertyChanged("Result");
+                if ((this.OperTypeField.Equals(value) != true)) {
+                    this.OperTypeField = value;
+                    this.RaisePropertyChanged("OperType");
                 }
             }
         }

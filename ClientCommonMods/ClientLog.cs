@@ -14,5 +14,10 @@ namespace ClientCommonMods
         public string Message { get; set; }
         [Bindable]
         public DateTime LogTime { get; set; }
+        public ClientLog(string message)
+        {
+            LogTime = DateTime.Now;
+            Message = message;
+        }
     }
 }

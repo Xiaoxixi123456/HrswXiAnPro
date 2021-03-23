@@ -5,15 +5,18 @@
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/Prism.Mvvm" base="q1:BindableBase">
         <xs:sequence>
+          <xs:element minOccurs="0" name="BatchNb" type="xs:int" />
           <xs:element minOccurs="0" name="Category" type="xs:int" />
           <xs:element minOccurs="0" name="CmmNo" type="xs:int" />
           <xs:element minOccurs="0" name="DrawingNo" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Flag" type="xs:int" />
           <xs:element minOccurs="0" name="Id" type="xs:int" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Oper" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PartNb" type="xs:int" />
           <xs:element minOccurs="0" name="Pass" type="xs:boolean" />
           <xs:element minOccurs="0" name="Placed" type="xs:boolean" />
+          <xs:element minOccurs="0" name="ResultFile" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SlotNb" type="xs:int" />
           <xs:element minOccurs="0" name="Status" type="tns:PartStatus" />
           <xs:element minOccurs="0" name="TrayNb" type="xs:int" />

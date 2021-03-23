@@ -9,6 +9,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PcdmisServerMain
 {
@@ -76,6 +77,10 @@ namespace PcdmisServerMain
             PcdmisService.Initial();
             StartPcdmisServiceHost();
             StartFileServiceHost();
+            if (MessageBox.Show("是否自动安全定位？", "信息", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No, MessageBoxOptions.DefaultDesktopOnly) == MessageBoxResult.Yes)
+            {
+                PcdmisService.GotoSafePostion();
+            }
         }
 
         private void StartFileServiceHost()
