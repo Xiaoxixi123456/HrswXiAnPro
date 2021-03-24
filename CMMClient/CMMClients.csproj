@@ -99,6 +99,10 @@
       <Project>{5082865e-4d57-4080-84a3-19b5134e7416}</Project>
       <Name>Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PLCModules\PLCInteraction\PLCInteraction.csproj">
+      <Project>{A3CC0CBC-6FF4-4AAB-B0D5-C464B8E457F9}</Project>
+      <Name>PLCInteraction</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utilities\Utilities\Utilities.csproj">
       <Project>{2F3106C7-9975-488D-844E-39A00FE7714E}</Project>
       <Name>Utilities</Name>

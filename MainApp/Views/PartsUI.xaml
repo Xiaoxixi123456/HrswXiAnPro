@@ -61,7 +61,7 @@
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
-                <DataGridTextColumn Header="结果文件" Binding="{Binding ResultFile}"/>
+                <DataGridTextColumn Header="结果文件" Binding="{Binding ResultFile}" Width="auto"/>
             </DataGrid.Columns>
             <!--<DataGrid.Triggers>
                 <MultiDataTrigger>

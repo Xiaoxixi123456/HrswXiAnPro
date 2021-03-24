@@ -58,5 +58,16 @@ namespace MainApp.Views
         {
             
         }
+
+        internal static void ShowInfo(string message)
+        {
+            //sw.InfoLabel.Content = message + "   正在退出...";
+            if (sw != null)
+            {
+                sw.Dispatcher.Invoke((Action)(() => 
+                sw.InfoLabel.Content = message + "   正在退出..."));
+                Thread.Sleep(1000);
+            }
+        }
     }
 }

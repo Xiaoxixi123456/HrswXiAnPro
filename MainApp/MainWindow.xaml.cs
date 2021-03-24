@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -60,8 +61,11 @@ namespace MainApp
                 SplashWindow.Stop();
                 Activate();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SplashWindow.ShowInfo("连接PLC失败");
+                Thread.Sleep(2000);
+                SplashWindow.Stop();
                 Application.Current.Shutdown(0);
             }
         }

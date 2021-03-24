@@ -1,4 +1,5 @@
 ﻿using Hrsw.XiAnPro.Utilities;
+using Prism.Mvvm;
 using Snap7;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,18 @@ using System.Threading.Tasks;
 
 namespace PLCServices
 {
-    public class PLCAccessor
+    public class PLCAccessor : BindableBase
     {
         private S7Client _s7Client;
         private object syncLock = new object();
         private static PLCAccessor _inst;
         public static PLCAccessor Instance => _inst ?? (_inst = new PLCAccessor());
+        [Bindable]
         public string PlcIP { get; set; }
-        
+        [Bindable]
+        public bool Connected { get; set; }
+
+
         private PLCAccessor()
         {
             _s7Client = new S7Client();
@@ -39,6 +44,7 @@ namespace PLCServices
         {
             int code = _s7Client.ConnectTo(PlcIP, 0, 0);
             Validate(code);
+            Connected = true;
         }
 
         [PlcAccessRetry(3, 200)]
@@ -46,6 +52,7 @@ namespace PLCServices
         {
             int code = _s7Client.Disconnect();
             Validate(code);
+            Connected = false;
         } 
 
         public bool IsConnected()

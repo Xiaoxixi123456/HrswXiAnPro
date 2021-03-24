@@ -9,6 +9,8 @@ using Prism.Mvvm;
 using Hrsw.XiAnPro.Utilities;
 using System.Threading;
 using ClientCommonMods;
+using Hrsw.XiAnPro.PLCInteraction;
+using System.IO;
 
 namespace Hrsw.XiAnPro.CMMClient
 {
@@ -21,6 +23,7 @@ namespace Hrsw.XiAnPro.CMMClient
 
         private CalypsoServiceClient _calypsoServiceClient;
         private ReportFileTransfer _reportFileTransfer;
+        private CalypsoPlcController _calypsoPlcController;
         private Timer _timer;
 
         [Bindable]
@@ -30,6 +33,7 @@ namespace Hrsw.XiAnPro.CMMClient
         private CalypsoClient()
         {
             Connected = false;
+            _calypsoPlcController = new CalypsoPlcController();
         }
 
         public bool Initial()
@@ -143,26 +147,66 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public async Task<bool> MeasurePartAsync(Part part)
         {
-            //Random rand = new Random();
-            //part.Id = rand.Next(1, 200);
-            //return Task.FromResult(true);
             bool success = true;
-            part.Status = PartStatus.PS_Measuring;
-            part.Flag = 0;
-            _timer = new Timer(TestBack/*_ => part.Flag = ++part.Flag % 2*/, part, 0, 2000);
+            try
+            {
+                part.Status = PartStatus.PS_Measuring;
+                part.Flag = 0;
+                _timer = new Timer(TestBack/*_ => part.Flag = ++part.Flag % 2*/, part, 0, 2000);
 
-            await Task.Delay(5000);
+                //await Task.Delay(5000);
+                success = await MeasurePart(part);
 
-            _timer.Change(Timeout.Infinite, Timeout.Infinite);
-            part.Flag = 0;
-            success = true;
-            part.Pass = false;
-            part.ResultFile = @"cal1.txt";
-            part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
-
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
+                part.Flag = 0;
+                part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
+            }
+            catch (Exception ex)
+            {
+                //通讯失败中终止测量
+                success = false;
+                part.Pass = false;
+                OfflineEvent?.Invoke(this, null);
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
+                part.Flag = 0;
+                part.ResultFile = "";
+                part.Status = PartStatus.PS_Idle;
+                throw new InvalidOperationException("远程测量异常");
+            }
 
             return success;
         }
+
+        private async Task<bool> SetMeasureParams(Part part)
+        {
+            CalypsoRequest calReq = new CalypsoRequest();
+            calReq.Part = part;
+            bool success = await _calypsoServiceClient.MakeOffsetFileAsync(calReq);
+            return success;
+
+        }
+
+        private async Task<string> GetReportFileName()
+        {
+            string fileName = await _calypsoServiceClient.GetReportFilenameAsync();
+            return fileName;
+        }
+
+        private async Task<bool> MeasurePart(Part part)
+        {
+            bool success = await SetMeasureParams(part);
+            if (!success) return success;
+
+            success = await _calypsoPlcController.MeasurePartAsync(part);
+            if (!success) return success;
+
+            //string fileName = await GetReportFileName();
+            string fileName = @"cal.txt";
+            part.ResultFile = Path.GetFileName(fileName);
+
+            return success;
+        }
+
 
         private void TestBack(object obj)
         {

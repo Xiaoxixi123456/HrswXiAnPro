@@ -6,6 +6,7 @@ using Hrsw.XiAnPro.LogicControls;
 using Hrsw.XiAnPro.Models;
 using Hrsw.XiAnPro.Utilities;
 using MainApp.Utilities;
+using PLCServices;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,8 @@ namespace MainApp.ViewModels
         public int RunLedIndex { get; set; }
         [Bindable]
         public ClientLogs LogsManager { get; set; }
+        [Bindable]
+        public PLCAccessor PLCAccessor { get; set; }
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -89,6 +92,7 @@ namespace MainApp.ViewModels
             Stopped = true;
             RunLedIndex = -1;
             LogsManager = ClientLogs.Inst;
+            PLCAccessor = PLCAccessor.Instance;
         }
 
         private void CategoriesRefresh()
@@ -107,6 +111,8 @@ namespace MainApp.ViewModels
         {
             ClientLogs.Inst.Dispatcher = Dispatcher;
             ClientLogs.Inst.Init();
+            PLCAccessor.Instance.PlcIP = "192.168.18.16";
+            PLCAccessor.Instance.Connect();
             if (ConfigManager.cmmConfigs.UsePcdmis)
             {
                 AddCmm(0, "Pcdmis");
@@ -170,6 +176,7 @@ namespace MainApp.ViewModels
 
         public void Dispose()
         {
+            PLCAccessor.Instance.Disconnect();
             PcdmisClient.Dispose();
             CalypsoClient.Dispose();
             ConfigManager.SaveConfigs();

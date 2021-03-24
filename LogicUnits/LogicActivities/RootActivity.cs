@@ -15,10 +15,10 @@ namespace Hrsw.XiAnPro.LogicActivities
         public RootActivity(ICMMControl cmmControl, ActivityController ac)
         {
             AActivities = new List<IAActivity<Tray, bool>>();
-            //AActivities.Add(new LoadActivity());
+            AActivities.Add(new LoadActivity());
             AActivities.Add(new MeasureTrayActivity(cmmControl, ac));
             AActivities.Add(new SafeLocateActivity(cmmControl));
-            //AActivities.Add(new UnloadActivity());
+            AActivities.Add(new UnloadActivity());
         }
 
         public void Complete()

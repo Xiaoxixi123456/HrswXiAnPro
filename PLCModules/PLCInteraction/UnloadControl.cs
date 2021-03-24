@@ -9,47 +9,27 @@ namespace Hrsw.XiAnPro.PLCInteraction
 {
     public class UnloadControl : PlcControlBase
     {
-        private int _dbNumber;
         public UnloadControl() : base()
         {
 
         }
 
-        public override Task Startup(Tray tray)
+        public override void Startup(Tray tray)
         {
-            return Task.Run(() => _plcAccessor.WriteMasks(_dbNumber, 258, 0x04));
-        }
-
-        public override void Initialize(Tray tray)
-        {
-            //_dbNumber = tray.UseCmmNo;
-            // TODO 存储块号选择
-            _dbNumber = tray.UseCmmNo == 0 ? 3 : 4;
+            _plcAccessor.WriteMasks(_dbNumber, 0, 0x04);
         }
 
         public override bool OnCompleted()
         {
             bool result;
-            _plcAccessor.ReadMask(_dbNumber, 258, 4, out result);
+            // 读取下料完成标志
+            _plcAccessor.ReadMask(_dbNumber, 0, 3, out result);
             if (result)
-                _plcAccessor.WriteMasks(_dbNumber, 258, false, 4);
+            {
+                // 下料料完成标志清零
+                _plcAccessor.WriteMasks(_dbNumber, 0, false, 3);
+            }
             return result;
-        }
-
-        public override bool OnError()
-        {
-            bool result;
-            //bool retry = true;
-            // LoadActivity暂停不可继续
-            // 返回两种可能
-            _plcAccessor.ReadMask(_dbNumber, 258, 5, out result);
-            // 如果设置了错误标志，提示人工选择处理方式
-            //if (result)
-            //{
-            //    retry = false;
-            //}
-            //return retry;
-            return !result;
         }
     }
 }

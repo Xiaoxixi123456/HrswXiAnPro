@@ -7,6 +7,7 @@
         xmlns:cvter="clr-namespace:MainApp.Convertors"
         xmlns:localViews="clr-namespace:MainApp.Views"
         xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:c="clr-namespace:CalcBinding;assembly=CalcBinding"
         mc:Ignorable="d"
         Title="自动控制检测系统" Height="600" Width="900"
                       Loaded="Window_Loaded" 
@@ -78,7 +79,7 @@
                 <localViews:CmmsUI/>
             </TabItem>
         </TabControl>
-        <StatusBar Grid.Row="2" 
+        <StatusBar x:Name="statusBar" Grid.Row="2" 
                    Grid.ColumnSpan="3"
                    VerticalContentAlignment="Stretch"
                    HorizontalContentAlignment="Stretch"
@@ -94,30 +95,30 @@
                        />
             </StatusBarItem>
             <StatusBarItem>
-                      <UniformGrid
+                <UniformGrid
                             Columns="3"
                             Rows="1"
                             Width="120">
-                        <Ellipse Width="30" 
+                    <Ellipse Width="30" 
                              Height="30"
                              Margin="2" 
                              Stroke="Black"
                              Fill="{Binding RunLedIndex,
                         Converter={StaticResource RunLedIndexConverter1}}"/>
-                        <Ellipse Width="30" 
+                    <Ellipse Width="30" 
                              Height="30"
                              Margin="2" 
                              Stroke="Black"
                              Fill="{Binding RunLedIndex, 
                         Converter={StaticResource RunLedIndexConverter2}}"/>
-                        <Ellipse Width="30" 
+                    <Ellipse Width="30" 
                              Height="30"
                              Margin="2" 
                              Stroke="Black"
                              Fill="{Binding RunLedIndex, 
                         Converter={StaticResource RunLedIndexConverter3}}"/>
-                    </UniformGrid>
-               </StatusBarItem>
+                </UniformGrid>
+            </StatusBarItem>
             <StatusBarItem>
                 <Rectangle Width="2"
                            Height="30"
@@ -131,20 +132,28 @@
                          ItemsPanel="{DynamicResource StatusLedListBoxItemsPanelTemplate}"
                          ItemsSource="{Binding LogicUnits}" 
                          ItemTemplate="{DynamicResource CmmLedDataTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"/>
-                <!--<StackPanel Orientation="Horizontal">
+            </StatusBarItem>
+            <StatusBarItem>
+                <Border BorderBrush="DarkGray" 
+                        BorderThickness="0,0,1,1">
+                    <StackPanel Orientation="Horizontal">
+                        <Viewbox Height="35">
+                            <Label Content="{Binding PLCAccessor.PlcIP}"
+                               ContentStringFormat="{}PLC-IP: {0}"
+                               VerticalContentAlignment="Center" 
+                                   Foreground="LightBlue"/>
+                        </Viewbox>
                         <Ellipse Width="30" 
                              Height="30"
-                             Margin="5,2" 
+                             Margin="2" 
                              Stroke="Black"
-                             Visibility="{Binding ConfigManager.cmmConfigs.UsePcdmis, 
-                            Converter={StaticResource CmmUseLedConverter}}"/>
-                        <Ellipse Width="30" 
-                             Height="30"
-                             Margin="5,2" 
-                             Stroke="Black"
-                             Visibility="{Binding ConfigManager.cmmConfigs.UseCalypso, 
-                            Converter={StaticResource CmmUseLedConverter}}"/>
-                    </StackPanel>-->
+                             Fill="{c:Binding PLCAccessor.Connected ? \'LightGreen\' : \'Black\'}">
+                            <Ellipse.ToolTip>
+                                <Label Content="{c:Binding PLCAccessor.Connected ? \'PLC连接\' : \'PLC断开\'}"/>
+                            </Ellipse.ToolTip>
+                        </Ellipse>
+                    </StackPanel>
+                </Border>
             </StatusBarItem>
         </StatusBar>
     </Grid>

@@ -18,8 +18,16 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <StatusBar x:Name="stbar" Grid.Row="1" 
+        <Grid Background="Transparent" Grid.Row="1"
+              Margin="30,0,30,20">
+            <Label VerticalAlignment="Center"
+                   VerticalContentAlignment="Center"
+                   x:Name="InfoLabel"
+                   Height="40"/>
+        </Grid>
+        <StatusBar x:Name="stbar" Grid.Row="2" 
                    HorizontalContentAlignment="Stretch" 
                    VerticalContentAlignment="Stretch"
                    Background="Transparent"

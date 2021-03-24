@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Prism, Version=8.0.0.1909, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,12 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalypsoPlcController.cs" />
     <Compile Include="LoadControl.cs" />
     <Compile Include="PlcControlBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnloadControl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ClientCommonMods\ClientCommonMods.csproj">
+      <Project>{E0524AAA-1F46-464C-8C49-66AEEFB14CC0}</Project>
+      <Name>ClientCommonMods</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Contracts\LogicContracts\LogicContracts.csproj">
       <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
       <Name>LogicContracts</Name>

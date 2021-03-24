@@ -24,7 +24,7 @@ namespace PLCServices.Tests
         public void ConnectTest()
         {
             plcAccessor = PLCAccessor.Instance;
-            plcAccessor.PlcIP = "192.168.18.18";
+            plcAccessor.PlcIP = "192.168.18.16";
             /*int success = */plcAccessor.Connect();
         }
 
