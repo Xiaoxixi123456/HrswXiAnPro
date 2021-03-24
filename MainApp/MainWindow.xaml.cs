@@ -55,6 +55,8 @@ namespace MainApp
             try
             {
                 SplashWindow.Start();
+                Thread.Sleep(1000);
+
                 MainViewModel.Initial();
                 _runLedtimer.Interval = TimeSpan.FromSeconds(1);
                 _runLedtimer.Start();
@@ -83,6 +85,11 @@ namespace MainApp
         private void RackUI_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CloseMenu_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

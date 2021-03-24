@@ -13,7 +13,18 @@
                     BorderBrush="Black"
                     CornerRadius="5"
                     Margin="5">
-                <Grid Margin="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Margin="3">
+                        <Label Content="{Binding SlotNb}"
+                           Background="DarkGray"
+                           Foreground="AliceBlue"
+                           VerticalAlignment="Center"/>
+                    </Viewbox>
+                    <Grid Margin="3" Grid.Row="1">
                     <Grid.Background>
                         <MultiBinding 
                             Converter="{StaticResource PartLedMultiConverter}">
@@ -49,6 +60,7 @@
                                VerticalContentAlignment="Center"/>
                     </BulletDecorator>
                 </Grid>
+                </Grid>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="EmptyPartDataTemplate">
@@ -58,7 +70,17 @@
                     Margin="5"
                     >
                 <Grid Margin="3" Background="Gray">
-                      <Label Grid.Row="1" Content="空位" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Margin="5">
+                        <Label Content="{Binding SlotNb}"
+                           Background="DarkGray"
+                           Foreground="AliceBlue"
+                           VerticalAlignment="Center"/>
+                    </Viewbox>
+                    <Label Grid.Row="1" Content="空位" 
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"/>
                 </Grid>

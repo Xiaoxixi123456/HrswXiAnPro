@@ -24,14 +24,16 @@
                   Width="450" 
                   BorderThickness="3"
                   BorderBrush="{DynamicResource {x:Static SystemColors.WindowFrameBrushKey}}"
-                  FontSize="16" ItemContainerStyle="{DynamicResource TreeViewItemStyle}" 
+                  FontSize="16" 
+                  ItemContainerStyle="{DynamicResource TreeViewItemStyle}" 
                   Background="Transparent">
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="加载料盘" 
                               Command="{Binding LoadTraysCommand}"/>
                     <MenuItem Header="卸载料盘" 
-                              Command="{Binding UnloadTrayFromRackCommand}"/>
+                              Command="{Binding UnLoadTraysFromSlotCommand
+                        }"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
             <TreeView.ItemTemplate>
@@ -69,17 +71,9 @@
                                         <Binding Path="TrayNb"/>
                                     </MultiBinding>
                                 </TextBlock.Text>
-                                <!--<TextBlock.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="加载料盘" 
-                              Command="{Binding LoadTraysCommand}" />
-                                        <MenuItem Header="卸载料盘" 
-                              Command="{Binding UnLoadTraysFromSlotCommand}"/>
-                                    </ContextMenu>
-                                </TextBlock.ContextMenu>-->
                                 <!--<TextBlock.ToolTip>
                                     <Border>
-                                        <Label Content="测试123"/>
+                                        <Label Content="{Binding UseCmmNo}"/>
                                     </Border>
                                 </TextBlock.ToolTip>-->
                             </TextBlock>

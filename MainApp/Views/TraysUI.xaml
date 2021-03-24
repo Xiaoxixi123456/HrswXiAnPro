@@ -31,10 +31,12 @@
                 <DataGridTextColumn Header="料盘编号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="类别" Binding="{Binding Category}"/>
                 <DataGridTextColumn Header="放置状态" Binding="{Binding Placed, Converter={StaticResource PlacedStatusConverter}}"/>
-                <DataGridTextColumn Header="使用的CMM编号" Binding="{Binding UseCmmNo}"/>
+                <DataGridTextColumn Header="使用的CMM" Binding="{Binding UseCmmNo,
+                    Converter={StaticResource CmmIndexToNameConverter}}"/>
                 <DataGridTextColumn Header="料库槽号" Binding="{Binding SlotNb}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,Converter={StaticResource TrayStatusConverter}}"/>
-                <DataGridTextColumn Header="CMM编号" Binding="{Binding CmmNo}"/>
+                <DataGridTextColumn Header="可用CMM" Binding="{Binding CmmNo, 
+                    Converter={StaticResource CmmIndexToNameConverter}}"/>
                 <!--<DataGridTextColumn Header="料盘行数" Binding="{Binding ColumnCount}"/>
                 <DataGridTextColumn Header="料盘列数" Binding="{Binding RowCount}"/>
                 <DataGridTextColumn Header="行偏置" Binding="{Binding ColumnOffset}"/>

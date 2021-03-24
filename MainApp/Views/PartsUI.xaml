@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
+             xmlns:ct="clr-namespace:MainApp.Convertors"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ct:CmmIndexToNameConverter x:Key="CmmIndexToNameConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -49,7 +53,8 @@
                 <DataGridTextColumn Header="放置状态" Binding="{Binding Placed, Converter={StaticResource PlacedStatusConverter}}"/>
                 <DataGridTextColumn Header="料盘号" Binding="{Binding TrayNb}"/>
                 <DataGridTextColumn Header="料盘槽号" Binding="{Binding SlotNb}"/>
-                <DataGridTextColumn Header="测量三坐标号" Binding="{Binding UseCmmNo}"/>
+                <DataGridTextColumn Header="测量三坐标" Binding="{Binding UseCmmNo,
+                    Converter={StaticResource CmmIndexToNameConverter}}"/>
                 <DataGridTextColumn Header="状态" Binding="{Binding Status,
                     Converter={StaticResource PartStatusConverter}}"/>
                 <DataGridTextColumn Header="是否合格">
@@ -60,7 +65,8 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="三坐标号" Binding="{Binding CmmNo}"/>
+                <DataGridTextColumn Header="可用三坐标" Binding="{Binding CmmNo, 
+                    Converter={StaticResource CmmIndexToNameConverter}}"/>
                 <DataGridTextColumn Header="结果文件" Binding="{Binding ResultFile}" Width="auto"/>
             </DataGrid.Columns>
             <!--<DataGrid.Triggers>

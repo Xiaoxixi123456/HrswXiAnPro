@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MainApp.Views"
              xmlns:utl="clr-namespace:MainApp.Utilities"
+             xmlns:cvtr="clr-namespace:MainApp.Convertors"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             FontSize="16">
     <UserControl.Resources>
+        <cvtr:CmmIndexToNameConverter x:Key="CmmIndexToNameConverter"/>
         <DataTemplate x:Key="DefaultRackTemplate">
             <Border Background="{Binding Status, 
                 Converter={StaticResource TrayBackgroundConverter}}"
@@ -15,33 +18,44 @@
                 BorderThickness="1"
                 CornerRadius="5"
                 Margin="8">
-                <StackPanel>
-                    <BulletDecorator >
-                        <BulletDecorator.Bullet>
-                            <Label Content="料盘类别" Width="100"/>
-                        </BulletDecorator.Bullet>
-                        <TextBlock Text="{Binding Category}" 
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Viewbox Margin="5">
+                        <Label Content="{Binding SlotNb}"
+                           Background="DarkGray"
+                           Foreground="AliceBlue"
+                           VerticalAlignment="Center"/>
+                    </Viewbox>
+                    <UniformGrid Rows="3"
+                                 Columns="1"
+                                 Grid.Row="1"
+                                VerticalAlignment="Center">
+                        <BulletDecorator>
+                            <BulletDecorator.Bullet>
+                                <Label Content="料盘类别：" Width="100"/>
+                            </BulletDecorator.Bullet>
+                            <Label Content="{Binding Category}" 
                         VerticalAlignment="Center"/>
-                    </BulletDecorator>
-                    <BulletDecorator >
-                        <BulletDecorator.Bullet>
-                            <Label Content="料盘编号" Width="100"/>
-                        </BulletDecorator.Bullet>
-                        <TextBlock Text="{Binding TrayNb}" VerticalAlignment="Center" />
-                    </BulletDecorator>
-                    <BulletDecorator >
-                        <BulletDecorator.Bullet>
-                            <Label Content="三坐标编号" Width="100"/>
-                        </BulletDecorator.Bullet>
-                        <TextBlock Text="{Binding CmmNo}" VerticalAlignment="Center"/>
-                    </BulletDecorator>
-                    <BulletDecorator >
-                        <BulletDecorator.Bullet>
-                            <Label Content="使用三坐标编号"/>
-                        </BulletDecorator.Bullet>
-                        <TextBlock Text="{Binding UseCmmNo}" VerticalAlignment="Center"/>
-                    </BulletDecorator>
-                </StackPanel>
+                        </BulletDecorator>
+                        <BulletDecorator >
+                            <BulletDecorator.Bullet>
+                                <Label Content="料盘编号：" Width="100"/>
+                            </BulletDecorator.Bullet>
+                            <Label Content="{Binding TrayNb}" VerticalAlignment="Center" />
+                        </BulletDecorator>
+                        <BulletDecorator >
+                            <BulletDecorator.Bullet>
+                                <Label Content="测量CMM："/>
+                            </BulletDecorator.Bullet>
+                            <Label Content="{Binding UseCmmNo, 
+                                Converter={StaticResource CmmIndexToNameConverter}}" 
+                                   VerticalAlignment="Center"/>
+                        </BulletDecorator>
+                    </UniformGrid>
+                </Grid>
             </Border>
         </DataTemplate>
         <DataTemplate x:Key="EmptyRackTemplate">
@@ -51,7 +65,17 @@
                     CornerRadius="2"
                     Margin="8">
                 <Grid >
-                    <Label Content="空槽" 
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Viewbox Margin="5">
+                            <Label Content="{Binding SlotNb}"
+                           Background="DarkGray"
+                           Foreground="AliceBlue"
+                           VerticalAlignment="Center"/>
+                        </Viewbox>
+                        <Label Grid.Row="1" Content="空槽" 
                            HorizontalContentAlignment="Center" 
                            VerticalContentAlignment="Center" 
                            FontSize="20"/>

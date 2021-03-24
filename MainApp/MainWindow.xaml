@@ -47,7 +47,8 @@
             </Menu.ItemsPanel>
             <MenuItem Header="文件" Background="{x:Null}">
                 <MenuItem Header="导入测量任务" IsEnabled="False"/>
-                <MenuItem Header="退出"/>
+                <MenuItem Header="退出"
+                          Click="CloseMenu_Click"/>
             </MenuItem>
             <MenuItem Header="设置" Background="{x:Null}">
                 <MenuItem Header="三坐标设置" 
@@ -85,7 +86,7 @@
                    HorizontalContentAlignment="Stretch"
                    >
             <StatusBarItem>
-                <Label Content="{Binding Logs.StatusMessage}" 
+                <Label Content="{Binding LogsManager.StatusMessage}" 
                        FontSize="14" 
                        Width="600" 
                        HorizontalContentAlignment="Stretch" 

@@ -21,6 +21,7 @@ namespace MainApp.Views
     /// </summary>
     public partial class SplashWindow : Window
     {
+        public bool Opened { get; set; }
         public SplashWindow()
         {
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
@@ -29,6 +30,7 @@ namespace MainApp.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Opened = true;
         }
 
         static SplashWindow sw;
