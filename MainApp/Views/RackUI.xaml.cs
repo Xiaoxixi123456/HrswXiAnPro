@@ -104,5 +104,21 @@ namespace MainApp.Views
         {
             ClientLogs.Inst.StatusMessage = "停止检测流程";
         }
+
+        private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.Source.GetType() != typeof(RackUserControl))
+                return;
+            var traysUI = (RackUserControl)e.Source;
+            var index = traysUI.TraysListBox.SelectedIndex;
+            SelectTray(RackTree, index);
+        }
+
+        private void SelectTray(ItemsControl itemsControl, int index)
+        {
+            TreeViewItem container = itemsControl.ItemContainerGenerator.ContainerFromIndex(0) as TreeViewItem;
+            TreeViewItem sl = container.ItemContainerGenerator.ContainerFromIndex(index) as TreeViewItem;
+            sl.IsSelected = true;
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
 
         public override void Startup(Tray tray)
         {
+            _plcAccessor.WriteInt(_dbNumber, 2, tray.SlotNb - 1);
             _plcAccessor.WriteMasks(_dbNumber, 0, 0x01);
         }
 

@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.CMMClients.FileServiceReference;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.CMMClients.FileServiceReference;
 using Hrsw.XiAnPro.Models;
 using System;
 using System.Collections.Concurrent;
@@ -104,6 +105,11 @@ namespace Hrsw.XiAnPro.CMMClients
                             }
                             fsm.Flush();
                         }
+                    }
+                    else
+                    {
+                        string info = $"工件：{part.Name}_{part.PartNb}_{part.BatchNb} - {message}, 报告文件：{part.ResultFile}";
+                        ClientLogs.Inst.AddLog(new ClientLog(info));
                     }
                     filestream.Close();
                 }

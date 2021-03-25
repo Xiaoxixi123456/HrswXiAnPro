@@ -22,7 +22,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
         public CalypsoPlcController()
         {
             _plcAccessor = PLCAccessor.Instance;
-            _dbNumber = 2;
+            _dbNumber = 1;
         }
 
         public async Task<bool> MeasurePartAsync(Part part)
@@ -46,7 +46,11 @@ namespace Hrsw.XiAnPro.PLCInteraction
         private void StartMeasure(Part part)
         {
             // TODO 传递表头过程
-            _plcAccessor.WriteMasks(_dbNumber, 0, 0x10);
+            _plcAccessor.WriteByte(_dbNumber, 2, part.Category);
+            _plcAccessor.WriteMasks(_dbNumber, 0, 0x03);
+            Thread.Sleep(500);
+            //_plcAccessor.WriteMasks(_dbNumber, 0, 0x01);
+            _plcAccessor.WriteMasks(_dbNumber,0, false, new int[]{ 1 });
         }
 
 
@@ -108,16 +112,17 @@ namespace Hrsw.XiAnPro.PLCInteraction
         {
             bool result;
             // 读取测量完成标志
-            _plcAccessor.ReadMask(_dbNumber, 0, 5, out result);
-            if (result)
+            _plcAccessor.ReadIMask(30, 2, out result);
+            if (!result)
             {
                 // 测量完成标志清零
-                _plcAccessor.WriteMasks(_dbNumber, 0, false, 5);
+                //_plcAccessor.WriteMasks(_dbNumber, 0, false, 5);
                 bool pass;
-                _plcAccessor.ReadMask(_dbNumber, 0, 7, out pass);
+                //_plcAccessor.ReadIMask(_dbNumber, 0, 7, out pass);
+                _plcAccessor.ReadIMask(30, 4, out pass);
                 part.Pass = pass;
             }
-            return result;
+            return !result;
         }
     }
 }

@@ -15,10 +15,10 @@ namespace Hrsw.XiAnPro.LogicActivities
         public RootActivity(ICMMControl cmmControl, ActivityController ac)
         {
             AActivities = new List<IAActivity<Tray, bool>>();
-            AActivities.Add(new LoadActivity());
+            //AActivities.Add(new LoadActivity());
             AActivities.Add(new MeasureTrayActivity(cmmControl, ac));
             AActivities.Add(new SafeLocateActivity(cmmControl));
-            AActivities.Add(new UnloadActivity());
+            //AActivities.Add(new UnloadActivity());
         }
 
         public void Complete()
@@ -46,9 +46,11 @@ namespace Hrsw.XiAnPro.LogicActivities
                 catch (Exception)
                 {
                     obj.Status = TrayStatus.TS_Error;
-                    // TODO 测量错误后料盘是否可以继续下料
+                    // 测量错误后料盘是否可以继续下料
                     ClientLogs.Inst.AddLog(new ClientLog("料盘测量错误."));
                     success = false;
+                    // 上下料有可能抛出异常
+                    break;
                 }
             }
             return success;

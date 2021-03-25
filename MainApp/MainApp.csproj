@@ -115,6 +115,7 @@
     <Compile Include="Convertors\RunLedIndexConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
     <Compile Include="Convertors\TrayStatusConverter.cs" />
+    <Compile Include="Convertors\TrayTreeViewBackgroundConverter.cs" />
     <Compile Include="Convertors\TreePartItemConverter.cs" />
     <Compile Include="Convertors\TreeTrayItemConverter.cs" />
     <Compile Include="Utilities\MainConfigManager.cs" />

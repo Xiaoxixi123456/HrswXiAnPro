@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace FileServices
@@ -62,6 +63,19 @@ namespace FileServices
                 result.FileStream = new MemoryStream();
                 return result;
             }
+
+            // 判断文件是否创建完成 
+            var t = WaitForRead(path);
+            bool canRead = t.Result;
+            if (!canRead)
+            {
+                result.IsSuccess = false;
+                result.FileSize = 0;
+                result.Message = "报告文件创建超时";
+                result.FileStream = new MemoryStream();
+                return result;
+            }
+
             Stream ms = new MemoryStream();
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             fs.CopyTo(ms);
@@ -73,6 +87,35 @@ namespace FileServices
             fs.Flush();
             fs.Close();
             return result;
+        }
+
+        private Task<bool> WaitForRead(string path)
+        {
+            return Task.Run(() =>
+             {
+                 CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+                 while (true)
+                 {
+                     if (cts.IsCancellationRequested)
+                     {
+                         return false;
+                     }
+                     try
+                     {
+                         var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.None);
+                         fs.Close();
+                         return true;
+                     }
+                     catch (Exception)
+                     {
+                     }
+                     finally
+                     {
+                     }
+
+                     Thread.Sleep(1000);
+                 }
+             });
         }
     }
 }

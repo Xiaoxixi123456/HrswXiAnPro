@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:MainApp.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
-    <Grid Margin="5">
+    <Grid Margin="5" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="auto"/>
@@ -58,7 +58,9 @@
                     <HierarchicalDataTemplate.ItemTemplate>
                         <HierarchicalDataTemplate ItemsSource="{Binding Parts}">
                             <!--<TextBlock Text="{Binding Category, StringFormat=料盘类别:{0}}"/>-->
-                            <TextBlock>
+                            <TextBlock Background="{Binding Status, 
+                                Converter={StaticResource TrayTreeViewBackgroundConverter}}"
+                                       >
                                 <TextBlock.Text>
                                     <!--<MultiBinding StringFormat="料盘类别:{0}, 料盘ID:{1}">
                                         <Binding Path="Category"/>

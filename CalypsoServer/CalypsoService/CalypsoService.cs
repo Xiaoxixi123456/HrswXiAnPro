@@ -23,7 +23,7 @@ namespace CalypsoServices
             }
             catch (Exception)
             {
-                //TODO 记录错误
+                //记录错误
                 result = false;
             }
             return result;
@@ -31,24 +31,34 @@ namespace CalypsoServices
 
         private void GenerateMeasureParameterFile(Part part)
         {
-            // TODO Calypso可能会变动路径
+            //Calypso可能会变动路径
             string fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "MeasParams.Par");
             if (File.Exists(fileName))
             {
                 File.Delete(fileName);
             }
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Base, {part.XOffset}, {part.YOffset}");
+            sb.AppendLine($"xoff={part.XOffset}");
+            sb.AppendLine($"yoff={part.YOffset}");
             File.WriteAllText(fileName, sb.ToString());
         }
 
         public string GetReportFilename()
         {
-            string fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "report.rpt");
-            string[] fileNames = File.ReadAllLines(fileName);
-            if (fileNames.Length == 0)
+            try
+            {
+                string fileName;
+                fileName = Path.Combine(ServerDirManager.Inst.MeasureProgDirectory, "report.rpt");
+                string[] fileNames = File.ReadAllLines(fileName);
+                if (fileNames.Length == 0)
+                    return "";
+                return fileNames[0];
+            }
+            catch (Exception ex)
+            {
+                ServerLog.Logs.AddLog(ex.Message);
                 return "";
-            return fileNames[0];
+            }
         }
     }
 }

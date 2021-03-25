@@ -17,14 +17,16 @@ namespace Hrsw.XiAnPro.CMMClient
         public bool MeasErrorFlag { get; set; }
         private PcdmisClient _pcdClient;
 
-        // TODO 需要判断安全定位和测量工件出错后的处理方式
+        // 需要判断安全定位和测量工件出错后的处理方式
         public void SendMessage(PCDMessage response)
         {
-            Debug.WriteLine(response.Message);
             MeasErrorFlag = response.Error;
             _pcdClient.CmmError = response.Error;
             _pcdClient.StatusMessage = response.Message;
+
             MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(new CmmErrorStatus() { CmmNo = 0, Error = _pcdClient.CmmError});
+
+            ClientLogs.Inst.AddLog(new ClientLog(response.Message));
         }
 
         public PcdmisCallback(PcdmisClient pcdClient)

@@ -17,6 +17,7 @@
     <Convertors:CmmErrorConverter x:Key="CmmErrorConverter"/>
     <Convertors:CmmErrorLedConverter x:Key="CmmErrorLedConverter"/>
     <Convertors:CmmIndexToNameConverter x:Key="CmmIndexToNameConverter"/>
+    <Convertors:TrayTreeViewBackgroundConverter x:Key="TrayTreeViewBackgroundConverter"/>
 
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 

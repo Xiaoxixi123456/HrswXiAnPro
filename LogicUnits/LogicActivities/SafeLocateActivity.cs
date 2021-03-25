@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Hrsw.XiAnPro.Models;
+using ClientCommonMods;
 
 namespace Hrsw.XiAnPro.LogicActivities
 {
@@ -26,6 +27,10 @@ namespace Hrsw.XiAnPro.LogicActivities
         public async Task<bool> ExecuteAsync(Tray obj, CancellationTokenSource cts)
         {
             bool success = await _cmm.GotoSafePositionAsync();
+            if (!success)
+            {
+                ClientLogs.Inst.AddLog(new ClientLog("三坐标安全定位失败"));
+            }
             return success;
         }
 

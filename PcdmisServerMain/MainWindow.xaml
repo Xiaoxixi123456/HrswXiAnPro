@@ -37,9 +37,9 @@
             <Button Content="最小化"
                     Margin="20, 10" 
                     Click="Button_Click"/>
-            <Button Content="断开"
+            <!--<Button Content="断开"
                     Margin="20,10"
-                    Click="Button_Click_1"/>
+                    Click="Button_Click_1"/>-->
         </StackPanel>
         <StatusBar Grid.Row="3">
             <Label Content="{Binding PcdmisService.StatusMessage}"/>

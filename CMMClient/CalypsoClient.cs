@@ -186,10 +186,18 @@ namespace Hrsw.XiAnPro.CMMClient
 
         }
 
-        private async Task<string> GetReportFileName()
+        private async Task GetReportFileName(Part part)
         {
-            string fileName = await _calypsoServiceClient.GetReportFilenameAsync();
-            return fileName;
+            try
+            {
+                string fileName = await _calypsoServiceClient.GetReportFilenameAsync();
+                part.ResultFile = Path.GetFileName(fileName);
+            }
+            catch (Exception)
+            {
+                ClientLogs.Inst.AddLog(new ClientLog("calypso报告文件名未找到"));
+                part.ResultFile = "";
+            }
         }
 
         private async Task<bool> MeasurePart(Part part)
@@ -200,9 +208,8 @@ namespace Hrsw.XiAnPro.CMMClient
             success = await _calypsoPlcController.MeasurePartAsync(part);
             if (!success) return success;
 
-            //string fileName = await GetReportFileName();
-            string fileName = @"cal.txt";
-            part.ResultFile = Path.GetFileName(fileName);
+            await GetReportFileName(part);
+            //part.ResultFile = Path.GetFileName(fileName);
 
             return success;
         }

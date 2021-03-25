@@ -74,7 +74,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
             {
                 _completed = true;
                 string message = _measureOperation ? "测量完成" : "回零完成";
-                RespondMessage(false, "message");
+                RespondMessage(false, message);
                 _are.Set();
             }
         }

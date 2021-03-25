@@ -79,14 +79,6 @@ namespace Hrsw.XiAnPro.CMMClient
         {
             try
             {
-                //if (_pcdmisService.State == CommunicationState.Opened)
-                //{
-                //    _pcdmisService.Close();
-                //}
-                //else if (_pcdmisService.State == CommunicationState.Faulted)
-                //{
-                //    _pcdmisService.Abort();
-                //}
                 _pcdmisService.InnerDuplexChannel.Faulted -= InnerDuplexChannel_Faulted;
                 _pcdmisService.InnerDuplexChannel.Opened -= InnerDuplexChannel_Opened;
                 _pcdmisService.InnerDuplexChannel.Closed -= InnerDuplexChannel_Closed;
@@ -160,8 +152,6 @@ namespace Hrsw.XiAnPro.CMMClient
             _pcdmisService.Abort();
         }
 
-
-
         public Task<bool> AnalyseReportAsync(out bool pass)
         {
             pass = false;
@@ -177,7 +167,8 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("远程测量异常");
+                ClientLogs.Inst.AddLog(new ClientLog("安全定位过程中远程测量异常"));
+                throw new InvalidOperationException("安全定位过程中远程测量异常");
             }
         }
 
@@ -205,6 +196,11 @@ namespace Hrsw.XiAnPro.CMMClient
                 part.Pass = response.Pass;
                 part.ResultFile = Path.GetFileName(response.ReportFile);
                 part.Status = success ? PartStatus.PS_Measured : PartStatus.PS_Error;
+
+                if (!success)
+                {
+                    ClientLogs.Inst.AddLog(new ClientLog(response.Message));
+                }
             }
             catch (Exception) 
             {
@@ -216,7 +212,8 @@ namespace Hrsw.XiAnPro.CMMClient
                 part.Flag = 0;
                 part.ResultFile = "";
                 part.Status = PartStatus.PS_Idle;
-                throw new InvalidOperationException("远程测量异常");
+                ClientLogs.Inst.AddLog(new ClientLog("远程服务器通讯异常"));
+                throw new InvalidOperationException("远程服务器通讯异常");
             }
 
             return success;
@@ -238,6 +235,7 @@ namespace Hrsw.XiAnPro.CMMClient
             }
             catch (Exception)
             {
+                ClientLogs.Inst.AddLog(new ClientLog("Pcdmis释放测量失败"));
                 OfflineEvent?.Invoke(this, null);
                 return false;
             }

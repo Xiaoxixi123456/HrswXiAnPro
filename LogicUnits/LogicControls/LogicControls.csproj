@@ -59,6 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ClientCommonMods\ClientCommonMods.csproj">
+      <Project>{E0524AAA-1F46-464C-8C49-66AEEFB14CC0}</Project>
+      <Name>ClientCommonMods</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Contracts\LogicContracts\LogicContracts.csproj">
       <Project>{644C2CD8-834D-464D-AB47-D18A70B89F64}</Project>
       <Name>LogicContracts</Name>

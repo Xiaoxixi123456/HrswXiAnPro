@@ -367,7 +367,7 @@ namespace MainApp.ViewModels
             trvm.Rack = SelectedRack;
             trvm.Trays.Clear();
             //var trays = Trays.Where(t => t.Status == TrayStatus.TS_Idle).ToList();
-            var trays = Trays.Where(t => !t.Placed).ToList();
+            var trays = Trays.Where(t => !t.Placed && t.PartCount != 0).ToList();
             foreach (var item in trays)
             {
                 trvm.Trays.Add(item);
@@ -484,19 +484,53 @@ namespace MainApp.ViewModels
 
         private void PartsUISelectCategory()
         {
+            //var ps = Parts.Where(p => p.Category == result);
+            //ps = ps.Where(p => p.UseCmmNo == CurrentUseCmmIndex - 1);
+            ////SelectParts = new ObservableCollection<Part>(ps);
+            //switch
+            // 选择类型
+            IEnumerable<Part> ps;
             if (CurrentSelectCategory != "All")
             {
                 int result;
                 bool ok = int.TryParse(CurrentSelectCategory, out result);
                 if (!ok)
                     return;
-                var ps = Parts.Where(p => p.Category == result);
-                SelectParts = new ObservableCollection<Part>(ps);
+                ps = Parts.Where(p => p.Category == result);
             }
             else
             {
-                SelectParts = Parts;
+                ps = Parts;
             }
+
+            // 选择机器
+            if (CurrentUseCmmIndex != 0)
+            {
+                ps = ps.Where(p => p.UseCmmNo == CurrentUseCmmIndex - 1);
+            }
+
+            // 选择状态
+            switch (CurrentPartStatusIndex)
+            {
+                case 1:
+                    ps = ps.Where(p => p.Status == PartStatus.PS_Measured);
+                    break;
+                case 2:
+                    ps = ps.Where(p => p.Status != PartStatus.PS_Measured);
+                    break;
+                case 3:
+                    ps = ps.Where(p => p.Status == PartStatus.PS_Error);
+                    break;
+                case 4:
+                    ps = ps.Where(p => p.Status == PartStatus.PS_Measured && p.Pass);
+                    break;
+                case 5:
+                    ps = ps.Where(p => p.Status == PartStatus.PS_Measured && !p.Pass);
+                    break;
+                default:
+                    break;
+            }
+            SelectParts = new ObservableCollection<Part>(ps);
         }
     }
 }

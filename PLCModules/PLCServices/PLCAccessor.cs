@@ -98,7 +98,7 @@ namespace PLCServices
         }
         #endregion
 
-        #region 读标志位
+        #region 读存储器标志位
         [PlcAccessRetry(5, 200)]
         public void ReadMask(int dbNumber, int start, int bit, out bool result)
         {
@@ -110,7 +110,22 @@ namespace PLCServices
                 Validate(code);
             }
             result = S7.GetBitAt(buf, 0, bit);
-        } 
+        }
+        #endregion
+
+        #region 读I口标志位
+        [PlcAccessRetry(5, 200)]
+        public void ReadIMask(int start, int bit, out bool result)
+        {
+            result = false;
+            byte[] buf = new byte[1];
+            lock (syncLock)
+            {
+                int code = _s7Client.EBRead(start, 1, buf);
+                Validate(code);
+            }
+            result = S7.GetBitAt(buf, 0, bit);
+        }
         #endregion
 
         #region 写字符串
@@ -168,7 +183,34 @@ namespace PLCServices
                 Thread.Sleep(300);
             }
             message = S7.GetCharsAt(buf, 0, size);
-        } 
+        }
+        #endregion
+
+        #region 写整数
+        [PlcAccessRetry(5, 200)]
+        public void WriteInt(int dbNumber, int start, int value)
+        {
+            byte[] buf = new byte[2];
+            lock (syncLock)
+            {
+                S7.SetIntAt(buf, 0, (short)value);
+                int code = _s7Client.DBWrite(dbNumber, start, 2, buf);
+                Validate(code);
+            }
+        }
+
+        [PlcAccessRetry(5, 200)]
+        public void WriteByte(int dbNumber, int start, int value)
+        {
+            //byte[] buf = new byte[1];
+            lock (syncLock)
+            {
+                byte[] buf = BitConverter.GetBytes(value);
+                //S7.SetByteAt(buf, 0, buf[0]);
+                int code = _s7Client.DBWrite(dbNumber, start, 1, buf);
+                Validate(code);
+            }
+        }
         #endregion
     }
 }
