@@ -42,6 +42,10 @@ namespace MainApp.ViewModels
         [Bindable]
         public string CurrentSelectCategory { get; set; }
         [Bindable]
+        public int CurrentUseCmmIndex { get; set; } = 0;
+        [Bindable]
+        public int CurrentPartStatusIndex { get; set; } = 0;
+        [Bindable]
         public Tray SelectedTray { get; set; }
         [Bindable]
         public Tray SelectedTrayInRack { get; set; }
@@ -111,7 +115,7 @@ namespace MainApp.ViewModels
         {
             ClientLogs.Inst.Dispatcher = Dispatcher;
             ClientLogs.Inst.Init();
-            PLCAccessor.Instance.PlcIP = "192.168.18.16";
+            PLCAccessor.Instance.PlcIP = "192.168.18.18";
             PLCAccessor.Instance.Connect();
             if (ConfigManager.cmmConfigs.UsePcdmis)
             {

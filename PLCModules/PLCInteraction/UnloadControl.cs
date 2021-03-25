@@ -31,5 +31,9 @@ namespace Hrsw.XiAnPro.PLCInteraction
             }
             return result;
         }
+
+        public override void OnError()
+        {
+        }
     }
 }

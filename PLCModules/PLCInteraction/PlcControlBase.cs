@@ -84,10 +84,11 @@ namespace Hrsw.XiAnPro.PLCInteraction
                     {
                         OnError();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         // TODO 错误出现时抛出异常
                         //throw;
+                        ClientLogs.Inst.AddLog(new ClientLog(this.GetType().FullName + "OnError"));
                     }
 
                     Task.Delay(1000).Wait();

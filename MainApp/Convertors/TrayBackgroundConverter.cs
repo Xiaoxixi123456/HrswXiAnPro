@@ -25,7 +25,7 @@ namespace MainApp.Convertors
                     result = new SolidColorBrush(Colors.LightYellow);
                     break;
                 case TrayStatus.TS_Wait:
-                    result = new SolidColorBrush(Colors.Blue);
+                    result = new SolidColorBrush(Colors.AliceBlue);
                     break;
                 case TrayStatus.TS_Loading:
                     result = new SolidColorBrush(Colors.LightBlue);
@@ -34,7 +34,7 @@ namespace MainApp.Convertors
                     result = new SolidColorBrush(Colors.LightBlue);
                     break;
                 case TrayStatus.TS_Measured:
-                    result = new SolidColorBrush(Colors.LightBlue);
+                    result = new SolidColorBrush(Colors.Blue);
                     break;
                 case TrayStatus.TS_Unloading:
                     result = new SolidColorBrush(Colors.LightBlue);

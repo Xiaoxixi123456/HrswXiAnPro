@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.LogicActivities;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.LogicActivities;
 using Hrsw.XiAnPro.LogicContracts;
 using Hrsw.XiAnPro.Models;
 using Hrsw.XiAnPro.Utilities;
@@ -135,6 +136,7 @@ namespace Hrsw.XiAnPro.LogicControls
             _cts?.Cancel();
             _actCtrl.IsOffline = true;
 
+            ClientLogs.Inst.StatusMessage = $"正在等待{CmmName}工作完成。。";
             bool ok = await Task.Run(() =>
             {
                 bool result = true;
@@ -146,10 +148,13 @@ namespace Hrsw.XiAnPro.LogicControls
             }).ConfigureAwait(false);
             if (!ok)
             {
+                ClientLogs.Inst.AddLog(new ClientLog("等待工作停止超时,无法离线!"));
                 throw new TimeoutException("等待工作停止超时,无法离线!");
             }
+            ClientLogs.Inst.StatusMessage = $"{CmmName}工作完成。";
             _cmmControl.Offline();
             CmmOnline = false;
+            ClientLogs.Inst.StatusMessage = $"{CmmName}离线。";
         }
 
         public void Online()

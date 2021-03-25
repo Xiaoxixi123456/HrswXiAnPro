@@ -17,20 +17,55 @@
             <RowDefinition />
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <BulletDecorator Margin="3">
-            <BulletDecorator.Bullet>
-                <Label Content="工件类别"/>
-            </BulletDecorator.Bullet>
-            <ComboBox ItemsSource="{Binding Categories}" 
+        <UniformGrid Columns="4" Rows="1" Grid.Row="0">
+            <BulletDecorator Margin="3">
+                <BulletDecorator.Bullet>
+                    <Label Content="工件类别"/>
+                </BulletDecorator.Bullet>
+                <ComboBox ItemsSource="{Binding Categories}" 
                       SelectedItem="{Binding CurrentSelectCategory}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding SelectCategoryCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </ComboBox>
-
-        </BulletDecorator>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectCategoryCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </BulletDecorator>
+            <BulletDecorator Margin="3">
+                <BulletDecorator.Bullet>
+                    <Label Content="使用CMM"/>
+                </BulletDecorator.Bullet>
+                <ComboBox SelectedIndex="{Binding CurrentUseCmmIndex}">
+                    <ComboBoxItem>All</ComboBoxItem>
+                    <ComboBoxItem>Pcdmis</ComboBoxItem>
+                    <ComboBoxItem>Calypso</ComboBoxItem>
+                    <ComboBoxItem>AnyCmm</ComboBoxItem>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectCategoryCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </BulletDecorator>
+            <BulletDecorator Margin="3">
+                <BulletDecorator.Bullet>
+                    <Label Content="测量状态"/>
+                </BulletDecorator.Bullet>
+                <ComboBox SelectedIndex="{Binding CurrentPartStatusIndex}">
+                    <ComboBoxItem>所有</ComboBoxItem>
+                    <ComboBoxItem>测量完成</ComboBoxItem>
+                    <ComboBoxItem>未测量</ComboBoxItem>
+                    <ComboBoxItem>错误</ComboBoxItem>
+                    <ComboBoxItem>合格</ComboBoxItem>
+                    <ComboBoxItem>不合格</ComboBoxItem>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectCategoryCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </BulletDecorator>
+        </UniformGrid>
         <DataGrid x:Name="PartsGrid"
                   ItemsSource="{Binding SelectParts}"
                   Grid.Row="1"
@@ -65,9 +100,12 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="可用三坐标" Binding="{Binding CmmNo, 
+                <DataGridTextColumn Header="可用三坐标" 
+                                    Binding="{Binding CmmNo, 
                     Converter={StaticResource CmmIndexToNameConverter}}"/>
-                <DataGridTextColumn Header="结果文件" Binding="{Binding ResultFile}" Width="auto"/>
+                <DataGridTextColumn Header="结果文件" 
+                                    Binding="{Binding ResultFile}" 
+                                    Width="*"/>
             </DataGrid.Columns>
             <!--<DataGrid.Triggers>
                 <MultiDataTrigger>
