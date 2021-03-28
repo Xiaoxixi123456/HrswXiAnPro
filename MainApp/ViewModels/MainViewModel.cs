@@ -115,7 +115,7 @@ namespace MainApp.ViewModels
         {
             ClientLogs.Inst.Dispatcher = Dispatcher;
             ClientLogs.Inst.Init();
-            PLCAccessor.Instance.PlcIP = "192.168.100.1";
+            PLCAccessor.Instance.PlcIP = Properties.Settings.Default.PlcIp;
             PLCAccessor.Instance.Connect();
             if (ConfigManager.cmmConfigs.UsePcdmis)
             {

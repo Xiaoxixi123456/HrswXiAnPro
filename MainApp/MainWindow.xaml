@@ -132,16 +132,20 @@
                          IsEnabled="True"
                          ItemsPanel="{DynamicResource StatusLedListBoxItemsPanelTemplate}"
                          ItemsSource="{Binding LogicUnits}" 
-                         ItemTemplate="{DynamicResource CmmLedDataTemplate}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"/>
+                         ItemTemplate="{DynamicResource CmmLedDataTemplate}" 
+                         ItemContainerStyle="{DynamicResource ListBoxItemStyle1}"/>
             </StatusBarItem>
             <StatusBarItem>
                 <Border BorderBrush="DarkGray" 
                         BorderThickness="0,0,1,1">
                     <StackPanel Orientation="Horizontal">
                         <Viewbox Height="35">
-                            <Label Content="{Binding PLCAccessor.PlcIP}"
+                            <!--<Label Content="{Binding PLCAccessor.PlcIP}"
                                ContentStringFormat="{}PLC-IP: {0}"
                                VerticalContentAlignment="Center" 
+                                   Foreground="LightBlue"/>-->
+                            <Label Content="PLC: "
+                                   VerticalContentAlignment="Center"
                                    Foreground="LightBlue"/>
                         </Viewbox>
                         <Ellipse Width="30" 

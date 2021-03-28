@@ -1,0 +1,36 @@
+﻿<Window x:Class="ConfigApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ConfigApp"
+        mc:Ignorable="d"
+        Title="应用配置" Height="147.683" Width="358.536">
+    <Grid Background="#FFF6F6F6" >
+        <StackPanel Margin="3">
+            <BulletDecorator>
+                <BulletDecorator.Bullet>
+                    <Label Content="Pcdmis服务器IP: " Width="130"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding PcdmisIp}"/>
+            </BulletDecorator>
+            <BulletDecorator>
+                <BulletDecorator.Bullet>
+                    <Label Content="Calypso服务器IP: " Width="130"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding CalypsoIp}"/>
+            </BulletDecorator>
+            <BulletDecorator>
+                <BulletDecorator.Bullet>
+                    <Label Content="PLC - IP: " Width="130"/>
+                </BulletDecorator.Bullet>
+                <TextBox Text="{Binding PlcIp}"/>
+            </BulletDecorator>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="应用" Margin="10" 
+                        Command="{Binding AppleCommand}"/>
+                <Button Content="关闭" Margin="10" Click="Button_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>
