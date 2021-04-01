@@ -276,6 +276,7 @@ namespace MainApp.ViewModels
             {
                 item.LogicUnit.Stop();
             }
+            ClientLogs.Inst.StatusMessage = "正在等待自动任务停止。。。";
             CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(30));
 
             await Task.Run(() =>
@@ -298,6 +299,7 @@ namespace MainApp.ViewModels
             Racks[0].Status = RackStatus.RS_Idle;
             Started = false;
             Stopped = true;
+            ClientLogs.Inst.StatusMessage = "自动检测流程停止";
         }
 
         private void UnloadTraysFromSlot()
@@ -412,7 +414,7 @@ namespace MainApp.ViewModels
             PartsOfTrayViewModel partsOfTrayViewModel = new PartsOfTrayViewModel();
             partsOfTrayViewModel.Tray = SelectedTray;
             //var parts = Parts.Where(p => p.Category == SelectedTray.Category && p.Status == PartStatus.PS_Idle);
-            var parts = Parts.Where(p => p.Category == SelectedTray.Category && !p.Placed && (p.CmmNo == 2 || SelectedTray.CmmNo == 2 || p.CmmNo == SelectedTray.CmmNo));
+            var parts = Parts.Where(p => p.Category == SelectedTray.Category && !p.Placed && (p.CmmNo == SelectedTray.CmmNo || p.CmmNo == 2));
             foreach (var item in parts)
             {
                 partsOfTrayViewModel.Parts.Add(item);

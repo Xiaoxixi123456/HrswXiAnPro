@@ -52,7 +52,10 @@ namespace Hrsw.XiAnPro.LogicActivities
 
                 part.Status = PartStatus.PS_Error;
 
-                // 测量失败跳转 retry - true, next - false, nexttray - null
+                // TODO 中断执行 选择处理路径
+                _ac.Cont_Evt.WaitOne();
+
+                // 测量失败跳转 retry - true, next - false, next tray - null
                 if (_ac.Mark == null) break;
                 if (!_ac.Success) return false;
             }

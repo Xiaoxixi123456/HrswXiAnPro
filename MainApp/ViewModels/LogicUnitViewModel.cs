@@ -33,6 +33,9 @@ namespace MainApp.ViewModels
         public DelegateCommand OfflineCommand { get; set; }
         public DelegateCommand OnlineCommand { get; set; }
         public DelegateCommand StartWorkflowCommand { get; set; }
+        public DelegateCommand ClearErrorCommand { get; set; }
+        public DelegateCommand RetryCommand { get; set; }
+        public DelegateCommand NextPartCommand { get; set; }
 
         public LogicUnitViewModel(int cmmNo, string cmmName, ICMMControl cmmClient)
         {
@@ -42,12 +45,31 @@ namespace MainApp.ViewModels
             OnlineCommand = new DelegateCommand(CmmOnline).ObservesCanExecute(() => CanOnline);
             StartWorkflowCommand = new DelegateCommand(StartWorkflow).ObservesCanExecute(() => Started);
 
+            ClearErrorCommand = new DelegateCommand(ClearError).ObservesCanExecute(() => CmmError);
+            RetryCommand = new DelegateCommand(RetryMeasurePart).ObservesCanExecute(() => CmmError);
+            NextPartCommand = new DelegateCommand(NextPart).ObservesCanExecute(() => CmmError);
+
             cmmClient.OfflineEvent += CmmClient_OfflineEvent;
             LogicUnit.StartedEvent += LogicUnit_StartedEvent;
             LogicUnit.StoppedEvent += LogicUnit_StoppedEvent;
             MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Subscribe(OnCmmEvent);
 
             CmmError = false;
+        }
+
+        private void NextPart()
+        {
+            LogicUnit.NextPart();
+        }
+
+        private void RetryMeasurePart()
+        {
+            LogicUnit.Retry();
+        }
+
+        private void ClearError()
+        {
+            LogicUnit.ClearError();
         }
 
         private void OnCmmEvent(CmmErrorStatus ceStatus)

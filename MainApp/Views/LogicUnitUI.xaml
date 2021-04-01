@@ -154,6 +154,21 @@
                     Command="{Binding StartWorkflowCommand}"
                     MouseLeave="Button_MouseLeave_2"
                     MouseMove="Button_MouseMove_2"/>
+                    <!--<Button Content="清除错误"
+                            Margin="5,3,5,3.4" 
+                            FontSize="20"
+                            Width="100"
+                            Command="{Binding ClearErrorCommand}"/>-->
+                    <Button Content="重试"
+                            Margin="5,3"
+                            FontSize="20"
+                            Width="80"
+                            Command="{Binding RetryCommand}"/>
+                    <Button Content="跳过"
+                            Margin="5,3"
+                            FontSize="20"
+                            Width="80"
+                            Command="{Binding NextPartCommand}"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

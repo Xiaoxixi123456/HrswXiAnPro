@@ -286,5 +286,10 @@ namespace Hrsw.XiAnPro.CMMClient
         {
             _reportFileTransfer.Next(obj);
         }
+
+        public void ClearError()
+        {
+            ReleaseMeasure();
+        }
     }
 }

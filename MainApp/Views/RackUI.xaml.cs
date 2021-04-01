@@ -67,42 +67,42 @@ namespace MainApp.Views
         private void loadTrayButton_MouseMove(object sender, MouseEventArgs e)
         {
             //OpInfomations.info = "往料库槽中装夹料盘";
-            ClientLogs.Inst.StatusMessage = "往料库槽中装夹料盘";
+            //ClientLogs.Inst.StatusMessage = "往料库槽中装夹料盘";
         }
 
         private void loadTrayButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void unloadTrayButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void unloadTrayButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "往料库槽中卸载料盘";
+            //ClientLogs.Inst.StatusMessage = "往料库槽中卸载料盘";
         }
 
         private void startAutoflowButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "启动检测流程";
+            //ClientLogs.Inst.StatusMessage = "启动检测流程";
         }
 
         private void startAutoflowButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void stopButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void stopButton_MouseMove(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "停止检测流程";
+            //ClientLogs.Inst.StatusMessage = "停止检测流程";
         }
 
         private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)

@@ -29,42 +29,42 @@ namespace MainApp.Views
 
         private void Button_MouseMove(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "添加料盘并设置料盘参数";
+            //ClientLogs.Inst.StatusMessage = "添加料盘并设置料盘参数";
         }
 
         private void Button_MouseLeave(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void Button_MouseMove_1(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "删除料盘";
+            //ClientLogs.Inst.StatusMessage = "删除料盘";
         }
 
         private void Button_MouseLeave_1(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void Button_MouseMove_2(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "往料盘上装夹工件";
+            //ClientLogs.Inst.StatusMessage = "往料盘上装夹工件";
         }
 
         private void Button_MouseLeave_2(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
 
         private void Button_MouseMove_3(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "从文件导入料盘";
+            //ClientLogs.Inst.StatusMessage = "从文件导入料盘";
         }
 
         private void Button_MouseLeave_3(object sender, MouseEventArgs e)
         {
-            ClientLogs.Inst.StatusMessage = "";
+            //ClientLogs.Inst.StatusMessage = "";
         }
     }
 }

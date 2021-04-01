@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hrsw.XiAnPro.LogicActivities
@@ -12,5 +13,6 @@ namespace Hrsw.XiAnPro.LogicActivities
 
         public bool Success { get; set; }
         public bool IsOffline { get; set; }
+        public AutoResetEvent Cont_Evt { get; set; }
     }
 }

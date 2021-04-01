@@ -33,6 +33,8 @@ namespace Hrsw.XiAnPro.LogicActivities
             {
                 try
                 {
+                    if (cts.IsCancellationRequested) break;
+
                     success = await activity.ExecuteAsync(obj, cts);
                     if (!success)
                     {

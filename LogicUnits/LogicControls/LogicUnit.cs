@@ -47,6 +47,7 @@ namespace Hrsw.XiAnPro.LogicControls
             _cmmControl = cmmControl;
             Working = false;
             _actCtrl = new ActivityController() { Mark = true, IsOffline = false };
+            _actCtrl.Cont_Evt = new AutoResetEvent(false);
             _traySelector = new TraySelectActivity(cmmNo);
             _rootActivity = new RootActivity(cmmControl, _actCtrl);
 
@@ -99,6 +100,11 @@ namespace Hrsw.XiAnPro.LogicControls
             _offlineWaitFlag.Set();
         }
 
+        public void ClearError()
+        {
+            _cmmControl.ClearError();
+        }
+
         private void SetupTray(Tray tray)
         {
             CurrentTray = tray;
@@ -109,18 +115,21 @@ namespace Hrsw.XiAnPro.LogicControls
         {
             _actCtrl.Mark = false;
             _actCtrl.Success = _cmmControl.ReleaseMeasure();
+            _actCtrl.Cont_Evt.Set();
         }
 
         public void NextTray()
         {
             _actCtrl.Mark = null;
             _actCtrl.Success = _cmmControl.ReleaseMeasure();
+            _actCtrl.Cont_Evt.Set();
         }
 
         public void Retry()
         {
             _actCtrl.Mark = true;
             _actCtrl.Success = _cmmControl.ReleaseMeasure();
+            _actCtrl.Cont_Evt.Set();
         }
 
         public void Stop()

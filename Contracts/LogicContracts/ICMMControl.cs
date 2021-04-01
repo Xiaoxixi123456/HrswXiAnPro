@@ -20,5 +20,6 @@ namespace Hrsw.XiAnPro.LogicContracts
         event EventHandler OnlineEvent;
 
         void TransferReport(Part obj);
+        void ClearError();
     }
 }

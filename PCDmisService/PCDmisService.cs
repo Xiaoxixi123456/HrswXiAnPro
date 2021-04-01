@@ -50,6 +50,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
             _completed = false;
             RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
+            _are.Set();
         }
 
         private void ExecuteError(object sender, PcdmisEventArgs e)
@@ -58,6 +59,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
             _completed = false;
             RespondMessage(true, e.Message);
             ServerLog.Logs.AddLog(e.Message);
+            _are.Set();
         }
 
         private void Executed(object sender, PcdmisEventArgs e)
@@ -69,6 +71,7 @@ namespace Hrsw.XiAnPro.ServerCommonMod
                 string message = _measureOperation ? "测量取消" : "回零取消";
                 RespondMessage(true, message);
                 ServerLog.Logs.AddLog(message);
+                _are.Set();
             }
             else
             {
@@ -181,7 +184,6 @@ namespace Hrsw.XiAnPro.ServerCommonMod
                     ServerLog.Logs.AddLog(resp.Message);
                     return resp;
                 }
-
                 _are.Reset();
                 bool success = _pcdmisControl.OpenProgram(progName);
                 success = _pcdmisControl.ExecuteProgramAsync();

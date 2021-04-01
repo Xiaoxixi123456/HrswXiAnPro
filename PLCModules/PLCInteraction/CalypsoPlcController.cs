@@ -1,4 +1,5 @@
-﻿using Hrsw.XiAnPro.Models;
+﻿using ClientCommonMods;
+using Hrsw.XiAnPro.Models;
 using PLCServices;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace Hrsw.XiAnPro.PLCInteraction
             try
             {
                 StartMonitor();
-                StartMeasure(part);
+                await StartMeasure(part).ConfigureAwait(false);
+                await Task.Delay(2000).ConfigureAwait(false);
                 await WaitMeasureEnd(part).ConfigureAwait(false);
                 EndMonitor();
             }
@@ -43,17 +45,20 @@ namespace Hrsw.XiAnPro.PLCInteraction
             return _error ? false : true;
         }
 
-        private void StartMeasure(Part part)
+        private Task StartMeasure(Part part)
         {
             // TODO 传递表头过程
-            _plcAccessor.WriteByte(_dbNumber, 2, part.Category);
-            _plcAccessor.WriteMasks(_dbNumber, 0, 0x03);
-            Thread.Sleep(500);
-            //_plcAccessor.WriteMasks(_dbNumber, 0, 0x01);
-            _plcAccessor.WriteMasks(_dbNumber,0, false, new int[]{ 1 });
+            return Task.Run(() =>
+            {
+                _plcAccessor.WriteByte(_dbNumber, 2, part.Category);
+                _plcAccessor.WriteMasks(_dbNumber, 0, 0x03);
+                Thread.Sleep(500);
+                //_plcAccessor.WriteMasks(_dbNumber, 0, 0x01);
+                _plcAccessor.WriteMasks(_dbNumber, 0, false, new int[] { 1 });
+            });
         }
 
-
+        // TODO 增加停止标志
         private Task WaitMeasureEnd(Part part)
         {
             return Task.Run(() =>
@@ -61,9 +66,8 @@ namespace Hrsw.XiAnPro.PLCInteraction
                 while (true)
                 {
                     // TODO 出现错误是否跳出
-
                     bool completed = OnCompleted(part);
-                    if (completed) break;
+                    if (completed || _error) break;
 
                     Task.Delay(1000).Wait();
                 }
@@ -105,6 +109,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
             if (_error)
             {
                 ErrorEvent?.BeginInvoke(this, null, null, null);
+                MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(new CmmErrorStatus() { CmmNo = 1, Error = true });
             }
         }
 
@@ -123,6 +128,13 @@ namespace Hrsw.XiAnPro.PLCInteraction
                 part.Pass = pass;
             }
             return !result;
+        }
+
+        public void ClearError()
+        {
+            _plcAccessor.WriteMasks(_dbNumber, 0, true, new int[] { 3 });
+            Thread.Sleep(500);
+            _plcAccessor.WriteMasks(_dbNumber, 0, false, new int[] { 3 });
         }
     }
 }

@@ -233,7 +233,8 @@ namespace Hrsw.XiAnPro.CMMClient
 
         public bool ReleaseMeasure()
         {
-            throw new NotImplementedException();
+            _calypsoPlcController.ClearError();
+            return true;
         }
 
         public void Dispose()
@@ -262,6 +263,11 @@ namespace Hrsw.XiAnPro.CMMClient
         public void TransferReport(Part obj)
         {
             _reportFileTransfer.Next(obj);
+        }
+
+        public void ClearError()
+        {
+            ReleaseMeasure();
         }
     }
 }
