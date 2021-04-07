@@ -98,6 +98,67 @@ namespace PLCServices
         }
         #endregion
 
+        #region 写字符串
+        [PlcAccessRetry(3, 300)]
+        public void WriteString(int dbNumber, int start, int size, string message)
+        {
+            byte[] buf = new byte[size];
+            S7.SetStringAt(buf, 0, size - 2, message);
+            lock (syncLock)
+            {
+                int code = _s7Client.DBWrite(dbNumber, start, size, buf);
+                Validate(code);
+                Thread.Sleep(300);
+            }
+        }
+
+        [PlcAccessRetry(3, 300)]
+        public void WriteASCIIString(int dbNumber, int start, string message)
+        {
+            byte[] buf = new byte[message.Length];
+            S7.SetCharsAt(buf, 0, message);
+            lock (syncLock)
+            {
+                int code = _s7Client.DBWrite(dbNumber, start, message.Length, buf);
+                Validate(code);
+                Thread.Sleep(300);
+            }
+        }
+        #endregion
+
+        #region 写整数
+        /// <summary>
+        /// 写短整数,2字节
+        /// </summary>
+        [PlcAccessRetry(5, 200)]
+        public void WriteSInt(int dbNumber, int start, int value)
+        {
+            byte[] buf = new byte[2];
+            lock (syncLock)
+            {
+                S7.SetIntAt(buf, 0, (short)value);
+                int code = _s7Client.DBWrite(dbNumber, start, 2, buf);
+                Validate(code);
+            }
+        }
+
+        [PlcAccessRetry(5, 200)]
+        /// <summary>
+        /// 写短整数,1字节
+        /// </summary>
+        public void WriteByte(int dbNumber, int start, int value)
+        {
+            //byte[] buf = new byte[1];
+            lock (syncLock)
+            {
+                byte[] buf = BitConverter.GetBytes(value);
+                //S7.SetByteAt(buf, 0, buf[0]);
+                int code = _s7Client.DBWrite(dbNumber, start, 1, buf);
+                Validate(code);
+            }
+        }
+        #endregion
+
         #region 读存储器标志位
         [PlcAccessRetry(5, 200)]
         public void ReadMask(int dbNumber, int start, int bit, out bool result)
@@ -125,34 +186,6 @@ namespace PLCServices
                 Validate(code);
             }
             result = S7.GetBitAt(buf, 0, bit);
-        }
-        #endregion
-
-        #region 写字符串
-        [PlcAccessRetry(3, 300)]
-        public void WriteString(int dbNumber, int start, int size, string message)
-        {
-            byte[] buf = new byte[size];
-            S7.SetStringAt(buf, 0, size - 2, message);
-            lock (syncLock)
-            {
-                int code = _s7Client.DBWrite(dbNumber, start, size, buf);
-                Validate(code);
-                Thread.Sleep(300);
-            }
-        }
-
-        [PlcAccessRetry(3, 300)]
-        public void WriteASCIIString(int dbNumber, int start, string message)
-        {
-            byte[] buf = new byte[message.Length];
-            S7.SetCharsAt(buf, 0, message);
-            lock (syncLock)
-            {
-                int code = _s7Client.DBWrite(dbNumber, start, message.Length, buf);
-                Validate(code);
-                Thread.Sleep(300);
-            }
         }
         #endregion
 
@@ -186,31 +219,12 @@ namespace PLCServices
         }
         #endregion
 
-        #region 写整数
-        [PlcAccessRetry(5, 200)]
-        public void WriteInt(int dbNumber, int start, int value)
+        [PlcAccessRetry(3, 300)]
+        public void PlcButton(int dbNumber, int start, int bit, bool signal, double sec)
         {
-            byte[] buf = new byte[2];
-            lock (syncLock)
-            {
-                S7.SetIntAt(buf, 0, (short)value);
-                int code = _s7Client.DBWrite(dbNumber, start, 2, buf);
-                Validate(code);
-            }
+            WriteMasks(dbNumber, start, signal, bit);
+            Thread.Sleep(TimeSpan.FromSeconds(sec));
+            WriteMasks(dbNumber, start, !signal, bit);
         }
-
-        [PlcAccessRetry(5, 200)]
-        public void WriteByte(int dbNumber, int start, int value)
-        {
-            //byte[] buf = new byte[1];
-            lock (syncLock)
-            {
-                byte[] buf = BitConverter.GetBytes(value);
-                //S7.SetByteAt(buf, 0, buf[0]);
-                int code = _s7Client.DBWrite(dbNumber, start, 1, buf);
-                Validate(code);
-            }
-        }
-        #endregion
     }
 }

@@ -19,10 +19,30 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Viewbox Margin="3">
-                        <Label Content="{Binding SlotNb}"
+                        <!--<Label Content="{Binding SlotNb}"
                            Background="DarkGray"
                            Foreground="AliceBlue"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center"/>-->
+                        <!--<Label Background="DarkGray"
+                               Foreground="AliceBlue"
+                               VerticalAlignment="Center">
+                            <Label.Content>
+                                <MultiBinding Converter="{StaticResource PartSlotToPositionConverter}">
+                                    <Binding Path="ColumnId"/>
+                                    <Binding Path="RowId"/>
+                                </MultiBinding>
+                            </Label.Content>
+                        </Label>-->
+                        <TextBlock Background="DarkGray"
+                                   Foreground="AliceBlue"
+                                   VerticalAlignment="Center">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0}{1}">
+                                    <Binding Path="ColumnId"/>
+                                    <Binding Path="RowId"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                     </Viewbox>
                     <Grid Margin="3" Grid.Row="1">
                     <Grid.Background>

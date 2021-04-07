@@ -16,7 +16,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
         protected PLCAccessor _plcAccessor;
         protected CancellationTokenSource _cts;
         protected int _dbNumber;
-        private bool _error;
+        protected bool _error;
 
         public event EventHandler ErrorEvent;
 
@@ -29,15 +29,18 @@ namespace Hrsw.XiAnPro.PLCInteraction
         {
             try
             {
+                _error = false;
                 Initialize(tray);
+                await Startup(tray).ConfigureAwait(false);
                 StartMonitor();
-                Startup(tray);
                 await WaitComplete().ConfigureAwait(false);
                 EndMonitor();
             }
             catch (InvalidOperationException pe)
             {
+                EndMonitor();
                 ClientLogs.Inst.AddLog(new ClientLog(pe.Message));
+                PLCAccessor.Instance.Connected = false;
                 _error = true;
             }
             return _error ? false : true;
@@ -47,11 +50,12 @@ namespace Hrsw.XiAnPro.PLCInteraction
         {
             return Task.Run(() =>
             {
+                _error = false;
                 while (true)
                 {
-                    // TODO 出现错误退出等待
+                    // 出现错误退出等待
                     bool completed = OnCompleted();
-                    if (completed) break;
+                    if (completed || _error) break;
 
                     Task.Delay(1000).Wait();
                 }
@@ -84,11 +88,12 @@ namespace Hrsw.XiAnPro.PLCInteraction
                     {
                         OnError();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        // TODO 错误出现时抛出异常
                         //throw;
                         ClientLogs.Inst.AddLog(new ClientLog(this.GetType().FullName + "OnError"));
+                        PLCAccessor.Instance.Connected = false;
+                        ErrorEvent?.Invoke(this, null );
                     }
 
                     Task.Delay(1000).Wait();
@@ -106,7 +111,7 @@ namespace Hrsw.XiAnPro.PLCInteraction
             _dbNumber = tray.UseCmmNo == 0 ? 1 : 2;
         }
 
-        public virtual void Startup(Tray tray)
+        public virtual Task Startup(Tray tray)
         {
             throw new NotImplementedException();
         }

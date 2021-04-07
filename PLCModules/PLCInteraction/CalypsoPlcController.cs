@@ -40,6 +40,8 @@ namespace Hrsw.XiAnPro.PLCInteraction
             catch (Exception)
             {
                 EndMonitor();
+                ClientLogs.Inst.AddLog(new ClientLog("Calypso测量过程中通讯异常。"));
+                PLCAccessor.Instance.Connected = false;
                 _error = true;
             }
             return _error ? false : true;
@@ -54,18 +56,18 @@ namespace Hrsw.XiAnPro.PLCInteraction
                 _plcAccessor.WriteMasks(_dbNumber, 0, 0x03);
                 Thread.Sleep(500);
                 //_plcAccessor.WriteMasks(_dbNumber, 0, 0x01);
-                _plcAccessor.WriteMasks(_dbNumber, 0, false, new int[] { 1 });
+                _plcAccessor.WriteMasks(_dbNumber, 0, false, 1);
             });
         }
 
-        // TODO 增加停止标志
+        // 增加停止标志
         private Task WaitMeasureEnd(Part part)
         {
             return Task.Run(() =>
             {
                 while (true)
                 {
-                    // TODO 出现错误是否跳出
+                    // 出现错误是否跳出
                     bool completed = OnCompleted(part);
                     if (completed || _error) break;
 
@@ -91,6 +93,8 @@ namespace Hrsw.XiAnPro.PLCInteraction
                     catch (Exception ex)
                     {
                         // 错误监控时抛出异常
+                        PLCAccessor.Instance.Connected = false;
+                        ClientLogs.Inst.AddLog(new ClientLog(this.GetType().FullName + "OnError"));
                     }
 
                     Task.Delay(1000).Wait();
@@ -132,9 +136,9 @@ namespace Hrsw.XiAnPro.PLCInteraction
 
         public void ClearError()
         {
-            _plcAccessor.WriteMasks(_dbNumber, 0, true, new int[] { 3 });
+            _plcAccessor.WriteMasks(_dbNumber, 0, true, 3);
             Thread.Sleep(500);
-            _plcAccessor.WriteMasks(_dbNumber, 0, false, new int[] { 3 });
+            _plcAccessor.WriteMasks(_dbNumber, 0, false, 3);
         }
     }
 }

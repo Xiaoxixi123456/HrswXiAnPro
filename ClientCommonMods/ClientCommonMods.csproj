@@ -61,8 +61,10 @@
     <Compile Include="ClientLogs.cs" />
     <Compile Include="ClientLog_s.cs" />
     <Compile Include="CmmErrorEvent.cs" />
+    <Compile Include="LoadAndUnloadEvent.cs" />
     <Compile Include="MainAndLogicUnitEvent.cs" />
     <Compile Include="MyEventAggregator.cs" />
+    <Compile Include="PlcErrorEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

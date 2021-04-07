@@ -18,7 +18,7 @@
     <Convertors:CmmErrorLedConverter x:Key="CmmErrorLedConverter"/>
     <Convertors:CmmIndexToNameConverter x:Key="CmmIndexToNameConverter"/>
     <Convertors:TrayTreeViewBackgroundConverter x:Key="TrayTreeViewBackgroundConverter"/>
-
+    <Convertors:PartSlotToPositionConverter x:Key="PartSlotToPositionConverter"/>
     <ItemsPanelTemplate x:Key="ItemsPanelTemplate1">
         <UniformGrid IsItemsHost="True" 
                      Columns="{Binding CurrentTray.ColumnCount}"
@@ -352,7 +352,7 @@
                             <Setter TargetName="rcgle" Property="Fill" Value="Red"/>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="rcgle" Property="Fill" Value="Gray"/>
+                            <Setter TargetName="rcgle" Property="Fill" Value="Black"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

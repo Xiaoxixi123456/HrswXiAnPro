@@ -30,6 +30,7 @@ namespace Hrsw.XiAnPro.LogicActivities
             if (!success)
             {
                 ClientLogs.Inst.AddLog(new ClientLog("三坐标安全定位失败"));
+                // 安全定位失败，流程无法继续进行
             }
             return success;
         }

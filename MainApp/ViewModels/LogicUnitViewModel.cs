@@ -30,6 +30,7 @@ namespace MainApp.ViewModels
         [Bindable]
         public bool CmmError { get; set; }
 
+
         public DelegateCommand OfflineCommand { get; set; }
         public DelegateCommand OnlineCommand { get; set; }
         public DelegateCommand StartWorkflowCommand { get; set; }
@@ -59,11 +60,15 @@ namespace MainApp.ViewModels
 
         private void NextPart()
         {
+            //MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(new CmmErrorStatus() { CmmNo = LogicUnit.CmmNo, Error = false });
+            CmmError = false;
             LogicUnit.NextPart();
         }
 
         private void RetryMeasurePart()
         {
+            //MyEventAggregator.Inst.GetEvent<CmmErrorEvent>().Publish(new CmmErrorStatus() { CmmNo = LogicUnit.CmmNo, Error = false });
+            CmmError = false;
             LogicUnit.Retry();
         }
 

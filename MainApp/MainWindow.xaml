@@ -157,6 +157,34 @@
                                 <Label Content="{c:Binding PLCAccessor.Connected ? \'PLC连接\' : \'PLC断开\'}"/>
                             </Ellipse.ToolTip>
                         </Ellipse>
+                        <Rectangle Width="1" Fill="DarkGray"/>
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{c:Binding LoadTraySignal ? \'LightGreen\' : \'Black\'}">
+                            <Ellipse.ToolTip>
+                                <Label Content="机器人上料指示灯"/>
+                            </Ellipse.ToolTip>
+                        </Ellipse>
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{c:Binding UnloadTraySignal ? \'LightGreen\' : \'Black\'}">
+                            <Ellipse.ToolTip>
+                                <Label Content="机器人下料指示灯"/>
+                            </Ellipse.ToolTip>
+                        </Ellipse>
+                        <Ellipse Width="30" 
+                             Height="30"
+                             Margin="2" 
+                             Stroke="Black"
+                             Fill="{c:Binding LoadOrUnloadError? \'Red\' : \'Black\'}">
+                            <Ellipse.ToolTip>
+                                <Label Content="PLC报警指示灯"/>
+                            </Ellipse.ToolTip>
+                        </Ellipse>
                     </StackPanel>
                 </Border>
             </StatusBarItem>

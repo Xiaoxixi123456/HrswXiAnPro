@@ -65,6 +65,13 @@ namespace MainApp.ViewModels
         public ClientLogs LogsManager { get; set; }
         [Bindable]
         public PLCAccessor PLCAccessor { get; set; }
+        [Bindable]
+        public bool LoadOrUnloadError { get; set; }
+        [Bindable]
+        public bool LoadTraySignal { get; set; }
+        [Bindable]
+        public bool UnloadTraySignal { get; set; }
+
 
         public PcdmisClient PcdmisClient { get; set; }
         public CalypsoClient CalypsoClient { get; set; }
@@ -97,6 +104,27 @@ namespace MainApp.ViewModels
             RunLedIndex = -1;
             LogsManager = ClientLogs.Inst;
             PLCAccessor = PLCAccessor.Instance;
+
+            LoadOrUnloadError = false;
+            MyEventAggregator.Inst.GetEvent<PlcErrorEvent>().Subscribe(OnPlcError);
+            MyEventAggregator.Inst.GetEvent<LoadEvent>().Subscribe(OnLoadActivity);
+            MyEventAggregator.Inst.GetEvent<UnloadEvent>().Subscribe(OnUnloadActivity);
+        }
+
+        private void OnUnloadActivity(bool obj)
+        {
+            UnloadTraySignal = obj;
+        }
+
+        private void OnLoadActivity(bool obj)
+        {
+            LoadTraySignal = obj;
+        }
+
+        private void OnPlcError(PlcErrorStatus obj)
+        {
+            ClientLogs.Inst.AddLog(new ClientLog("机器人动作错误"));
+            LoadOrUnloadError = obj.Error;
         }
 
         private void CategoriesRefresh()

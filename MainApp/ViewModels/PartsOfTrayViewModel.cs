@@ -65,6 +65,8 @@ namespace MainApp.ViewModels
                 if (Tray.Parts[item - 1].Status == PartStatus.PS_Empty)
                     continue;
                 //Tray.Parts[item - 1].Status = PartStatus.PS_Idle;
+                int col = (item - 1) % Tray.ColumnCount;
+                int row = (item - 1) / Tray.ColumnCount;
                 Tray.Parts[item - 1].SlotNb = -1;
                 Tray.Parts[item - 1].TrayNb = -1;
                 Tray.Parts[item - 1].Placed = false;
@@ -74,6 +76,8 @@ namespace MainApp.ViewModels
                     SlotNb = item,
                     Status = PartStatus.PS_Empty
                 };
+                Tray.Parts[item - 1].ColumnId = Encoding.ASCII.GetString(new byte[] { (byte)(65 + col) });
+                Tray.Parts[item - 1].RowId = Encoding.ASCII.GetString(new byte[] { (byte)(49 + row) });
             }
             Tray.PartCount = Tray.Parts.Count(p => p.Status != PartStatus.PS_Empty);
         }
@@ -99,9 +103,13 @@ namespace MainApp.ViewModels
                     Parts.Add(SelectedPartsOfTray[pos]);
                 }
                 Part pt = SelectedParts[pos];
+                int col = (index - 1) % Tray.ColumnCount;
+                int row = (index - 1) / Tray.ColumnCount;
                 Tray.Parts[index - 1] = pt;
                 Tray.Parts[index - 1].Status = PartStatus.PS_Idle;
                 Tray.Parts[index - 1].SlotNb = index;
+                Tray.Parts[index - 1].ColumnId = Encoding.ASCII.GetString(new byte[] { (byte)(65 + col) });
+                Tray.Parts[index - 1].RowId = Encoding.ASCII.GetString(new byte[] { (byte)(49 + row) });
                 Tray.Parts[index - 1].TrayNb = Tray.TrayNb;
                 Tray.Parts[index - 1].Placed = true;
                 Parts.Remove(pt);

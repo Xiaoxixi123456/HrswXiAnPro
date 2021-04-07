@@ -21,6 +21,9 @@ namespace ClientCommonMods
         {
             events.Add(typeof(MainAndLogicUnitEvent), new MainAndLogicUnitEvent());
             events.Add(typeof(CmmErrorEvent), new CmmErrorEvent());
+            events.Add(typeof(PlcErrorEvent), new PlcErrorEvent());
+            events.Add(typeof(LoadEvent), new LoadEvent());
+            events.Add(typeof(UnloadEvent), new UnloadEvent());
         }
     }
 }

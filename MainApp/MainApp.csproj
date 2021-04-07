@@ -112,6 +112,7 @@
     <Compile Include="Convertors\PartLedMultiConverter.cs" />
     <Compile Include="Convertors\PartPlacedStatusConverter.cs" />
     <Compile Include="Convertors\PartResultMultiConverter.cs" />
+    <Compile Include="Convertors\PartSlotToPositionConverter.cs" />
     <Compile Include="Convertors\PartStatusConverter.cs" />
     <Compile Include="Convertors\RunLedIndexConverter.cs" />
     <Compile Include="Convertors\TrayBackgroundConverter.cs" />
